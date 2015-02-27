@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function (grunt, options) {
     var copy = grunt.file.copy;
     var rm = grunt.file.delete;
     var read = grunt.file.read;
@@ -23,7 +23,24 @@ module.exports = function (grunt) {
         });
     });
 
-    grunt.registerTask('firefox', ['fx-temp-dir', 'fx-common-modules', 'browserify:firefox', 'fx-beautify-app']);
+    grunt.registerTask('firefox', [
+        'fx-temp-dir',
+        'fx-common-modules',
+        'browserify:firefox',
+        'fx-beautify-app',
+        'fx-copy-to-out',
+        'fx-finish'
+    ]);
+
+    grunt.registerTask('fx-copy-to-out', function() {
+        grunt.file.expand({filter: 'isFile'}, '.grunt/firefox/**').forEach(function (file) {
+            copy(file, options.outputDir + '/' + (file.replace(/^\.grunt\//, '')));
+        });
+    });
+
+    grunt.registerTask('fx-finish', function() {
+        rm('.grunt/');
+    });
 
     grunt.config('browserify', {
         firefox: {

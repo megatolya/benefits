@@ -1,3 +1,7 @@
 module.exports = function (grunt) {
-    require('./Gruntfile-firefox')(grunt);
+    var options = {
+        outputDir: 'out'
+    };
+
+    require('./Gruntfile-firefox')(grunt, options);
 };

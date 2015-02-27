@@ -2,3 +2,4 @@
 .project
 .grunt
 node_modules/
+out/
