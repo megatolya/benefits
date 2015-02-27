@@ -1,0 +1,27 @@
+{
+  "name": "peepl",
+  "version": "0.0.0",
+  "description": "",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/megatolya/achivki.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/megatolya/achivki/issues"
+  },
+  "homepage": "https://github.com/megatolya/achivki",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "signals": "^1.0.0"
+  },
+  "devDependencies": {
+    "grunt-browserify": "^3.4.0"
+  }
+}

@@ -1,2 +1,5 @@
 #Eclipse files
 .project
+.grunt
+node_modules/
+out/

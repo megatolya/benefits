@@ -17,11 +17,6 @@ let core = {
         return APP_NAME;
     },
 
-    // FIXME: Нужен ли геттер вообще?
-    get app() {
-        return this._application;
-    },
-
     init: function () {
         this._loadModules();
         this._loadUIManager();
@@ -63,21 +58,11 @@ let core = {
     },
 
     _loadApplication: function () {
-        this._application = this._importModules('application.jsm').application;
-
-        if (typeof this._application.init === 'function') {
-            // FIXME: Не факт, что в application нужно передавать core,
-            // если application будет в общем коде.
-            this._application.init(this);
-        }
+        this._importModules('application.jsm');
     },
 
     _unloadApplication: function () {
-        if (typeof this._application.finalize === 'function') {
-            this._application.finalize();
-        }
-
-        this._application = null;
+        Cu.unload(APP_CHROME_PATH + 'application.jsm');
     },
 
     /**
@@ -131,3 +116,4 @@ function uninstall (aData, aReason) {
         return;
     }
 }
+
