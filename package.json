@@ -18,7 +18,8 @@
   "homepage": "https://github.com/megatolya/achivki",
   "dependencies": {
     "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13"
+    "grunt-cli": "^0.1.13",
+    "signals": "^1.0.0"
   },
   "devDependencies": {
     "grunt-browserify": "^3.4.0"

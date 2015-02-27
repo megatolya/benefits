@@ -1,3 +1,10 @@
-require('./serverConnector').connect();
+var serverConnector = require('./serverConnector');
+var console = require('./console');
 
-require('./coreProvider')();
+serverConnector.connected.add(function() {
+    console.log('connnected from signal!!!');
+});
+
+serverConnector.connect();
+
+
