@@ -9,7 +9,7 @@ const {
     results: Cr
 } = Components;
 
-Cu.import("resource:///modules/CustomizableUI.jsm");
+Cu.import('resource:///modules/CustomizableUI.jsm');
 
 let uiManager = {
     init: function (aCore) {

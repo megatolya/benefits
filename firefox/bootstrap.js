@@ -7,10 +7,10 @@ const {
     utils: Cu
     } = Components;
 
-Cu.import("resource://gre/modules/Services.jsm");
+Cu.import('resource://gre/modules/Services.jsm');
 
 const APP_NAME = 'peepl';
-const APP_CHROME_PATH = 'chrome://' + APP_NAME + '/content/'
+const APP_CHROME_PATH = 'chrome://' + APP_NAME + '/content/';
 
 let core = {
     get appName() {
@@ -116,4 +116,3 @@ function uninstall (aData, aReason) {
         return;
     }
 }
-
