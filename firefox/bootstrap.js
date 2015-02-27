@@ -62,6 +62,7 @@ let core = {
     },
 
     _unloadApplication: function () {
+        Cu.unload(APP_CHROME_PATH + 'application.jsm');
     },
 
     /**
