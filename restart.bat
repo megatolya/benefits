@@ -22,6 +22,7 @@ echo(
 if "%user_version%" == "" goto welcome
 
 :main
+set firefox_flags=%firefox_flags% -P "%user_version: =_%"
 
 <nul (set/p dummy=Closing firefox.exe process)
 
