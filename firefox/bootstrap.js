@@ -61,6 +61,8 @@ let core = {
         this._importModules('application.jsm');
     },
 
+    // FIXME: Внимание, нигде не производится финализация объектов, которые загружены в application.jsm
+    // Они продолжают работу и возникают ошибки.
     _unloadApplication: function () {
         Cu.unload(APP_CHROME_PATH + 'application.jsm');
     },
