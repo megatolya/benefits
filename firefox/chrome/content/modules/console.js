@@ -1,6 +1,10 @@
+'use strict';
+
+let console = Components.utils.import('resource://gre/modules/devtools/Console.jsm', {}).console;
+
 module.exports = {
-    //log: () => dump.apply(null, arguments)
     log: (msg) => {
         dump('>>>' + msg + '\n');
+        console.log('>>>' + msg);
     }
 };
