@@ -13,20 +13,20 @@ Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
 
 let navigationMonitor = {
-    locationChanged: new signals.Signal(),
+    init: function (aCallback) {
+        if (!(aCallback && typeof aCallback === 'function')) {
+            throw new Error('navigationMonitor callback should be a function.');
+        }
 
-    init: function () {
+        this._callback = aCallback;
+
         this._injectToBrowser();
-
-        webProgressListener.locationChanged.add(this._onLocationChange, this);
     },
 
     finalize: function () {
         this._ejectFromBrowser();
 
-        webProgressListener.locationChanged.remove(this._onLocationChange, this);
-
-        this.locationChanged.removeAll();
+        this._callback = null;
     },
 
     onOpenWindow: function (aWindow) {
@@ -34,6 +34,40 @@ let navigationMonitor = {
             .QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsIDOMWindow)
             .addEventListener('load', this, false);
+    },
+
+    onLocationChange: function(aBrowser, aWebProgress, aRequest, aURI, aFlag) {
+        let domWindow = aWebProgress.DOMWindow;
+        let prevURL = this._domWindowNavigatedUrlMap.get(domWindow);
+        let onlyHashChanged = false;
+        let referrer = null;
+
+        if (domWindow) {
+            referrer = domWindow.document && domWindow.document.referrer;
+        }
+
+        let [url, hash] = aURI.spec.split('#');
+        this._domWindowNavigatedUrlMap.set(domWindow, url);
+
+        let sameDocument = (aFlag & Ci.nsIWebProgressListener.LOCATION_CHANGE_SAME_DOCUMENT);
+        if (sameDocument && (prevURL === url)) {
+            onlyHashChanged = true;
+        }
+
+        if (sameDocument && !onlyHashChanged) {
+            referrer = prevURL;
+        }
+
+        let navigationData = {
+            tab: aBrowser,
+            domWindow: domWindow,
+            isTopLevel: aWebProgress.isTopLevel,
+            onlyHashChanged: onlyHashChanged,
+            url: aURI,
+            referrer: referrer
+        };
+
+        this._callback(navigationData);
     },
 
     handleEvent: function (aEvent) {
@@ -46,6 +80,9 @@ let navigationMonitor = {
                 return;
         }
     },
+
+    _callback: null,
+    _domWindowNavigatedUrlMap: new WeakMap(),
 
     _injectToBrowser: function () {
         let windows = Services.wm.getEnumerator('navigator:browser');
@@ -78,48 +115,28 @@ let navigationMonitor = {
     },
 
     _startMonitorWindowWebProgress: function (aWindow) {
-        aWindow.getBrowser().addTabsProgressListener(webProgressListener);
+        aWindow.getBrowser().addTabsProgressListener(this);
     },
 
     _stopMonitorWindowWebProgress: function (aWindow) {
-        aWindow.getBrowser().removeTabsProgressListener(webProgressListener);
-    },
-
-    _onLocationChange: function (aData) {
-        this.locationChanged.dispatch(aData);
-    }
-};
-
-let webProgressListener = {
-    locationChanged: new signals.Signal(),
-
-    onLocationChange: function(aBrowser, aWebProgress, aRequest, aURI, aFlag) {
-        let prevURL = this._tabURLsMap.get(aBrowser);
-        let onlyHashChanged = false;
-
-        let [url, hash] = aURI.spec.split('#');
-        this._tabURLsMap.set(aBrowser, url);
-
-        let sameDocument = (aFlag & Ci.nsIWebProgressListener.LOCATION_CHANGE_SAME_DOCUMENT);
-        if (sameDocument && prevURL) {
-            if (prevURL === url) {
-                onlyHashChanged = true;
-            }
-        }
-
-        let navigationData = {
-            tab: aBrowser,
-            url: aURI,
-            isTopLevel: aWebProgress.isTopLevel,
-            onlyHashChanged: onlyHashChanged
-        };
-
-        this.locationChanged.dispatch(navigationData);
+        aWindow.getBrowser().removeTabsProgressListener(this);
     },
 
     QueryInterface: XPCOMUtils.generateQI(['nsIWebProgressListener', 'nsISupportsWeakReference']),
-
-    _tabURLsMap: new WeakMap()
 };
 
-module.exports = navigationMonitor;
+let navigationMonitorWrapper = {
+    locationChanged: new signals.Signal(),
+
+    start: function () {
+        navigationMonitor.init(aNavigationData => this.locationChanged.dispatch(aNavigationData));
+    },
+
+    stop: function () {
+        this.locationChanged.removeAll();
+
+        navigationMonitor.finalize();
+    }
+};
+
+module.exports = navigationMonitorWrapper;
