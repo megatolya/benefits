@@ -3,8 +3,8 @@
  *
  * For proper work each module should contain this attributes:
  * {String} name - name of the module
- * {Function} __init - should do init logic and call passed callback with initialization error
- * {Function} __onInit - should call passed callback after completed initialization
+ * {Function} [__init] - should do init logic and call passed callback with initialization error
+ * {Function} [__onInit] - should call passed callback after completed initialization
  *
  * If some module doesn't contain __init method,
  * Initializer won't catch any errors (and won't have ability to repeat init process).
@@ -44,7 +44,7 @@ Initializer.prototype = {
 
     initModule: function (module, catchErrors) {
         var initPromise = createInitPromise(module);
-        if (catchErrors && initPromise) {
+        if (catchErrors) {
             initPromise.catch(this._catchInitError.bind(this, module));
         }
     },
