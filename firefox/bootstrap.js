@@ -101,7 +101,6 @@ function startup (aData, aReason) {
 }
 
 function shutdown (aData, aReason) {
-    // FIXME: finalize нужно вызывать в любом случае, не нужно удалять UI, если причина APP_SHUTDOWN.
     if (aReason == APP_SHUTDOWN) {
         return;
     }
