@@ -29,10 +29,18 @@ var Initializer = function () {};
 Initializer.prototype = {
     initModules: function (modules, callback) {
         var promises = [];
+
         modules.forEach(function (module) {
             promises.push(this._initModule(module));
         }, this);
-        Promise.all(promises).then(callback, callback);
+
+        Promise.all(promises).then(
+            // При успешном выполнении Promise.all возвращает массив.
+            function () {
+                callback();
+            },
+            callback
+        );
     },
 
     _initModule: function (module) {
@@ -43,16 +51,18 @@ Initializer.prototype = {
                 reject: reject,
                 catchErrors: true
             });
-        });
+        }.bind(this));
     },
 
     _tryCallInit: function (options) {
         var initPromise = createInitPromise(options.module);
+
         if (options.catchErrors) {
             initPromise.catch(this._catchInitError.bind(this, options));
         } else {
             initPromise.catch(options.reject);
         }
+
         initPromise.then(options.resolve);
     },
 
@@ -77,8 +87,10 @@ function createInitPromise(module) {
     return new Promise(function (resolve, reject) {
         if (typeof module.__init !== 'function') {
             console.log('Module %s do not have __init method', module.name);
+
             resolve();
         }
+
         callInitMethod(module, resolve, reject);
     });
 }
