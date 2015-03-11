@@ -3,26 +3,18 @@
  *
  * For proper work each module should contain this attributes:
  * {String} name - name of the module
- * {Function} [__init] - should do init logic and call passed callback with initialization error
- * {Function} [__onInit] - should call passed callback after completed initialization
+ * {Function} [__init] - should do init logic and call passed callback with initialization error,
+ * should do init logic only once, but call callback with success or error for any attempt for reinitialization
  *
  * If some module doesn't contain __init method,
  * Initializer won't catch any errors (and won't have ability to repeat init process).
  *
- * If some module doesn't contain onInit method,
- * Initializer will pretend that this module have been already initialized
- *
  * Usage:
- * In app.js (or in any other module that responsible for initialization of all other modules)
- * var m1 = require('./module1');
- * var m2 = require('./module2');
- * require('./initializer').initModules([m1, m2]);
- *
  * In some module, that have dependencies from m1 and m2
  * and want to do some things only after m1 and m2 would be both initialized
  * var m1 = require('./module1');
  * var m2 = require('./module2');
- * require('./initializer').waitForInit([m1, m2], startMyLogic);
+ * require('./initializer').initModules([m1, m2], startMyLogic);
  * function startMyLogic() {...}
  *
  */
