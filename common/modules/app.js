@@ -1,17 +1,40 @@
 'use strict';
 
+var initializer = require('./initializer');
+
 var serverConnector = require('./serverConnector');
 var navigationMonitor = require('./navigation');
+var downloadsMonitor = require('./downloads');
 var console = require('./console');
 
-navigationMonitor.init();
+var GLOBAL = this;
 
-navigationMonitor.locationChanged.add(function (aData) {
-    console.log('SIGNAL: navigationMonitor.locationChanged; url=' + aData.url.spec + '; onlyHashChanged=' + aData.onlyHashChanged);
-});
+var app = {
+    start: function () {
+        console.log('starting application...');
 
-serverConnector.connected.add(function() {
-    console.log('connnected from signal!!!');
-});
+        // TODO: Убрать эту функцию, модули будут импортироваться там, где они нужны,
+        // клиенты сами будут ожидать инициализации через callback.
+        this._initModules();
+    },
 
-serverConnector.connect();
+    // TODO: firefox Как-то научиться вызывать finalize из bootstrap.js
+    finalize: function () {
+
+    },
+
+    _initModules: function () {
+        initializer.initModules([downloadsMonitor], function (errorStatus) {
+            if (errorStatus) {
+                console.log('DownloadsMonitor initialization failed. ' + errorStatus);
+            } else {
+                console.log('DownloadsMonitor initialization succeed.');
+            }
+        });
+
+        // TODO: firefox Переделать navigationMonitor на использование initializer
+        navigationMonitor.start();
+    }
+};
+
+app.start();

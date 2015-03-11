@@ -22,6 +22,7 @@
     "signals": "^1.0.0"
   },
   "devDependencies": {
+    "async": "^0.9.0",
     "grunt-browserify": "^3.4.0"
   }
 }
