@@ -36,35 +36,47 @@ var INIT_AFTER_FAIL_TIMEOUT = 444;
 var Initializer = function () {};
 
 Initializer.prototype = {
-    initModules: function (modules) {
+    initModules: function (modules, callback) {
+        var promises = [];
         modules.forEach(function (module) {
-            this.initModule(module, true);
+            promises.push(this._initModule(module));
         }, this);
+        Promise.all(promises).then(callback, callback);
     },
 
-    initModule: function (module, catchErrors) {
-        var initPromise = createInitPromise(module);
-        if (catchErrors) {
-            initPromise.catch(this._catchInitError.bind(this, module));
+    _initModule: function (module) {
+        return new Promise(function (resolve, reject) {
+            this._tryCallInit({
+                module: module,
+                resolve: resolve,
+                reject: reject,
+                catchErrors: true
+            });
+        });
+    },
+
+    _tryCallInit: function (options) {
+        var initPromise = createInitPromise(options.module);
+        if (options.catchErrors) {
+            initPromise.catch(this._catchInitError.bind(this, options));
+        } else {
+            initPromise.catch(options.reject);
+        }
+        initPromise.then(options.resolve);
+    },
+
+    _catchInitError: function(options, error) {
+        if (options.catchErrors) {
+            options.catchErrors = false;
+            this._initModuleAfterTimeout(options);
+        } else {
+            options.reject(error);
         }
     },
 
-    waitForInit: function (modules, callback) {
-        var tasks = [];
-        modules.forEach(function (module) {
-            tasks.push(getOnInitMethod(module));
-        });
-        async.parallel(tasks, callback);
-    },
-
-    _catchInitError: function (module) {
-        // TODO pass catchErrors = false after several attempts (not after first)
-        this._initModuleAfterTimeout(module, false);
-    },
-
-    _initModuleAfterTimeout: function(module, catchErrors) {
+    _initModuleAfterTimeout: function(options) {
         setTimeout(
-            this.initModule.bind(null, module, catchErrors),
+            this._tryCallInit.bind(null, options),
             INIT_AFTER_FAIL_TIMEOUT
         );
     }
@@ -94,16 +106,5 @@ function callInitMethod(module, resolve, reject) {
     }
 }
 
-function getOnInitMethod(module) {
-    if (typeof module.__onInit === 'function') {
-        return module.__onInit;
-    }
-    console.log('Module %s do not have onInit method', module.name);
-    return onInitHelperMethod;
-}
-
-function onInitHelperMethod(callback) {
-    callback();
-}
 
 module.exports = new Initializer();
