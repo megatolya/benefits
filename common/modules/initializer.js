@@ -20,7 +20,6 @@
  */
 'use strict';
 
-var async = require('async');
 var console = require('./console');
 
 var INIT_AFTER_FAIL_TIMEOUT = 444;
