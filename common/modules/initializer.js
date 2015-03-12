@@ -21,26 +21,23 @@
 'use strict';
 
 var console = require('./console');
+var BaseModule = require('./base-module');
 
 var INIT_AFTER_FAIL_TIMEOUT = 444;
 
 var Initializer = function () {};
 
+
 Initializer.prototype = {
-    initModules: function (modules, callback) {
+    initModules: function (modules) {
         var promises = [];
 
         modules.forEach(function (module) {
+            checkType(module);
             promises.push(this._initModule(module));
         }, this);
 
-        Promise.all(promises).then(
-            // При успешном выполнении Promise.all возвращает массив.
-            function () {
-                callback();
-            },
-            callback
-        );
+        return Promise.all(promises);
     },
 
     _initModule: function (module) {
@@ -83,29 +80,26 @@ Initializer.prototype = {
     }
 };
 
-function createInitPromise(module) {
-    return new Promise(function (resolve, reject) {
-        if (typeof module.__init !== 'function') {
-            console.log('Module %s do not have __init method', module.name);
-
-            resolve();
-        }
-
-        callInitMethod(module, resolve, reject);
-    });
+function checkType(module) {
+    if (module instanceof BaseModule === false) {
+        console.log('Module %s should be instance of BaseModule!', module.name);
+        throw new Error();
+    }
 }
 
-function callInitMethod(module, resolve, reject) {
+function createInitPromise(module) {
+    if (typeof module.__init !== 'function') {
+        console.log('Module %s do not have __init method', module.name);
+        return Promise.resolve();
+    }
+    return callInitMethod(module);
+}
+
+function callInitMethod(module) {
     try {
-        module.__init(function(error) {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
+        return module.__init();
     } catch (error) {
-        reject(error);
+        return Promise.reject(error);
     }
 }
 
