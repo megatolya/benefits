@@ -1,7 +1,5 @@
 'use strict';
 
-var initializer = require('./initializer');
-
 var serverConnector = require('./serverConnector');
 var navigationMonitor = require('./navigation');
 var downloadsMonitor = require('./downloads');
@@ -24,16 +22,16 @@ var app = {
     },
 
     _initModules: function () {
-        initializer.initModules([downloadsMonitor], function (errorStatus) {
-            if (errorStatus) {
-                console.log('DownloadsMonitor initialization failed. ' + errorStatus);
-            } else {
-                console.log('DownloadsMonitor initialization succeed.');
-            }
-        });
-
-        // TODO: firefox Переделать navigationMonitor на использование initializer
-        navigationMonitor.start();
+        // TODO удалить зависимости от initializer
+        //initializer.initModules([downloadsMonitor], function (errorStatus) {
+        //    if (errorStatus) {
+        //        console.log('DownloadsMonitor initialization failed. ' + errorStatus);
+        //    } else {
+        //        console.log('DownloadsMonitor initialization succeed.');
+        //    }
+        //});
+        //
+        //navigationMonitor.start();
     }
 };
 
