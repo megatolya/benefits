@@ -2,7 +2,7 @@
  * BaseModule contains initializing and finalizing methods
  * All modules should extends from BaseModule
  * If you want to do some special things in initialization/finalization,
- * your module should have init and finalize methods
+ * your module should have _init and _finalize methods
  *
  * Usage:
  * If your module is a simple object:
@@ -39,10 +39,10 @@ BaseModule.prototype = {
     },
 
     __finalize: function () {
-        this.finalize();
+        safeCall(this._rejectInitPromise);
         this._rejectInitPromise = null;
         this._initPromise = null;
-        safeCall(this._rejectInitPromise);
+        this._finalize();
     },
 
     _createInitPromise: function() {
@@ -53,7 +53,7 @@ BaseModule.prototype = {
     },
 
     _callInit: function (resolve, reject) {
-        var initPromise = this.init();
+        var initPromise = this._init();
         if (isPromise(initPromise)) {
             initPromise.then(resolve, reject);
         } else {
@@ -61,11 +61,11 @@ BaseModule.prototype = {
         }
     },
 
-    init: function () {
+    _init: function () {
         return Promise.resolve();
     },
 
-    finalize: function () {}
+    _finalize: function () {}
 };
 
 function isPromise(object) {
