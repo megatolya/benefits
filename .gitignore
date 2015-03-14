@@ -9,3 +9,6 @@
 extensions/.grunt
 extensions/node_modules/
 extensions/out/
+
+#Server files
+server/node_modules
