@@ -2,8 +2,14 @@
 .project
 .settings
 
-.grunt
-node_modules/
-out/
-
+# Idea files
 /.idea
+
+# Extensions files
+extensions/.grunt
+extensions/node_modules/
+extensions/out/
+
+#Server files
+server/node_modules
+db/
