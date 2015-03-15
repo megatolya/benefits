@@ -7,9 +7,11 @@
 
 # Extensions files
 extensions/.grunt
-extensions/node_modules/
 extensions/out/
 
-#Server files
+# Server files
 server/node_modules
 db/
+
+# Common files
+node_modules/

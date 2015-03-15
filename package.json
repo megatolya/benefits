@@ -1,0 +1,21 @@
+{
+  "name": "peepl",
+  "version": "0.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/megatolya/achivki.git"
+  },
+  "author": "mir",
+  "bugs": {
+    "url": "https://github.com/megatolya/achivki/issues"
+  },
+  "homepage": "https://github.com/megatolya/achivki",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-commit-message-verify": "^0.1.0",
+    "grunt-githooks": "^0.3.1",
+    "grunt-jscs": "^1.5.0"
+  }
+}
