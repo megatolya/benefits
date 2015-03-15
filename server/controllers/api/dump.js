@@ -1,11 +1,11 @@
 var db = require('../../db');
 
-// TODO next?
-function onFail(reason) {
-    console.error('Failed to append log because', reason.message || reason);
-}
-
 module.exports = function (req, res, next) {
+    if (!req.authorized) {
+        next(401);
+        return;
+    }
+
     res.sendStatus(202);
     res.end();
 
@@ -19,7 +19,5 @@ module.exports = function (req, res, next) {
         return;
     }
 
-    req.getUserId().then(function(userId) {
-        db.appendUserData(userId, log).fail(onFail);
-    }).fail(onFail);
+    db.appendUserData(req.uid, log);
 };

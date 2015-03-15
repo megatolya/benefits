@@ -15,6 +15,7 @@ module.exports = function (req, res, next) {
     } else {
         req.checkToken(params.token, params.uid).then(function() {
             req.authorized = true;
+            req.uid = params.uid;
             log(req, 'authorized');
             next();
         }).fail(function(reason) {

@@ -34,5 +34,7 @@ app.use(require('./auth/middleware'));
 
 require('./controllers/api')(app);
 
+app.use(require('./error-handler'));
+
 app.listen(config.port);
 console.log('http://localhost:' + config.port);
