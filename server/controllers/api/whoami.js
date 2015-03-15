@@ -1,5 +1,10 @@
+var auth = require('../../auth');
+
 module.exports = function (req, res, next) {
-    console.log('hello');
-    res.json({hello: 'world'});
-    res.end();
+    auth.registerUser().then(function (userInfo) {
+        res.json({
+            userId: userInfo.id,
+            salt: userInfo.salt
+        });
+    }).fail(next);
 };

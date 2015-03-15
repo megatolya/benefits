@@ -14,8 +14,8 @@ module.exports = {
             connectionUrl: 'mongodb://localhost:27017/dumps'
         },
 
-        tokens: {
-            connectionUrl: 'mongodb://localhost:27017/tokens'
+        users: {
+            connectionUrl: 'mongodb://localhost:27017/users'
         }
     }
 };

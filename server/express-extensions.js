@@ -1,40 +1,30 @@
 var express = require('express');
 var Q = require('q');
-var uuid = require('node-uuid');
 var db = require('./db');
+var auth = require('./auth');
 
-express.request.getToken = function () {
+express.request.checkToken = function (token, uid) {
     var req = this;
     var deferred = Q.defer();
 
-    if (this.session.token) {
-        deferred.resolve(this.session.token);
-        return deferred.promise;
-    }
+    // находим пользователя, его соль, генерим токен и сравниваем
+    db.getUserByUserId(uid)
+        .then(function(user) {
+            if (!user) {
+                deferred.reject(new Error('User not found'));
+                return;
+            }
 
-    var token = uuid.v4();
+            var validToken = auth.generateToken(uid, user.salt, req.path);
+            console.log('validToken', validToken, 'vs token', token);
 
-    this.getUserIdFromToken().then(function(userId) {
-        db.registerToken(token, userId).then(function () {
-            req.session.token = token;
-            deferred.resolve(token);
-        }).fail(deferred.reject);
-    });
-
-    return deferred.promise;
-};
-
-express.request.getUserIdFromToken = function () {
-    var deferred = Q.defer();
-
-    console.log(this.session);
-    if (!this.session.userId) {
-        this.session.userId = uuid.v1();
-    }
-
-    console.log(this.session.userId);
-
-    deferred.resolve(this.session.userId);
+            if (token === validToken) {
+                deferred.resolve();
+            } else {
+                deferred.reject(new Error('Wrong token'));
+            }
+        })
+        .fail(deferred.reject);
 
     return deferred.promise;
 };

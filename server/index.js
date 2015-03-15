@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use(cookieParser(config.cookie.secret));
-app.use(require('./session-manager'));
+app.use(require('./auth/middleware'));
 
 require('./controllers/api')(app);
 
