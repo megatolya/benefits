@@ -12,3 +12,4 @@ extensions/out/
 
 #Server files
 server/node_modules
+db/

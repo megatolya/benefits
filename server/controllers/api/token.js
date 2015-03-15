@@ -1,7 +1,8 @@
 module.exports = function (req, res) {
-    req.getKey().then(function(key) {
-        res.json({key: key});
+    req.getToken().then(function(token) {
+        res.send(token);
     }).fail(function() {
+        res.sendStatus(500);
         res.end();
     });
 };

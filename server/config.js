@@ -3,5 +3,19 @@ module.exports = {
 
     cookie: {
         secret: 'cook it bitch'
+    },
+
+    session: {
+        secret: 'russia'
+    },
+
+    db: {
+        dumps: {
+            connectionUrl: 'mongodb://localhost:27017/dumps'
+        },
+
+        tokens: {
+            connectionUrl: 'mongodb://localhost:27017/tokens'
+        }
     }
 };
