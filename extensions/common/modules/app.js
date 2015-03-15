@@ -23,15 +23,15 @@ var app = {
 
     _initModules: function () {
         // TODO удалить зависимости от initializer
-        //initializer.initModules([downloadsMonitor], function (errorStatus) {
+        // initializer.initModules([downloadsMonitor], function (errorStatus) {
         //    if (errorStatus) {
         //        console.log('DownloadsMonitor initialization failed. ' + errorStatus);
         //    } else {
         //        console.log('DownloadsMonitor initialization succeed.');
         //    }
-        //});
+        // });
         //
-        //navigationMonitor.start();
+        // navigationMonitor.start();
     }
 };
 

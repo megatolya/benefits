@@ -19,7 +19,6 @@ module.exports = function (grunt) {
             'server/db/**.js',
             'server/controllers/**.js',
             'server/*.js',
-            'extensions/firefox/**/**.js',
             'extensions/common/modules/**/**.js',
         ],
         options: {
