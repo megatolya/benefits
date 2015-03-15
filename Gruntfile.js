@@ -38,6 +38,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('pre-commit-check', ['grunt-commit-message-verify', 'jscs']);
+    grunt.registerTask('pre-commit-check', ['jscs']);
     grunt.registerTask('pre-push-check', ['grunt-commit-message-verify']);
 };
