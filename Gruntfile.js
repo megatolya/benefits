@@ -33,7 +33,7 @@ module.exports = function (grunt) {
         maxLineLength: 80,
         regexes: {
             'check start of the commit': {
-                regex: /^(Issue #([0-9])+\s\w+|cc.*|typo?.*)/,
+                regex: /^(Issue #([0-9])+\s.+|cc.*|typo?.*)/,
                 explanation: 'Issue #xxx что сделано. Или "cc что сделано". Или "typo что сделано"'
             }
         }
