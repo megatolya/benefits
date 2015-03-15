@@ -9,7 +9,7 @@ express.request.checkToken = function (token, uid) {
 
     // находим пользователя, его соль, генерим токен и сравниваем
     db.getUserByUserId(uid)
-        .then(function(user) {
+        .then(function (user) {
             if (!user) {
                 deferred.reject(new Error('User not found'));
                 return;

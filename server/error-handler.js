@@ -1,4 +1,4 @@
-module.exports = function(err, req, res, next) {
+module.exports = function (err, req, res, next) {
     if (typeof err === 'number') {
         res.sendStatus(err);
         res.end();

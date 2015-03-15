@@ -18,7 +18,7 @@ app.set('views', './views');
 app.set('view engine', 'jade');
 
 app.use(session({
-    genid: function(req) {
+    genid: function (req) {
         return uuid.v4();
     },
     secret: config.session.secret

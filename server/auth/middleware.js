@@ -13,12 +13,12 @@ module.exports = function (req, res, next) {
         next();
         return;
     } else {
-        req.checkToken(params.token, params.uid).then(function() {
+        req.checkToken(params.token, params.uid).then(function () {
             req.authorized = true;
             req.uid = params.uid;
             log(req, 'authorized');
             next();
-        }).fail(function(reason) {
+        }).fail(function (reason) {
             req.authorized = false;
             log(req, 'mamkin haker', reason);
             next();
