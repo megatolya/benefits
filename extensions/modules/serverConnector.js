@@ -1,3 +1,5 @@
+'use strict';
+
 var console = require('../impl/console');
 var signals = require('signals');
 

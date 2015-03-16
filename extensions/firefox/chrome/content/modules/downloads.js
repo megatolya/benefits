@@ -1,3 +1,5 @@
+/* global XPCOMUtils, Task, Downloads */
+
 'use strict';
 
 let signals = require('signals');
@@ -73,7 +75,7 @@ let downloadsMonitor = {
         return Task.spawn(function *() {
             let list = this._getDownloadsList();
 
-            return yield downloadsList.getAll();
+            return yield this._downloadsList.getAll();
         }).then(aDownloads => {
             return aDownloads.filter(aDownload => !aDownload.stopped);
         });
@@ -133,6 +135,10 @@ let downloadsMonitor = {
         this.__activeDownloadsNumber = aValue;
 
         this.activeDownloadsNumberChanged.dispatch(aValue, previousValue);
+    },
+
+    get _activeDownloadsNumber() {
+        return this.__activeDownloadsNumber;
     },
 
     _obtainDownloadsList: function () {
@@ -215,7 +221,7 @@ let downloadsMonitorWrapper = function () {
          * @returns {Array<String>}
          */
         get availableEvents() {
-            return Array.slice(eventsNames);
+            return Array.slice(eventNames);
         },
 
         __init: function (aCallback) {

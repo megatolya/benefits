@@ -1,3 +1,5 @@
+/* global dump */
+
 'use strict';
 
 let console = Components.utils.import('resource://gre/modules/devtools/Console.jsm', {}).console;

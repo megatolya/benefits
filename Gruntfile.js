@@ -2,6 +2,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-githooks');
     grunt.loadNpmTasks('grunt-jscs');
     grunt.loadNpmTasks('grunt-commit-message-verify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+
 
     grunt.loadTasks('./extensions/');
     grunt.loadTasks('./extensions/build/');
@@ -13,6 +15,14 @@ module.exports = function (grunt) {
             'pre-commit': 'pre-commit-check',
             'pre-push': 'pre-push-check'
         }
+    });
+
+    grunt.config('jshint', {
+        options: {
+            jshintrc: true
+        },
+        //server: ['server/**/*.js'],
+        extensions: ['<%= extensions_path %>/**/*.js', '!<%= dist_root_path %>/**', '!<%= impl_path %>/**']
     });
 
     grunt.config('jscs', {
@@ -42,6 +52,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('pre-commit-check', ['jscs']);
+    grunt.registerTask('pre-commit-check', ['jscs', 'jshint']);
     grunt.registerTask('pre-push-check', ['grunt-commit-message-verify']);
 };

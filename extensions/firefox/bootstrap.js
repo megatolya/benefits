@@ -1,3 +1,5 @@
+/* global APP_SHUTDOWN, ADDON_UNINSTALL */
+
 'use strict';
 
 const {
@@ -94,14 +96,14 @@ let core = {
                 {}
             );
     }
-}
+};
 
 function startup (aData, aReason) {
     core.init();
 }
 
 function shutdown (aData, aReason) {
-    if (aReason == APP_SHUTDOWN) {
+    if (aReason === APP_SHUTDOWN) {
         return;
     }
 

@@ -5,8 +5,6 @@ var navigationMonitor = require('../impl/navigation');
 var downloadsMonitor = require('../impl/downloads');
 var console = require('../impl/console');
 
-var GLOBAL = this;
-
 var app = {
     start: function () {
         console.log('starting application...');

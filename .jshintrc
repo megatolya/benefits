@@ -1,0 +1,30 @@
+{
+    "moz": true,
+    "esnext": true,
+    "nonew": true,
+    "curly": true,
+    "noarg": true,
+    "forin": true,
+    "noempty": true,
+    "eqeqeq": true,
+    "strict": true,
+    "undef": true,
+    "bitwise": false,
+    "newcap": true,
+    "node": true,
+
+    "predef": [
+        "Components",
+        "chrome",
+        "it",
+        "describe",
+        "before",
+        "after",
+        "beforeEach",
+        "afterEach",
+        "module",
+        "require",
+        "define",
+        "requirejs"
+    ]
+}

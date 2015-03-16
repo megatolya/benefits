@@ -1,3 +1,5 @@
+/* global Services, XPCOMUtils */
+
 'use strict';
 
 var signals = require('signals');
