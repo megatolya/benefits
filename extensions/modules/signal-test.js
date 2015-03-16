@@ -153,7 +153,7 @@ describe('Signal', function () {
             priority = 1;
         });
 
-        it('should bew defined', function () {
+        it('should be defined', function () {
             assert.isFunction(signal[method]);
         });
 

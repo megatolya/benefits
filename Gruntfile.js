@@ -51,6 +51,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('pre-commit-check', ['jscs', 'jshint']);
+    grunt.registerTask('pre-commit-check', ['jscs', 'jshint', 'test-extensions']);
     grunt.registerTask('pre-push-check', ['grunt-commit-message-verify']);
 };

@@ -4,7 +4,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.config('mochaTest', {
-        common: {
+        extensions_common: {
             options: {
                 reporter: 'spec',
                 clearRequireCache: true
@@ -13,5 +13,5 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('test-common', ['mochaTest:common']);
+    grunt.registerTask('test-extensions', ['mochaTest:extensions_common']);
 };
