@@ -17,8 +17,14 @@ mongo
 ```
 
 ## Сервер
+Установка
+```shell
+# находясь в папке server/
+npm install
+```
 Запуск:
 ```shell
+# находясь в папке server/
 node index.js
 ```
 
