@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = function (grunt) {
     var rm = grunt.file.delete;
 

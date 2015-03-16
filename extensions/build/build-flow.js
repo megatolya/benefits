@@ -6,10 +6,9 @@ module.exports = function (grunt) {
         'build:chrome'
     ]);
 
-
     grunt.registerTask('build', function (browser) {
         var tasks = [
-            'set-browser-config:'+browser,
+            'set-browser-config:' + browser,
             'clean',
             'copy-impl',
             'compile'
