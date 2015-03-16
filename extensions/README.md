@@ -10,5 +10,5 @@ grunt build:chrome
 
 Все сразу:
 ```shell
-grunt build:all
+grunt build-all
 ```
