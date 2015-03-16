@@ -25,12 +25,12 @@ Signal.prototype = {
         this._handleAdded(listener, listenerContext, priority);
     },
 
-    remove : function (listener, context) {
+    remove: function (listener, context) {
         this._signal.remove(listener, context);
         this._handleRemoved(listener, context);
     },
 
-    removeAll : function () {
+    removeAll: function () {
         var removedListeners = getListeners(this._signal);
         this._signal.removeAll();
         this._handleRemovedAll(removedListeners);
@@ -44,21 +44,21 @@ Signal.prototype = {
         this._signal.halt();
     },
 
-    dispatch : function (params) {
+    dispatch: function (params) {
         this._signal.dispatch(params);
     },
 
-    forget : function () {
+    forget: function () {
         this._signal.forget();
     },
 
-    dispose : function () {
+    dispose: function () {
         var removedListeners = getListeners(this._signal);
         this._signal.dispose();
         this._handleRemovedAll(removedListeners);
     },
 
-    toString : function () {
+    toString: function () {
         this._signal.toString();
     },
 
@@ -94,6 +94,5 @@ function getListeners(signal) {
         };
     });
 }
-
 
 module.exports = Signal;
