@@ -1,7 +1,5 @@
-module.exports = function (grunt) {
-    var options = {
-        outputDir: 'out'
-    };
+'use strict';
 
-    require('./Gruntfile-firefox')(grunt, options);
+module.exports = function (grunt) {
+    grunt.loadTasks('./build/');
 };

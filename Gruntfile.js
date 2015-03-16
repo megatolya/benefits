@@ -3,6 +3,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jscs');
     grunt.loadNpmTasks('grunt-commit-message-verify');
 
+    grunt.loadTasks('./extensions/build/');
+
     grunt.registerTask('setup', 'Установка окружения', ['githooks']);
 
     grunt.config('githooks', {
@@ -19,7 +21,7 @@ module.exports = function (grunt) {
             'server/db/**.js',
             'server/controllers/**.js',
             'server/*.js',
-            'extensions/common/modules/**/**.js',
+            'extensions/common/modules/**/**.js'
         ],
         options: {
             config: '.jscsrc'

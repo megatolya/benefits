@@ -42,12 +42,12 @@ module.exports = function (grunt, options) {
         rm('.grunt/');
     });
 
-    grunt.config('browserify', {
-        firefox: {
-            src: ['.grunt/firefox/chrome/content/modules/*.js'],
-            dest: '.grunt/firefox/chrome/content/application.jsm'
-        }
-    });
+    //grunt.config('browserify', {
+    //    firefox: {
+    //        src: ['.grunt/firefox/chrome/content/modules/*.js'],
+    //        dest: '.grunt/firefox/chrome/content/application.jsm'
+    //    }
+    //});
 
     grunt.registerTask('fx-beautify-app', function() {
         var BEFORE = '\'use strict\'\nconst EXPORTED_SYMBOLS = [];\n';
