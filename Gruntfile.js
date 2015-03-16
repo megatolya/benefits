@@ -4,7 +4,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-commit-message-verify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
-
     grunt.loadTasks('./extensions/');
     grunt.loadTasks('./extensions/build/');
 
@@ -21,7 +20,7 @@ module.exports = function (grunt) {
         options: {
             jshintrc: true
         },
-        //server: ['server/**/*.js'],
+        // server: ['server/**/*.js'],
         extensions: ['<%= extensions_path %>/**/*.js', '!<%= dist_root_path %>/**', '!<%= impl_path %>/**']
     });
 
