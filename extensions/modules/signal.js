@@ -12,28 +12,32 @@ function Signal(addedHandler, removedHandler) {
 
 Signal.prototype = {
     has: function (listener, context) {
-        this._signal.has(listener, context);
+        return this._signal.has(listener, context);
     },
 
     add: function (listener, listenerContext, priority) {
+        var alreadyHas = this.has(listener, listenerContext);
         this._signal.add(listener, listenerContext, priority);
-        this._handleAdded(listener, listenerContext, priority);
+        this._handleAdded(listener, listenerContext, priority, alreadyHas);
     },
 
     addOnce: function (listener, listenerContext, priority) {
+        var alreadyHas = this.has(listener, listenerContext);
         this._signal.addOnce(listener, listenerContext, priority);
-        this._handleAdded(listener, listenerContext, priority);
+        this._handleAdded(listener, listenerContext, priority, alreadyHas);
     },
 
     remove: function (listener, context) {
+        var prevListenersNumber = this.getNumListeners();
         this._signal.remove(listener, context);
-        this._handleRemoved(listener, context);
+        this._handleRemoved(listener, context, prevListenersNumber);
     },
 
     removeAll: function () {
+        var prevListenersNumber = this.getNumListeners();
         var removedListeners = getListeners(this._signal);
         this._signal.removeAll();
-        this._handleRemovedAll(removedListeners);
+        this._handleRemovedAll(removedListeners, prevListenersNumber);
     },
 
     getNumListeners: function () {
@@ -53,16 +57,20 @@ Signal.prototype = {
     },
 
     dispose: function () {
+        var prevListenersNumber = this.getNumListeners();
         var removedListeners = getListeners(this._signal);
         this._signal.dispose();
-        this._handleRemovedAll(removedListeners);
+        this._handleRemovedAll(removedListeners, prevListenersNumber);
     },
 
     toString: function () {
         this._signal.toString();
     },
 
-    _handleAdded: function (listener, listenerContext, priority) {
+    _handleAdded: function (listener, listenerContext, priority, alreadyHas) {
+        if (alreadyHas) {
+            return;
+        }
         this._addedHandler({
             listener: listener,
             context: listenerContext,
@@ -71,17 +79,22 @@ Signal.prototype = {
         });
     },
 
-    _handleRemoved: function (listener, context) {
+    _handleRemoved: function (listener, context, prevListenersNum) {
+        var currentListenersNum = getNumListeners(this._signal);
+        if (prevListenersNum === currentListenersNum) {
+            return;
+        }
         this._removedHandler({
             listener: listener,
             context: context,
-            isLast: this._signal.getNumListeners() === 0
+            isLast: currentListenersNum === 0 && prevListenersNum === 1
         });
     },
 
-    _handleRemovedAll: function (listeners) {
+    _handleRemovedAll: function (listeners, prevListenersNum) {
         listeners.forEach(function (listenerData) {
-            this._handleRemoved(listenerData.listener, listenerData.context);
+            this._handleRemoved(listenerData.listener, listenerData.context, prevListenersNum);
+            prevListenersNum -= 1;
         }, this);
     }
 };
@@ -93,6 +106,14 @@ function getListeners(signal) {
             context: binding.context
         };
     });
+}
+
+function getNumListeners(signal) {
+    try {
+        return signal.getNumListeners();
+    } catch (e) {
+        return 0;
+    }
 }
 
 module.exports = Signal;
