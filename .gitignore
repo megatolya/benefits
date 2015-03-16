@@ -12,7 +12,7 @@ extensions/impl/
 
 # Server files
 server/node_modules
-db/
+/db/
 
 # Common files
 node_modules/
