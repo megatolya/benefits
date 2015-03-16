@@ -22,7 +22,8 @@ module.exports = function (grunt) {
             'server/db/**.js',
             'server/controllers/**.js',
             'server/*.js',
-            'extensions/common/modules/**/**.js'
+            'extensions/modules/**.js',
+            'extensions/build/**.js'
         ],
         options: {
             config: '.jscsrc'
