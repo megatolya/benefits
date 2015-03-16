@@ -3,6 +3,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jscs');
     grunt.loadNpmTasks('grunt-commit-message-verify');
 
+    grunt.loadTasks('./extensions/');
     grunt.loadTasks('./extensions/build/');
 
     grunt.registerTask('setup', 'Установка окружения', ['githooks']);

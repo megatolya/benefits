@@ -1,4 +1,4 @@
-var console = require('./console');
+var console = require('../impl/console');
 var signals = require('signals');
 
 console.log('hello world from serverConnector');

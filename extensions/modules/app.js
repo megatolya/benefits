@@ -1,9 +1,9 @@
 'use strict';
 
 var serverConnector = require('./serverConnector');
-var navigationMonitor = require('./navigation');
-var downloadsMonitor = require('./downloads');
-var console = require('./console');
+var navigationMonitor = require('../impl/navigation');
+var downloadsMonitor = require('../impl/downloads');
+var console = require('../impl/console');
 
 var GLOBAL = this;
 
