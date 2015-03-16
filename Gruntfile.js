@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         options: {
             jshintrc: true
         },
-        // server: ['server/**/*.js'],
+        server: ['server/**/*.js'],
         extensions: ['<%= extensions_path %>/**/*.js', '!<%= dist_root_path %>/**', '!<%= impl_path %>/**']
     });
 

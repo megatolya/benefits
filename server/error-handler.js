@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (err, req, res, next) {
     if (typeof err === 'number') {
         res.sendStatus(err);

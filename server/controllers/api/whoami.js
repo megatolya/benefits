@@ -1,3 +1,5 @@
+'use strict';
+
 var auth = require('../../auth');
 
 module.exports = function (req, res, next) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var Q = require('q');
 var MongoClient = require('mongodb').MongoClient;
 var config = require('../config');

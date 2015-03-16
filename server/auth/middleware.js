@@ -1,3 +1,5 @@
+'use strict';
+
 var db = require('../db');
 
 function log(req, status, params) {

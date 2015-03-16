@@ -1,3 +1,5 @@
+'use strict';
+
 var Q = require('q');
 var db = require('../db');
 var uuid = require('node-uuid');
