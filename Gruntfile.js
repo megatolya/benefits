@@ -21,7 +21,7 @@ module.exports = function (grunt) {
             jshintrc: true
         },
         server: ['server/**/*.js'],
-        extensions: ['<%= extensions_path %>/**/*.js', '!<%= dist_root_path %>/**', '!<%= impl_path %>/**']
+        extensions: ['<%= extensions_path %>/**/*.js', '!<%= dist_root_path %>/**', '!<%= specific_path %>/**']
     });
 
     grunt.config('jscs', {

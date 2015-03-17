@@ -18,9 +18,9 @@ module.exports = function (grunt) {
             dist_app: cwd + 'out/chrome/application.js'
         },
 
-        modules_path: cwd + 'modules',
-        modules_app: cwd + 'modules/app.js',
-        impl_path: cwd + 'impl',
+        modules_path: cwd + 'common',
+        modules_app: cwd + 'common/app.js',
+        specific_path: cwd + 'specific',
         dist_root_path: cwd + 'out',
 
         // при сборке подменяются на значения firefox или chrome

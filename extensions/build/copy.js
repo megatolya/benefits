@@ -3,11 +3,11 @@
 module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.config('copy.impl', {
+    grunt.config('copy.specific', {
         expand: true,
         cwd: '<%= browser_modules_path %>/',
         src: '**',
-        dest: '<%= impl_path %>/'
+        dest: '<%= specific_path %>/'
     });
 
     grunt.config('copy.out', {
@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         dest: '<%= dist_path %>/'
     });
 
-    grunt.registerTask('copy-impl', function () {
-        grunt.task.run(['copy:impl', 'copy:out']);
+    grunt.registerTask('copy-extension', function () {
+        grunt.task.run(['copy:specific', 'copy:out']);
     });
 };

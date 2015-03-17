@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         var tasks = [
             'set-browser-config:' + browser,
             'clean',
-            'copy-impl',
+            'copy-extension',
             'compile'
         ];
 

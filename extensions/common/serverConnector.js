@@ -1,6 +1,6 @@
 'use strict';
 
-var console = require('../impl/console');
+var console = require('../specific/console');
 var signals = require('signals');
 
 console.log('hello world from serverConnector');
