@@ -57,7 +57,7 @@ Signal.prototype = {
     },
 
     dispose: function () {
-        var prevListenersNumber = this.getNumListeners();
+        var prevListenersNumber = getNumListeners(this._signal);
         var removedListeners = getListeners(this._signal);
         this._signal.dispose();
         this._handleRemovedAll(removedListeners, prevListenersNumber);
@@ -100,6 +100,9 @@ Signal.prototype = {
 };
 
 function getListeners(signal) {
+    if (!signal._bindings) {
+        return [];
+    }
     return signal._bindings.map(function (binding) {
         return {
             listener: binding.getListener(),
