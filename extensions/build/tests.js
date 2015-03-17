@@ -9,7 +9,7 @@ module.exports = function (grunt) {
                 reporter: 'spec',
                 clearRequireCache: true
             },
-            src: ['<%= modules_path %>/**/*-test.js']
+            src: ['<%= common_path %>/**/*-test.js']
         }
     });
 

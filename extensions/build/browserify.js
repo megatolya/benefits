@@ -8,7 +8,7 @@ module.exports = function (grunt) {
             debug: true
         },
         dev: {
-            src: '<%= modules_app %>',
+            src: '<%= common_app %>',
             dest: '<%= dist_app %>'
         }
     });

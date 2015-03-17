@@ -1,7 +1,7 @@
 'use strict';
 
 var console = require('../specific/console');
-var signals = require('signals');
+var Signal = require('./signal');
 
 console.log('hello world from serverConnector');
 
@@ -11,7 +11,7 @@ var serverConnector = {
         this.connected.dispatch();
     },
 
-    connected: new signals.Signal()
+    connected: new Signal()
 };
 
 module.exports = serverConnector;

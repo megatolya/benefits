@@ -31,7 +31,7 @@ module.exports = function (grunt) {
             'server/db/**.js',
             'server/controllers/**.js',
             'server/*.js',
-            'extensions/modules/**.js',
+            'extensions/common/**.js',
             'extensions/build/**.js'
         ],
         options: {

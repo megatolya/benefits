@@ -18,8 +18,8 @@ module.exports = function (grunt) {
             dist_app: cwd + 'out/chrome/application.js'
         },
 
-        modules_path: cwd + 'common',
-        modules_app: cwd + 'common/app.js',
+        common_path: cwd + 'common',
+        common_app: cwd + 'common/app.js',
         specific_path: cwd + 'specific',
         dist_root_path: cwd + 'out',
 
