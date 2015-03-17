@@ -2,7 +2,7 @@
 
 var assert = require('chai').assert;
 var sinon = require('sinon');
-var Signal = require('./signal');
+var Signal = require('common/signal');
 
 describe('Signal', function () {
     var signal;

@@ -13,5 +13,9 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('test-extensions', ['mochaTest:extensions_common']);
+    grunt.registerTask('test-extensions', [
+        'symlink:extensions_common',
+        'symlink:extensions_specific',
+        'mochaTest:extensions_common'
+    ]);
 };
