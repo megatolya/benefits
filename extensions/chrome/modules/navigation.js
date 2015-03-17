@@ -1,6 +1,6 @@
 'use strict';
 
-var signals = require('signals');
+var signals = require('common/signals');
 
 module.exports = {
     locationChanged: new signals.Signal()

@@ -5,7 +5,10 @@ module.exports = function (grunt) {
 
     grunt.config('browserify', {
         options: {
-            debug: true
+            debug: true,
+            browserifyOptions: {
+                paths: ['./node_modules', './' + grunt.config('extensions_path') + '/']
+            }
         },
         dev: {
             src: '<%= common_app %>',

@@ -1,7 +1,7 @@
 'use strict';
 
-var serverConnector = require('./serverConnector');
-var console = require('../specific/console');
+var serverConnector = require('common/serverConnector');
+var console = require('specific/console');
 
 var app = {
     start: function () {
