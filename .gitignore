@@ -8,7 +8,7 @@
 # Extensions files
 extensions/.grunt
 extensions/out/
-extensions/impl/
+extensions/specific/
 
 # Server files
 server/node_modules
