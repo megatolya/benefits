@@ -1,8 +1,8 @@
-/* global XPCOMUtils, Task, Downloads */
+/* global XPCOMUtils, Task, Downloads, Promise */
 
 'use strict';
 
-let signals = require('signals');
+let Signal = require('common/Signal');
 
 const {
     classes: Cc,
@@ -12,8 +12,9 @@ const {
 } = Components;
 
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
-Cu.import('resource://gre/modules/Downloads.jsm');
 Cu.import('resource://gre/modules/Task.jsm');
+Cu.import('resource://gre/modules/Downloads.jsm');
+Cu.import("resource://gre/modules/Promise.jsm");
 
 // TODO: Перейти на нормальный логгер
 let console = Components.utils.import('resource://gre/modules/devtools/Console.jsm', {}).console;
@@ -22,61 +23,54 @@ function logger (msg) {
 }
 
 let downloadsMonitor = {
-    /**
-     * Возвращает число незавершенных загрузок текущей сессии браузера.
-     *
-     * @returns Number
-     */
-    get activeDownloadsNumber() {
-        return this.__activeDownloadsNumber;
-    },
-
     init: function (aCallback) {
-        return new Promise((aResolve, aReject) => {
-            if (!(aCallback && typeof aCallback === 'function')) {
-                throw new Error('Callback should be a function.');
-            }
+        if (!(aCallback && typeof aCallback === 'function')) {
+            throw new Error('Callback should be a function.');
+        }
 
-            this._callback = aCallback;
-
-            this._initializationReject = aReject;
-
-            if (typeof this.activeDownloadsNumberChanged === 'undefined') {
-                XPCOMUtils.defineLazyGetter(this, 'activeDownloadsNumberChanged', () => new signals.Signal());
-            }
-
-            this._obtainDownloadsList()
-                .then(() => aResolve(), (aError) => aReject(aError));
-        }).catch(aError => {
-            logger('Error during finalization.' + aError);
-
-            this.finalize();
-        });
+        this._callback = aCallback;
     },
 
     finalize: function () {
-        if (typeof this._initializationReject === 'function') {
-            this._initializationReject('Finalization');
-
-            this._initializationReject = null;
-        }
-
-        this._stopObserveDownloads();
+        this.stopObserveDownloads();
 
         this._callback = null;
     },
 
+    startObserveDownloads: function () {
+        this._obtainDownloadList().then(aDownloadList => {
+            return aDownloadList.addView(this);
+        });
+    },
+
+    stopObserveDownloads: function () {
+        this._obtainDownloadList()
+            .then(aDownloadList => {
+                return aDownloadList.removeView(this);
+            })
+            .catch(aError => logger('Removing observer failed. ' + aError));
+    },
+
     /**
-     * Возвращает промис, который заполнится массивом всех незавершенных загрузок текущей сессии браузера.
+     * Возвращает Promise, заполняющийся массивом всех загрузок текущей сессии браузера.
      *
-     * @returns Promise<Array<Downloads>>
+     * @returns Promise<Array<Download>>
+     */
+    getAllDownloads: function () {
+        return Task.spawn(function *() {
+            let list = yield this._obtainDownloadList();
+
+            return yield list.getAll();
+        }.bind(this));
+    },
+
+    /**
+     * Возвращает Promise, заполняющийся массивом всех незавершенных загрузок текущей сессии браузера.
+     *
+     * @returns Promise<Array<Download>>
      */
     getActiveDownloads: function () {
-        return Task.spawn(function *() {
-            let list = this._getDownloadsList();
-
-            return yield this._downloadsList.getAll();
-        }).then(aDownloads => {
+        return this.getAllDownloads().then(aDownloads => {
             return aDownloads.filter(aDownload => !aDownload.stopped);
         });
     },
@@ -125,64 +119,25 @@ let downloadsMonitor = {
 //        this._callback('removed', aDownload);
     },
 
-    _initializationReject: null,
-    _downloadsList: null,
-    __activeDownloadsNumber: 0,
+    _downloadList: null,
 
-    set _activeDownloadsNumber(aValue) {
-        let previousValue = this.__activeDownloadsNumber;
+    /**
+     * Возвращает Promise, который заполнится объектом типа DownloadList при успешном выполнении.
+     *
+     * @returns Promise<DownloadList>
+     */
+    _obtainDownloadList: function () {
+        if (!this._downloadList) {
+            this._downloadList = Downloads.getList(Downloads.ALL).catch(aError => {
+                logger('Can\'t get DownloadsList. ' + aError);
 
-        this.__activeDownloadsNumber = aValue;
+                this._downloadList = null;
 
-        this.activeDownloadsNumberChanged.dispatch(aValue, previousValue);
-    },
-
-    get _activeDownloadsNumber() {
-        return this.__activeDownloadsNumber;
-    },
-
-    _obtainDownloadsList: function () {
-        let promise = null;
-
-        if (this._downloadsList) {
-            promise = Promise.resolve();
-        } else {
-            promise = Downloads.getList(Downloads.ALL).then(aList => this._downloadsList = aList);
-        }
-
-        return promise;
-    },
-
-    _getDownloadsList: function () {
-        return this._downloadsList;
-    },
-
-    // TODO: Добавить вызов этой функции, когда появляются подписчики
-    // (сигналы не подходят, потому что судя по документации не умеют оповещать о подписке)
-    _startObserveDownloads: function () {
-        let list = this._getDownloadsList();
-        if (!list) {
-            throw new Error('No downloads list. Couldn\'t observer downloads.');
-        }
-
-        list.addView(this)
-            .catch(aError => {
-                let errorMsg = 'Adding observer failed. ' + aError;
-
-                logger(errorMsg);
-
-                throw new Error('Adding observer failed. ' + aError);
+                return Promise.reject(aError);
             });
-    },
-
-    _stopObserveDownloads: function () {
-        let list = this._getDownloadsList();
-        if (!list) {
-            return;
         }
 
-        list.removeView(this)
-            .catch(aError => logger('Removing observer failed. ' + aError));
+        return this._downloadList;
     }
 };
 
@@ -191,26 +146,55 @@ let downloadsMonitorWrapper = function () {
 
     // downloadStarted должно включать в себя firstRun, restart.
     // downloadStopped будет включать в себя success, error, canceled.
-    let eventNames = ['downloadStarted', 'downloadStopped'];
+    let signalNames = ['downloadStarted', 'downloadStopped'];
+    let signals = {};
 
-    function setupEventsDispatchers () {
-        eventNames.forEach(aSignalName => {
-            XPCOMUtils.defineLazyGetter(this, aSignalName, () => new signals.Signal());
+    function setupEventDispatchers () {
+        signalNames.forEach(aSignalName => {
+            let signal = new Signal(
+                // FIXME: При сборке не проходит проверку
+                // ({isNew}) => {}
+
+                info => {
+                    if (info.isNew) {
+                        // FIXME: Что делать, если promise в startObserveDownloads failed?
+                        downloadsMonitor.startObserveDownloads();
+                    }
+                },
+                info => {
+                    if (info.isLast) {
+                        downloadsMonitor.stopObserveDownloads();
+                    }
+                }
+            );
+
+            signals[aSignalName] = signal;
+            XPCOMUtils.defineLazyGetter(this, aSignalName, () => signal);
         });
     }
 
-    function unsetEventsDispatchers () {
-        eventNames.forEach(aSignalName => {
-            if (this[aSignalName]) {
-                this[aSignalName].removeAll();
-                delete this[aSignalName];
+    function unsetEventDispatchers () {
+        signalNames.forEach(aSignalName => {
+            let signal = signals[aSignalName];
+            if (signal) {
+                signal.removeAll();
             }
+
+            delete signals[aSignalName];
+            delete this[aSignalName];
         });
     }
 
-    let initializationPromise = null;
+    function wrapDownload (aDownload) {
+        return {
+            url: aDownload.source.url
+        };
+    }
+
+    function DownloadWrapper (aDownload) {}
 
     let module = {
+        // FIXME: Нужно ли это свойство?
         get name() {
             return 'downloadsMonitor';
         },
@@ -221,74 +205,61 @@ let downloadsMonitorWrapper = function () {
          * @returns {Array<String>}
          */
         get availableEvents() {
-            return Array.slice(eventNames);
+            return Array.slice(signalNames);
         },
 
-        __init: function (aCallback) {
+        init: function () {
             if (!active) {
-                setupEventsDispatchers.call(this);
+                setupEventDispatchers.call(this);
 
-                active = true;
-            }
+                downloadsMonitor.init((aEventType, aDownload) => {
+                    // TODO: Переделать на new DownloadWrapper(aDownload);
+                    let download = wrapDownload(aDownload);
 
-            if (!initializationPromise) {
-                initializationPromise = downloadsMonitor.init((aEvent, aData) => {
-                    let downloadDescription = {
-                        url: aData.source.url
-                    };
-
-                    switch (aEvent) {
+                    switch (aEventType) {
                         case 'firstRun':
-                            this.downloadStarted(downloadDescription, 'firstRun');
+                            this.downloadStarted(download, 'firstRun');
                             break;
 
                         case 'restart':
-                            this.downloadStarted(downloadDescription, 'restart');
+                            this.downloadStarted(download, 'restart');
                             break;
 
                         case 'canceled':
-                            this.downloadStopped(downloadDescription, 'canceled');
+                            this.downloadStopped(download, 'canceled');
                             break;
 
                         case 'completed':
-                            this.downloadStopped(downloadDescription, 'success');
+                            this.downloadStopped(download, 'success');
                             break;
 
                         case 'failed':
-                            this.downloadStopped(downloadDescription, 'error');
+                            this.downloadStopped(download, 'error');
                             break;
 
                         default:
                             return;
                     }
-                }).catch(aError => {
-                    logger('Initialization failed. ' + aError);
-
-                    this.__finalize();
                 });
-            }
 
-            initializationPromise.then(() => aCallback(), aError => aCallback(aError));
+                active = true;
+            }
         },
 
-        __finalize: function () {
+        finalize: function () {
             if (active) {
-                unsetEventsDispatchers.call(this);
+                unsetEventDispatchers.call(this);
 
                 active = false;
-            }
-
-            if (initializationPromise) {
-                initializationPromise = null;
             }
 
             downloadsMonitor.finalize();
         },
 
         /**
-         * Возвращает массив всех загрузок браузера.
+         * Вызывает переданную функцию с массивом всех загрузок, хранящихся в истории браузера.
          *
-         * @param {allDownloadsCallback} aCallback
+         * @param {downloadsCallback} aCallback
          */
         getAllHistoryDownloads: function (aCallback) {
             // TODO: Сделать получение загрузок из истории браузера через Places.
@@ -299,26 +270,52 @@ let downloadsMonitorWrapper = function () {
         },
 
         /**
-         * Возвращает массив всех загрузок текущей сессии браузера.
+         * Вызывает переданную функцию с массивом всех загрузок текущей сессии браузера.
          *
-         * @param {allSessionDownloadsCallback} aCallback
+         * @param {allSessiondownloadsCallback} aCallback
          */
-        getAllSessionDownloads: function (aCallback) {
+        getAllDownloads: function (aCallback) {
+            // FIXME
+            Components.utils.reportError('ROMAN# downloads.js; getAllDownloads;');
+
             if (typeof aCallback !== 'function') {
                 throw new Error('Callback should be a function.');
             }
 
             // TODO: Возвращать не массив объектов instanceof Download, а массив оберток.
+            downloadsMonitor.getAllDownloads()
+                .then(
+                    aCallback,
+                    aError => aCallback()
+                );
+        },
+
+        /**
+         * Вызывает переданную функцию с массивом всех незавершенных загрузок текущей сессии браузера.
+         *
+         * @param {downloadsCallback} aCallback
+         */
+        getActiveDownloads: function (aCallback) {
+            if (typeof aCallback !== 'function') {
+                throw new Error('Callback should be a function.');
+            }
+
             downloadsMonitor.getActiveDownloads()
-                .then(aDownloadsArray => aCallback(aDownloadsArray), aError => aCallback());
+                .then(
+                    aCallback,
+                    aError => aCallback()
+                );
         }
     };
+
+    module.init();
 
     return module;
 }();
 
+// TODO: Использовать только один @callback downloadsCallback
 /**
- * @callback allSessionDownloadsCallback
+ * @callback allSessiondownloadsCallback
  *
  * @param {Array<Download>|Null} downloadsList:
  *      Array<Download> - массив загрузок;
@@ -326,7 +323,7 @@ let downloadsMonitorWrapper = function () {
  */
 
 /**
- * @callback allDownloadsCallback
+ * @callback downloadsCallback
  *
  * @param {Array<Object>|Null} downloadsList:
  *      Array<Object> - массив объектов, хранящих информацию о загрузке;
