@@ -51,7 +51,7 @@ echo(
 echo Starting build...
 echo(
 
-grunt firefox && echo( && echo Starting browser with flags: %firefox_flags% && "%programFiles(x86)%\Mozilla Firefox %user_version%\firefox.exe" %firefox_flags%
+grunt build:firefox && echo( && echo Starting browser with flags: %firefox_flags% && "%programFiles(x86)%\Mozilla Firefox %user_version%\firefox.exe" %firefox_flags%
 
 goto :EOF
 
