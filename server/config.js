@@ -19,5 +19,9 @@ module.exports = {
         users: {
             connectionUrl: 'mongodb://localhost:27017/users'
         }
+    },
+
+    tokens: {
+        whoami: 'whoami_her_na_rilo'
     }
 };
