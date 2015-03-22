@@ -1,7 +1,7 @@
 'use strict';
 
 var Request = require('specific/request');
-var sessionManager = require('common/sessionManager');
+var sessionData = require('common/sessionData');
 
 var API_URL_TEMPLATE = 'http://localhost:3000/api/{version}/{method}?uid={uid}&token={token}';
 var currentVersion = 'v1';
@@ -57,8 +57,8 @@ function createApiUrl(method) {
     return API_URL_TEMPLATE
         .replace('{version}', currentVersion)
         .replace('{method}', method)
-        .replace('{uid}', sessionManager.getUID())
-        .replace('{token}', sessionManager.getToken(method));
+        .replace('{uid}', sessionData.getUID())
+        .replace('{token}', sessionData.getToken(method));
 }
 
 module.exports = {

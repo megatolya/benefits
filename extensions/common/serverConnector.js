@@ -4,7 +4,22 @@ var console = require('specific/console');
 var Signal = require('common/signal');
 var api = require('common/api');
 
-console.log('hello world from serverConnector');
+function handleRulesResponse(response) {
+    if (response && response.rules) {
+        serverConnector.rulesUpdated.dispatch(response.rules);
+    }
+}
+
+function handleAchievementsResponse(response) {
+    if (response && response.achievements) {
+        serverConnector.achievementsUpdated.dispatch(response.achievements);
+    }
+}
+
+function handleDumpResponse(response) {
+    handleAchievementsResponse(response);
+    handleRulesResponse(response);
+}
 
 var serverConnector = {
     connect: function () {
@@ -21,19 +36,19 @@ var serverConnector = {
     },
 
     rules: function () {
-        return api.get({method: 'rules'});
+        return api.get({method: 'rules'}).then(handleRulesResponse);
     },
 
     achievements: function () {
-        return api.get({method: 'achievements'});
+        return api.get({method: 'achievements'}).then(handleAchievementsResponse);
     },
 
     dump: function () {
-        return api.post({method: 'dump'});
+        return api.post({method: 'dump'}).then(handleDumpResponse);
     },
 
-    connected: new Signal(),
-    updated: new Signal()
+    rulesUpdated: new Signal(),
+    achievementsUpdated: new Signal()
 };
 
 module.exports = serverConnector;
