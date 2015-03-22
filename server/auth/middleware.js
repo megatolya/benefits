@@ -1,6 +1,7 @@
 'use strict';
 
 var db = require('../db');
+var config = require('../config');
 
 function log(req, status, params) {
     console.log(req.method + ' ' + req.path + ' (' + status + ')', params || '');
@@ -12,7 +13,7 @@ module.exports = function (req, res, next) {
     req.uid = params.uid;
     req.authorized = false;
 
-    if (!params.token) {
+    if (!params.token && config.useToken) {
         log(req, 'unauthorized');
         next();
         return;

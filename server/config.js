@@ -1,5 +1,7 @@
 'use strict';
 
+var argv = require('minimist')(process.argv.slice(2));
+
 module.exports = {
     port: 3000,
 
@@ -31,5 +33,13 @@ module.exports = {
 
     tokens: {
         whoami: 'whoami_her_na_rilo'
+    },
+
+    get useToken() {
+        if ('token' in argv) {
+            return argv.token;
+        }
+
+        return true;
     }
 };

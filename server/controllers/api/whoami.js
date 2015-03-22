@@ -9,7 +9,7 @@ console.log('validToken for whoami', validToken);
 
 module.exports = function (req, res, next) {
 
-    if (req.query.token !== validToken) {
+    if (req.query.token !== validToken && config.useToken) {
         console.error('wrong token', req.query.token);
         return next(401);
     }

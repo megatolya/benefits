@@ -4,8 +4,13 @@ var express = require('express');
 var Q = require('q');
 var db = require('./db');
 var auth = require('./auth');
+var config = require('./config');
 
 express.request.checkToken = function (token, uid) {
+    if (config.useToken === false) {
+        return Q.resolve();
+    }
+
     var req = this;
     var deferred = Q.defer();
 
