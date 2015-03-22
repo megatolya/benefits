@@ -5,7 +5,7 @@ var crypto = require('specific/crypto');
 
 var sessionManagerWrapper = (function () {
     var storageKeys = {
-        UID: 'extesion-uid',
+        UID: 'extension-uid',
         SALT: 'salt'
     };
 
