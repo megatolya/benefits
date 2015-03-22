@@ -16,6 +16,12 @@ mongo
 >show dbs
 ```
 
+Наполнение базы
+```shell
+# при запущенном mongod
+grunt init-database
+```
+
 ## Сервер
 Установка
 ```shell
@@ -28,10 +34,20 @@ npm install
 node index.js
 ```
 
+Не проверять токены
+```shell
+node index.js --no-token
+```
+
 Для подхватывания изменений без перезагрузки сервера:
 ```shell
 # установка супервизора
 npm install -g supervisor
 # запуск сервера
 supervisor index.js
+```
+
+Не проверять токены
+```shell
+supervisor -- server --no-token
 ```
