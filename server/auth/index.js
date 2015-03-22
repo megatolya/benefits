@@ -11,7 +11,7 @@ module.exports = {
         var id = uuid.v4();
         var salt = uuid.v4();
 
-        db.addUser(id, salt).then(function () {
+        db.users.add(id, salt).then(function () {
             var newUser = {
                 id: id,
                 salt: salt

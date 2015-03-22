@@ -16,7 +16,7 @@ express.request.checkToken = function (token, uid) {
 
     var method = this.path.replace('/api/v1/', '');
     // находим пользователя, его соль, генерим токен и сравниваем
-    db.getUserByUserId(uid)
+    db.users.get(uid)
         .then(function (user) {
             if (!user) {
                 deferred.reject(new Error('User not found'));

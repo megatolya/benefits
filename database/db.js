@@ -49,7 +49,7 @@ module.exports = {
         }
     ],
 
-    userAchivements: {
+    userAchievements: {
         uid2: ['vk1'],
         uid3: ['ok']
     },

@@ -10,26 +10,26 @@ module.exports = function (grunt) {
 
 
         var achievements = Q.all(data.achievements.map(function (achievement) {
-            return db.addAchievement(achievement);
+            return db.achievements.add(achievement);
         }));
 
         var users = Q.all(data.users.map(function (user) {
-            return db.addUser(user.uid, user.salt);
+            return db.users.add(user.uid, user.salt);
         }));
 
-        var userAchivements = Q.all(Object.keys(data.userAchivements).map(function (uid) {
-            var achievements = data.userAchivements[uid];
+        var userAchievements = Q.all(Object.keys(data.userAchievements).map(function (uid) {
+            var achievements = data.userAchievements[uid];
 
-            return db.addUserAchivements(uid, achievements);
+            return db.userAchievements.add(uid, achievements);
         }));
 
         var userHits = Q.all(Object.keys(data.userHits).map(function (uid) {
             var hits = data.userHits[uid];
 
-            return db.updateUserHits(uid, hits);
+            return db.userHits.update(uid, hits);
         }));
 
-        Q.all([achievements, users, userAchivements, userHits]).then(function () {
+        Q.all([achievements, users, userAchievements, userHits]).then(function () {
             done();
         }).fail(function (reason) {
             grunt.fail.fatal(reason);
