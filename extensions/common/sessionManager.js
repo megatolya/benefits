@@ -9,7 +9,7 @@ var sessionManagerWrapper = (function () {
         SALT: 'salt'
     };
 
-    function md5 (aString) {
+    function md5(aString) {
         return aString;
     }
 

@@ -17,9 +17,13 @@ function makeApiCall(method, url, options) {
     });
 }
 
-function onApiResponse(resolve, reject, data) {
-    // TODO: Проверять repsonse.statusCode
-    parseResponse(data.responseText)
+function onApiResponse(resolve, reject, event) {
+    var target = event.target;
+    if (!target || target.status > 400) {
+        reject(target);
+        return;
+    }
+    parseResponse(target.response)
         .then(handleBasicErrors)
         .then(resolve)
         .catch(reject);
