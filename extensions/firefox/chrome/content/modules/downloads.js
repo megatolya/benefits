@@ -194,11 +194,6 @@ let downloadsMonitorWrapper = function () {
     function DownloadWrapper (aDownload) {}
 
     let module = {
-        // FIXME: Нужно ли это свойство?
-        get name() {
-            return 'downloadsMonitor';
-        },
-
         /**
          * Возвращает массив имен доступных событий объекта.
          *
