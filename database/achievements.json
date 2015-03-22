@@ -1,14 +1,18 @@
 [
     {
-        "name": "vkontankter",
+        "id": "vkontanter",
         "url": "https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*",
         "type": "navigation",
-        "hits": 5
+        "hits": 50,
+        "title": "Вконтактер",
+        "description": "Много раз был на вконтакте"
     },
     {
-        "name": "odnoklasnik",
+        "id": "odnoklassnik",
         "url": "https?:\\/\\/(www\\.)?(ok\\.ru|odnoklassniki\\.ru)\\/.*",
         "type": "navigation",
-        "hits": 5
+        "hits": 100,
+        "title": "Одноклассник",
+        "description": "Много раз был на вконтакте"
     }
 ]

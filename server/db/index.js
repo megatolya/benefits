@@ -52,34 +52,148 @@ function getDatabase(dbName) {
 }
 
 module.exports = {
-    appendUserData: function (userId, log) {
-        console.log('Appending ', log, 'from userId', userId);
+    updateUserHits: function (uid, trackData) {
+        console.log('New trackData ', trackData, 'from uid', uid);
         var deferred = Q.defer();
 
-        getDatabase('dumps').then(function (db) {
-            var collection = db.collection(userId);
+        getDatabase('userHits').then(function (db) {
+            var collection = db.collection(uid);
+            var toInsert = Object.keys(trackData);
 
-            collection.insert(log, function (err, results) {
+            collection.find({
+                rule_id: {
+                    $in: toInsert.slice()
+                }
+            }, function (err, res) {
                 if (err) {
                     deferred.reject(err);
                     return;
                 }
 
-                db.close();
-                deferred.resolve();
+                res.toArray(function (err, arr) {
+                    if (err) {
+                        deferred.reject(err);
+                        return;
+                    }
+
+                    if (arr.length !== 0) {
+                        var updatePromises = arr.map(function (row) {
+                            // удаляем из toInsert то, что обновили
+                            toInsert.splice(toInsert.indexOf(row.rule_id), 1);
+
+                            var updateRecordsDeferred = Q.defer();
+
+                            row.hits += trackData[row.rule_id];
+                            collection.update({
+                                _id: row._id
+                            }, row, {upsert: false}, function (err, res) {
+                                if (err) {
+                                    updateRecordsDeferred.reject(err);
+                                    return;
+                                }
+
+                                updateRecordsDeferred.resolve();
+                            });
+
+                            return updateRecordsDeferred;
+                        });
+
+                        Q.all(updatePromises)
+                            .then(deferred.resolve)
+                            .fail(deferred.reject);
+
+                        if (toInsert.length === 0) {
+                            return;
+                        }
+                    }
+
+                    var insertPromises = toInsert.map(function (ruleId) {
+                        var insertDeferred = Q.defer();
+
+                        collection.insert({
+                            rule_id: ruleId,
+                            hits: trackData[ruleId]
+                        }, function (err, res) {
+                            if (err) {
+                                insertDeferred.reject(err);
+                                return;
+                            }
+
+                            insertDeferred.resolve();
+                        });
+
+                        return insertDeferred;
+                    });
+
+                    Q.all(insertPromises)
+                        .then(deferred.resolve)
+                        .fail(deferred.reject);
+                });
             });
         }).fail(deferred.reject);
 
         return deferred.promise;
     },
 
-    addUser: function (userId, salt) {
+    getUserHits: function (uid) {
+        var deferred = Q.defer();
+
+        getDatabase('userHits').then(function (db) {
+            var collection = db.collection(uid);
+
+            collection.find({}, {rule_id: true, hits: true}, function (err, trackData) {
+                if (err) {
+                    deferred.reject(err);
+                    return;
+                }
+
+                trackData.toArray(function (err, arr) {
+                    if (err) {
+                        deferred.reject(err);
+                        return;
+                    }
+
+                    deferred.resolve(arr);
+                });
+            });
+        }).fail(deferred.reject);
+        return deferred.promise;
+    },
+
+    getUserAchivements: function (uid) {
+        var deferred = Q.defer();
+
+        getDatabase('userAchivements').then(function (db) {
+            var collection = db.collection(uid);
+
+            collection.find({}, function (err, achievements) {
+                if (err) {
+                    deferred.reject(err);
+                    return;
+                }
+
+                achievements.toArray(function (err, arr) {
+                    if (err) {
+                        deferred.reject(err);
+                        return;
+                    }
+
+                    deferred.resolve(arr);
+                });
+            });
+        }).fail(deferred.reject);
+
+        return deferred.promise;
+    },
+
+    addUser: function (uid, salt) {
         var deferred = Q.defer();
 
         getDatabase('users').then(function (db) {
             var collection = db.collection('userInfo');
+
             collection.insert({
-                id: userId,
+                id: uid,
                 salt: salt
             }, function (err, res) {
                 if (err) {
@@ -94,12 +208,13 @@ module.exports = {
         return deferred.promise;
     },
 
-    getUserByUserId: function (userId) {
+    getUserByUserId: function (uid) {
         var deferred = Q.defer();
 
         getDatabase('users').then(function (db) {
             var users = db.collection('userInfo');
-            users.findOne({id: userId}, function (err, user) {
+
+            users.findOne({id: uid}, function (err, user) {
                 if (err) {
                     deferred.reject(err);
                     return;
@@ -124,7 +239,7 @@ module.exports = {
                     return;
                 }
 
-                console.log('inserted', achievement.name);
+                console.log('inserted', achievement.id);
                 deferred.resolve(res);
             });
         });
@@ -156,5 +271,30 @@ module.exports = {
         });
 
         return deferred.promise;
+    },
+
+    addUserAchivements: function (uid, achievements) {
+        return Q.all(achievements.map(function (achivementId) {
+            var deferred = Q.defer();
+
+            getDatabase('userAchivements').then(function (db) {
+                var collection = db.collection(uid);
+
+                collection.save({
+                    id: achivementId,
+                    date: Date.now(),
+                    visible: true
+                }, function (err, res) {
+                    if (err) {
+                        deferred.reject(err);
+                        return;
+                    }
+
+                    deferred.resolve();
+                });
+            }).fail(deferred.reject);
+
+            return deferred.promise;
+        }));
     }
 };

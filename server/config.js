@@ -12,8 +12,12 @@ module.exports = {
     },
 
     db: {
-        dumps: {
-            connectionUrl: 'mongodb://localhost:27017/dumps'
+        userHits: {
+            connectionUrl: 'mongodb://localhost:27017/user-hits'
+        },
+
+        userAchivements: {
+            connectionUrl: 'mongodb://localhost:27017/user-achivements'
         },
 
         users: {

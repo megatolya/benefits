@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('../../db');
+var achievements = require('../../achievements');
 
 module.exports = function (req, res, next) {
     if (!req.authorized) {
@@ -11,17 +11,5 @@ module.exports = function (req, res, next) {
     res.sendStatus(202);
     res.end();
 
-    console.log('Got: ', req.body);
-
-    var log = null;
-    try {
-        log = JSON.parse(req.body.log);
-    } catch (err) {}
-
-    if (!log) {
-        console.error('Failed to parse log', req.body);
-        return;
-    }
-
-    db.appendUserData(req.uid, log);
+    achievements.trackDump(req.uid, req.body);
 };
