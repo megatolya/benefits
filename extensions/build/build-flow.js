@@ -11,6 +11,7 @@ module.exports = function (grunt) {
             'set-browser-config:' + browser,
             'clean',
             'copy-extension',
+            'test-extension',
             'compile'
         ];
 

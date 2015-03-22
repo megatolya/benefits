@@ -24,9 +24,9 @@ module.exports = function (grunt) {
         dist_root_path: cwd + 'out',
 
         // при сборке подменяются на значения firefox или chrome
-        browser_src_path: cwd + 'firefox',
-        browser_modules_path: cwd + 'firefox/chrome/content/modules',
-        dist_path: cwd + 'out/firefox',
-        dist_app: cwd + 'out/firefox/chrome/content/application.jsm'
+        browser_src_path: cwd + 'chrome',
+        browser_modules_path: cwd + 'chrome/modules',
+        dist_path: cwd + 'out/chrome',
+        dist_app: cwd + 'out/chrome/application.js'
     });
 };

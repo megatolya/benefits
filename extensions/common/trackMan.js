@@ -11,14 +11,21 @@ var handlers = {};
 timers.setInterval(sendDump, SEND_DUMP_TIMEOUT);
 
 function sendDump() {
+    var dumpData = collectDumpData();
+    console.log('dumpData: ', dumpData);
+    if (dumpData) {
+        serverConnector.dump(dumpData);
+    }
+}
+
+function collectDumpData() {
     var dumpData = {};
     for (var key in handlers) {
         if (handlers.hasOwnProperty(key)) {
             merge(dumpData, handlers[key]());
         }
     }
-    console.log('dumpData: ', dumpData);
-    serverConnector.dump(dumpData);
+    return dumpData;
 }
 
 function merge(parent, child) {
