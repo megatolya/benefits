@@ -1,10 +1,5 @@
 # Как поднять сервер локально
-Установка
-```shell
-npm install
-```
-Запуск:
-Предварительно нужно [включить БД](https://github.com/megatolya/achivki/blob/master/database/README.md). Затем:
+Предварительно нужно [включить БД](https://github.com/megatolya/achivki/blob/master/database/README.md) и [настроить окружение](https://github.com/megatolya/achivki/blob/master/README.md). Затем:
 ```shell
 node server
 ```
