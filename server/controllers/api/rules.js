@@ -12,7 +12,9 @@ module.exports = function (req, res, next) {
         res.json({
             rules: {
                 navigation: rules
-            }
+            },
+            dom: [],
+            bookmarks: []
         });
     }).fail(next);
 };
