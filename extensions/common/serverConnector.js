@@ -2,6 +2,7 @@
 
 var console = require('specific/console');
 var Signal = require('common/signal');
+var api = require('common/api');
 
 console.log('hello world from serverConnector');
 
@@ -11,7 +12,11 @@ var serverConnector = {
         this.connected.dispatch();
     },
 
-    connected: new Signal()
+    whoami: function () {
+    },
+
+    connected: new Signal(),
+    updated: new Signal()
 };
 
 module.exports = serverConnector;
