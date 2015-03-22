@@ -43,8 +43,8 @@ var serverConnector = {
         return api.get({method: 'achievements'}).then(handleAchievementsResponse);
     },
 
-    dump: function () {
-        return api.post({method: 'dump'}).then(handleDumpResponse);
+    dump: function (body) {
+        return api.post({method: 'dump', body: body}).then(handleDumpResponse);
     },
 
     rulesUpdated: new Signal(),
