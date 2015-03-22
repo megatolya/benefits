@@ -3,8 +3,8 @@
 module.exports = function (err, req, res, next) {
     if (typeof err === 'number') {
         res.sendStatus(err);
-        res.send('Ololo ' + err);
         res.end();
+        return;
     }
 
     console.error('Failed', err.message);

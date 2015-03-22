@@ -9,20 +9,20 @@ function log(req, status, params) {
 module.exports = function (req, res, next) {
     var params = req.query;
 
-    if (!params.token || !params.uid) {
-        req.authorized = false;
+    req.uid = params.uid;
+    req.authorized = false;
+
+    if (!params.token) {
         log(req, 'unauthorized');
         next();
         return;
     } else {
         req.checkToken(params.token, params.uid).then(function () {
             req.authorized = true;
-            req.uid = params.uid;
             log(req, 'authorized');
             next();
         }).fail(function (reason) {
-            req.authorized = false;
-            log(req, 'mamkin haker', reason);
+            log(req, 'mamkin haker or new user', reason);
             next();
         });
     }

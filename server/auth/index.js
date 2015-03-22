@@ -3,6 +3,7 @@
 var Q = require('q');
 var db = require('../db');
 var uuid = require('node-uuid');
+var md5 = require('MD5');
 
 module.exports = {
     registerUser: function () {
@@ -11,16 +12,19 @@ module.exports = {
         var salt = uuid.v4();
 
         db.addUser(id, salt).then(function () {
-            deferred.resolve({
+            var newUser = {
                 id: id,
                 salt: salt
-            });
+            };
+
+            deferred.resolve(newUser);
+            console.log('new user created', newUser);
         }).fail(deferred.reject);
 
         return deferred.promise;
     },
 
-    generateToken: function (userId, salt, path) {
-        return userId.split('-')[0] + salt.split('-')[0] + path.replace(/(\/|-)/g, '');
+    generateToken: function (uid, salt, method) {
+        return md5(uid + '_' + salt + '_' + method);
     }
 };
