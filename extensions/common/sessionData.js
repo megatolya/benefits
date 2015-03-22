@@ -29,8 +29,7 @@ var sessionManagerWrapper = (function () {
             var uid = this.getUID();
             var salt = this.getSalt();
 
-            // FIXME: Заменить md5 на реализацию
-            return md5(uid + salt + aMethod);
+            return md5(uid + '_' + salt + '_' + aMethod);
         },
 
         /**

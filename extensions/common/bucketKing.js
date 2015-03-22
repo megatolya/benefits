@@ -1,11 +1,19 @@
 'use strict';
 
 var serverConnector = require('common/serverConnector');
-serverConnector.rulesUpdated.add(onRulesUpdated);
+serverConnector.updated.add(onReceivedDataFromServer);
 
 var handlers = {};
 
-function onRulesUpdated(rules) {
+function onReceivedDataFromServer(data) {
+    var rules = data.rules;
+    if (!rules) {
+        return;
+    }
+    notifyHandlers(rules);
+}
+
+function notifyHandlers(rules) {
     for (var key in rules) {
         if (rules.hasOwnProperty(key)) {
             callHandlerForRuleName(key, rules[key]);
@@ -21,6 +29,11 @@ function callHandlerForRuleName(ruleName, rules) {
 }
 
 module.exports = {
+    start: function () {
+        console.log('Bucket King: start');
+        serverConnector.rules();
+    },
+
     register: function (name, handler) {
         handlers[name] = handler;
     }

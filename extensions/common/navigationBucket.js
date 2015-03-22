@@ -9,10 +9,8 @@ var storage = require('common/storage');
 var NAVIGATION_KEY = 'navigation';
 var dump = {};
 
-trackMan.register(navigationBucket.getDump.bind(navigationBucket));
-bucketKing.register(NAVIGATION_KEY, onRulesUpdated);
-
 function onRulesUpdated(rules) {
+    console.log('Navigation bucket rules: ', rules);
     navigationBucket.rules = rules || [];
     storage.set(NAVIGATION_KEY, rules);
     navigationBucket.updated.dispatch(rules);
@@ -37,5 +35,8 @@ var navigationBucket = {
 
     updated: new Signal()
 };
+
+bucketKing.register(NAVIGATION_KEY, onRulesUpdated);
+trackMan.register(NAVIGATION_KEY, navigationBucket.getDump.bind(navigationBucket));
 
 module.exports = navigationBucket;

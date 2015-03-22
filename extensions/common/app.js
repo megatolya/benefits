@@ -3,13 +3,23 @@
 var serverConnector = require('common/serverConnector');
 var sessionManager = require('common/sessionManager');
 var console = require('specific/console');
+var bucketKing = require('common/bucketKing');
+
+require('common/navigationTracker');
 
 var app = {
     start: function () {
-        sessionManager.startSession();
-            // .then(serverConnector.rules())
-            // .then(serverConnector.achievements());
+        sessionManager.startSession()
+            .then(bucketKing.start);
     }
 };
 
 app.start();
+
+setInterval(function () {
+    serverConnector.achievements().then(function (response) {
+        console.log('-----------------------------------');
+        console.log('response achievements: ', response);
+        console.log('-----------------------------------');
+    });
+}, 15000);

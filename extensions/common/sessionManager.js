@@ -12,7 +12,7 @@ function handleWhoamiError(error) {
 
 function handleWhoamiResponse(response) {
     var data = response.whoami;
-    console.log('Whoami response: ' + data);
+    console.log('Whoami response: ' + JSON.stringify(data));
     sessionData.setUID(data.uid);
     sessionData.setSalt(data.salt);
 }

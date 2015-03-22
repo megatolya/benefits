@@ -13,7 +13,9 @@ function onRulesUpdated() {
 function onLocationsChanged(locationData) {
     console.log('locationData.url: ', locationData.url);
     navigationBucket.rules.forEach(function (rule) {
-        if (locationData.url.indexOf(rule.url_pattern) !== -1) {
+        var regExp = new RegExp(rule.url_pattern);
+        if (regExp.test(locationData.url)) {
+            console.log('save to dump');
             navigationBucket.saveToDump(rule.rule_id);
         }
     });

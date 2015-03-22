@@ -2,11 +2,11 @@
 
 var serverConnector = require('common/serverConnector');
 
-var SEND_DUMP_TIMEOUT = 30000;
+var SEND_DUMP_TIMEOUT = 15000;
 
 var handlers = {};
 
-setTimeout(sendDump, SEND_DUMP_TIMEOUT);
+setInterval(sendDump, SEND_DUMP_TIMEOUT);
 
 function sendDump() {
     var dumpData = {};
