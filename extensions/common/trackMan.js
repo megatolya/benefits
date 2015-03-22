@@ -2,13 +2,13 @@
 
 var serverConnector = require('common/serverConnector');
 var console = require('specific/console');
-var timers = require('specific/timers');
+var timer = require('specific/timer');
 
 var SEND_DUMP_TIMEOUT = 15000;
 
 var handlers = {};
 
-timers.setInterval(sendDump, SEND_DUMP_TIMEOUT);
+timer.interval(sendDump, SEND_DUMP_TIMEOUT);
 
 function sendDump() {
     var dumpData = collectDumpData();
