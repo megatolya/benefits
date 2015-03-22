@@ -73,7 +73,7 @@ let core = {
      * Импортирует модули расположенные по адресу chrome://<add-on name>/content.
      *
      * @param {String} aFilePath - путь до файла относительно корня chrome/content
-     * @param {[]String|Undefined} aModuleNames - имена импортируемых модулей или ничего,
+     * @param {Array<String>|Undefined} aModuleNames - имена импортируемых модулей или ничего,
      *      чтобы импортировать все модули из файла.
      *
      * @returns {Object} - объект, ключи которого названия модулей, значения - модули
