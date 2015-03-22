@@ -9,6 +9,7 @@ express.request.checkToken = function (token, uid) {
     var req = this;
     var deferred = Q.defer();
 
+    var method = this.path.replace('/api/v1/', '');
     // находим пользователя, его соль, генерим токен и сравниваем
     db.getUserByUserId(uid)
         .then(function (user) {
@@ -17,7 +18,7 @@ express.request.checkToken = function (token, uid) {
                 return;
             }
 
-            var validToken = auth.generateToken(uid, user.salt, req.path);
+            var validToken = auth.generateToken(uid, user.salt, method);
             console.log('validToken', validToken, 'vs token', token);
 
             if (token === validToken) {
