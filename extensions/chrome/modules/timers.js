@@ -2,5 +2,7 @@
 
 module.exports = {
     setInterval: window.setInterval,
-    setTimeout: window.setTimeout
+    setTimeout: window.setTimeout,
+    clearTimeout: window.clearTimeout,
+    clearInterval: window.clearInterval
 };
