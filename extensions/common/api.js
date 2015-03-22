@@ -1,6 +1,7 @@
 'use strict';
 
 var Request = require('specific/request');
+var sessionManager = require('common/sessionManager');
 
 var API_URL_TEMPLATE = 'http://localhost:3000/api/{version}/{method}?uid={uid}&token={token}';
 var currentVersion = 'v1';
@@ -10,13 +11,14 @@ function makeApiCall(method, url, options) {
         var xhr = new Request();
         xhr.open(method, url);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.addEventListener('load', onApiResponse.bind(resolve, reject));
+        xhr.addEventListener('load', onApiResponse.bind(undefined, resolve, reject));
         xhr.addEventListener('error', reject);
         xhr.send(options.body);
     });
 }
 
 function onApiResponse(resolve, reject, data) {
+    // TODO: Проверять repsonse.statusCode
     parseResponse(data.responseText)
         .then(handleBasicErrors)
         .then(resolve)
@@ -51,9 +53,8 @@ function createApiUrl(method) {
     return API_URL_TEMPLATE
         .replace('{version}', currentVersion)
         .replace('{method}', method)
-        // TODO брать uid и token из storage
-        .replace('{uid}', '1231')
-        .replace('{token}', '9990da9c91b76eaacd9addfd3dbba36f');
+        .replace('{uid}', sessionManager.getUID())
+        .replace('{token}', sessionManager.getToken(method));
 }
 
 module.exports = {
