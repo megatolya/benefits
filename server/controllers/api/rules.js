@@ -10,7 +10,9 @@ module.exports = function (req, res, next) {
 
     achievements.getRulesForUser(req.uid).then(function (rules) {
         res.json({
-            rules: rules
+            rules: {
+                navigation: rules
+            }
         });
     }).fail(next);
 };
