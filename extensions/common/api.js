@@ -2,7 +2,7 @@
 
 var Request = require('specific/request');
 
-var API_URL_TEMPLATE = 'api/{version}/{method}';
+var API_URL_TEMPLATE = 'http://localhost:3000/api/{version}/{method}?uid={uid}&token={token}';
 var currentVersion = 'v1';
 
 function makeApiCall(method, url, options) {
@@ -50,7 +50,10 @@ function handleBasicErrors(data) {
 function createApiUrl(method) {
     return API_URL_TEMPLATE
         .replace('{version}', currentVersion)
-        .replace('{method}', method);
+        .replace('{method}', method)
+        // TODO брать uid и token из storage
+        .replace('{uid}', '1231')
+        .replace('{token}', '9990da9c91b76eaacd9addfd3dbba36f');
 }
 
 module.exports = {

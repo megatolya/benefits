@@ -13,6 +13,23 @@ var serverConnector = {
     },
 
     whoami: function () {
+        return api.get({method: 'whoami'});
+    },
+
+    token: function () {
+        return api.get({method: 'token'});
+    },
+
+    rules: function () {
+        return api.get({method: 'rules'});
+    },
+
+    achievements: function () {
+        return api.get({method: 'achievements'});
+    },
+
+    dump: function () {
+        return api.post({method: 'dump'});
     },
 
     connected: new Signal(),
