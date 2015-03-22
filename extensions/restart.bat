@@ -9,7 +9,7 @@ set action=kill
 set max_counter=15
 set counter=0
 
-if "%firefox_flags%" == "" set firefox_flags=-purgecaches -no-remote -jsconsole
+if "%firefox_flags%" == "" set firefox_flags=--purgecaches -no-remote -jsconsole
 
 if not "%user_version%" == "" goto main
 
