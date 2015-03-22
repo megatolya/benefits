@@ -1,0 +1,14 @@
+[
+    {
+        "name": "vkontankter",
+        "url": "https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*",
+        "type": "navigation",
+        "hits": 5
+    },
+    {
+        "name": "odnoklasnik",
+        "url": "https?:\\/\\/(www\\.)?(ok\\.ru|odnoklassniki\\.ru)\\/.*",
+        "type": "navigation",
+        "hits": 5
+    }
+]

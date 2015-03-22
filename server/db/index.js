@@ -110,5 +110,26 @@ module.exports = {
         }).fail(deferred.reject);
 
         return deferred.promise;
+    },
+
+    addAchievement: function (achievement) {
+        var deferred = Q.defer();
+
+        getDatabase('achievements').then(function (db) {
+            var collection = db.collection('browser');
+
+            collection.insert(achievement, function (err, res) {
+                if (err) {
+                    deferred.reject(err);
+                    return;
+                }
+
+                console.log(achievement.urlPattern);
+                console.log('inserted', achievement.name);
+                deferred.resolve(res);
+            });
+        });
+
+        return deferred.promise;
     }
 };

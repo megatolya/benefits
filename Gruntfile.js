@@ -7,6 +7,8 @@ module.exports = function (grunt) {
     grunt.loadTasks('./extensions/');
     grunt.loadTasks('./extensions/build/');
 
+    grunt.loadTasks('./database/tasks/');
+
     grunt.registerTask('setup', 'Установка окружения', ['githooks']);
 
     grunt.config('githooks', {
@@ -21,6 +23,7 @@ module.exports = function (grunt) {
             jshintrc: true
         },
         server: ['server/**/*.js'],
+        db: ['database/**/*.js'],
         extensions: ['<%= extensions_path %>/**/*.js', '!<%= dist_root_path %>/**', '!<%= specific_path %>/**']
     });
 

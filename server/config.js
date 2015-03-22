@@ -18,6 +18,10 @@ module.exports = {
 
         users: {
             connectionUrl: 'mongodb://localhost:27017/users'
+        },
+
+        achievements: {
+            connectionUrl: 'mongodb://localhost:27017/achievements'
         }
     },
 
