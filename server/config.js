@@ -18,8 +18,8 @@ module.exports = {
             connectionUrl: 'mongodb://localhost:27017/user-hits'
         },
 
-        userAchivements: {
-            connectionUrl: 'mongodb://localhost:27017/user-achivements'
+        userAchievements: {
+            connectionUrl: 'mongodb://localhost:27017/user-achievements'
         },
 
         users: {

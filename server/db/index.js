@@ -163,7 +163,7 @@ module.exports = {
     getUserAchivements: function (uid) {
         var deferred = Q.defer();
 
-        getDatabase('userAchivements').then(function (db) {
+        getDatabase('userAchievements').then(function (db) {
             var collection = db.collection(uid);
 
             collection.find({}, function (err, achievements) {
@@ -277,7 +277,7 @@ module.exports = {
         return Q.all(achievements.map(function (achivementId) {
             var deferred = Q.defer();
 
-            getDatabase('userAchivements').then(function (db) {
+            getDatabase('userAchievements').then(function (db) {
                 var collection = db.collection(uid);
 
                 collection.save({
