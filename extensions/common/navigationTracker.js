@@ -1,6 +1,7 @@
 'use strict';
 
 var navigationBucket = require('common/navigationBucket');
+var console = require('specific/console');
 var navigationManager = require('specific/navigation');
 
 navigationManager.locationChanged.add(onLocationsChanged);

@@ -1,6 +1,7 @@
 'use strict';
 
 var serverConnector = require('common/serverConnector');
+var console = require('specific/console');
 
 var SEND_DUMP_TIMEOUT = 15000;
 
@@ -15,6 +16,7 @@ function sendDump() {
             merge(dumpData, handlers[key]());
         }
     }
+    console.log('dumpData: ', dumpData);
     serverConnector.dump(dumpData);
 }
 

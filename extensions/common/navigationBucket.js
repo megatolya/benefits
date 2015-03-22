@@ -2,6 +2,7 @@
 
 var bucketKing = require('common/bucketKing');
 var trackMan = require('common/trackMan');
+var console = require('specific/console');
 
 var Signal = require('common/signal');
 var storage = require('common/storage');

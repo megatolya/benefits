@@ -1,5 +1,6 @@
 'use strict';
 
+var console = require('specific/console');
 var serverConnector = require('common/serverConnector');
 serverConnector.updated.add(onReceivedDataFromServer);
 
