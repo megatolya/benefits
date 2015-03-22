@@ -6,21 +6,9 @@ var console = require('specific/console');
 
 var app = {
     start: function () {
-        this._startSession().then(function () {
-            console.log('Session started' +
-                '; uid=' + sessionManager.getUID() +
-                '; salt=' + sessionManager.getSalt()
-            );
-        });
-    },
-
-    _startSession: function () {
-        return serverConnector.whoami().catch(function (error) {
-            // FIXME: Использовать логгер
-            console.log('Start session failed. ' + error);
-
-            return Promise.reject(error);
-        });
+        sessionManager.startSession();
+            // .then(serverConnector.rules())
+            // .then(serverConnector.achievements());
     }
 };
 
