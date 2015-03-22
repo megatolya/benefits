@@ -1,6 +1,7 @@
 'use strict';
 
 var storage = require('common/storage');
+var crypto = require('specific/crypto');
 
 var sessionManagerWrapper = (function () {
     var storageKeys = {
@@ -9,7 +10,7 @@ var sessionManagerWrapper = (function () {
     };
 
     function md5(aString) {
-        return aString;
+        return crypto.md5(aString);
     }
 
     return {
