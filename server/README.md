@@ -6,12 +6,12 @@ npm install
 Запуск:
 Предварительно нужно [включить БД](https://github.com/megatolya/achivki/blob/master/database/README.md). Затем:
 ```shell
-node server/
+node server
 ```
 
 Не проверять токены
 ```shell
-node server/ --no-token
+node server --no-token
 ```
 
 Для подхватывания изменений без перезагрузки сервера:
@@ -19,7 +19,7 @@ node server/ --no-token
 # установка супервизора
 npm install -g supervisor
 # запуск сервера
-supervisor index.js
+supervisor server
 ```
 
 Не проверять токены
