@@ -2,7 +2,7 @@
 
 'use strict';
 
-var signals = require('signals');
+let Signal = require('common/Signal');
 
 const {
     classes: Cc,
@@ -21,14 +21,20 @@ let navigationMonitor = {
         }
 
         this._callback = aCallback;
-
-        this._injectToBrowser();
     },
 
     finalize: function () {
-        this._ejectFromBrowser();
+        this.stopObserve();
 
         this._callback = null;
+    },
+
+    startObserve: function () {
+        this._injectToBrowser();
+    },
+
+    stopObserve: function () {
+        this._ejectFromBrowser();
     },
 
     onOpenWindow: function (aWindow) {
@@ -39,6 +45,10 @@ let navigationMonitor = {
     },
 
     onLocationChange: function(aBrowser, aWebProgress, aRequest, aURI, aFlag) {
+        if (!aURI) {
+            return;
+        }
+
         let domWindow = aWebProgress.DOMWindow;
         let prevURL = this._domWindowNavigatedUrlMap.get(domWindow);
         let onlyHashChanged = false;
@@ -65,7 +75,7 @@ let navigationMonitor = {
             domWindow: domWindow,
             isTopLevel: aWebProgress.isTopLevel,
             onlyHashChanged: onlyHashChanged,
-            url: aURI,
+            url: url,
             referrer: referrer
         };
 
@@ -127,18 +137,79 @@ let navigationMonitor = {
     QueryInterface: XPCOMUtils.generateQI(['nsIWebProgressListener', 'nsISupportsWeakReference']),
 };
 
-let navigationMonitorWrapper = {
-    locationChanged: new signals.Signal(),
+let navigationMonitorWrapper = function () {
+    let active = false;
 
-    start: function () {
-        navigationMonitor.init(aNavigationData => this.locationChanged.dispatch(aNavigationData));
-    },
+    let signalNames = ['locationChanged'];
+    let signals = {};
 
-    stop: function () {
-        this.locationChanged.removeAll();
+    function setupEventDispatchers () {
+        signalNames.forEach(aSignalName => {
+            let signal = new Signal(
+                info => {
+                    if (info.isNew) {
+                        // FIXME: Обрабатывать ошибку при подписке
+                        navigationMonitor.startObserve();
+                    }
+                },
+                info => {
+                    if (info.isLast) {
+                        navigationMonitor.stopObserve();
+                    }
+                }
+            );
 
-        navigationMonitor.finalize();
+            signals[aSignalName] = signal;
+            XPCOMUtils.defineLazyGetter(this, aSignalName, () => signal);
+        });
     }
-};
+
+    function unsetEventDispatchers () {
+        signalNames.forEach(aSignalName => {
+            let signal = signals[aSignalName];
+            if (signal) {
+                signal.removeAll();
+            }
+
+            delete signals[aSignalName];
+            delete this[aSignalName];
+        });
+    }
+
+    let module = {
+        /**
+         * Возвращает массив имен доступных событий объекта.
+         *
+         * @returns {Array<String>}
+         */
+        get availableEvents() {
+            return Array.slice(signalNames);
+        },
+
+        init: function () {
+            if (!active) {
+                setupEventDispatchers.call(this);
+
+                navigationMonitor.init(aNavigationData => this.locationChanged.dispatch(aNavigationData));
+
+                active = true;
+            }
+        },
+
+        finalize: function () {
+            if (active) {
+                unsetEventDispatchers.call(this);
+
+                navigationMonitor.finalize();
+
+                active = false;
+            }
+        }
+    };
+
+    module.init();
+
+    return module;
+}();
 
 module.exports = navigationMonitorWrapper;
