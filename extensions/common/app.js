@@ -7,10 +7,9 @@ var console = require('specific/console');
 var app = {
     start: function () {
         this._startSession().then(function () {
-            console.log('Session started'
-                + '; uid=' + sessionManager.getUID()
-                + '; token=' + sessionManager.getToken()
-                + '; salt=' + sessionManager.getSalt()
+            console.log('Session started' +
+                '; uid=' + sessionManager.getUID() +
+                '; salt=' + sessionManager.getSalt()
             );
         });
     },
