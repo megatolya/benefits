@@ -1,7 +1,6 @@
 'use strict';
 
 var storage = require('common/storage');
-var console = require('specific/console');
 
 var sessionManagerWrapper = (function () {
     var storageKeys = {
