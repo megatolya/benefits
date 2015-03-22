@@ -1,7 +1,27 @@
 'use strict';
 
-var signals = require('common/signals');
+var Signal = require('common/signal');
 
-module.exports = {
-    locationChanged: new signals.Signal()
+function onListenerAdded(data) {
+    if (data.isNew) {
+        chrome.tabs.onUpdated.addListener(onTabUpdated);
+    }
+}
+
+function onListenerRemoved(data) {
+    if (data.isLast) {
+        chrome.tabs.onUpdated.removeListener(onTabUpdated);
+    }
+}
+
+function onTabUpdated(tabId, changeInfo) {
+    navigationModule.locationChanged.dispatch({
+        url: changeInfo.url
+    });
+}
+
+var navigationModule = {
+    locationChanged: new Signal(onListenerAdded, onListenerRemoved)
 };
+
+module.exports = navigationModule;
