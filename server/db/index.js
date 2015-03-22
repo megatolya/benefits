@@ -124,9 +124,34 @@ module.exports = {
                     return;
                 }
 
-                console.log(achievement.urlPattern);
                 console.log('inserted', achievement.name);
                 deferred.resolve(res);
+            });
+        });
+
+        return deferred.promise;
+    },
+
+    getAllAchievements: function () {
+        var deferred = Q.defer();
+
+        getDatabase('achievements').then(function (db) {
+            var collection = db.collection('browser');
+
+            collection.find({}, function (err, achievements) {
+                if (err) {
+                    deferred.reject(err);
+                    return;
+                }
+
+                achievements.toArray(function (err, arr) {
+                    if (err) {
+                        deferred.reject(err);
+                        return;
+                    }
+
+                    deferred.resolve(arr);
+                });
             });
         });
 

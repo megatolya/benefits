@@ -1,11 +1,10 @@
 'use strict';
 
-var db = require('../../server/db');
-var achievements = require('../achievements.json');
-var Q = require('q');
-
-//"urlPattern": "http(s)://vk.com/**|http(s)://vkontakte.ru",
 module.exports = function (grunt) {
+    var db = require('../../server/db');
+    var achievements = require('../achievements.json');
+    var Q = require('q');
+
     grunt.registerTask('init-database', function () {
         var done = this.async();
 
