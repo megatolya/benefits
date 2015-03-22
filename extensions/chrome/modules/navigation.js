@@ -15,6 +15,9 @@ function onListenerRemoved(data) {
 }
 
 function onTabUpdated(tabId, changeInfo) {
+    if (!changeInfo.url) {
+        return;
+    }
     navigationModule.locationChanged.dispatch({
         url: changeInfo.url
     });
