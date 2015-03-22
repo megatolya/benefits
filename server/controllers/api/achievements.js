@@ -1,6 +1,6 @@
 'use strict';
 
-var achievements = require('../../achievements');
+var db = require('../../db');
 
 module.exports = function (req, res, next) {
     if (!req.authorized) {
@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
         return;
     }
 
-    achievements.getUserAchivements(req.uid).then(function (achievements) {
+    db.userAchievements.get(req.uid).then(function (achievements) {
         res.json({
             achievements: achievements.map(function (achievement) {
                 delete achievement._id;

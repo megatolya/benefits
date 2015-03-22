@@ -5,7 +5,7 @@ var auth = require('../../auth');
 
 module.exports = function (req, res, next) {
         var token = req.query.token;
-    db.getUserByUserId(req.uid).then(function (user) {
+    db.users.get(req.uid).then(function (user) {
         var validToken = auth.generateToken(req.uid, (user || {}).salt, 'token');
 
         res.json({

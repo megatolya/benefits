@@ -23,7 +23,7 @@ var achievementManager = {
     getRulesForUser: function(uid) {
         var deferred = Q.defer();
 
-        db.getAllAchievements().then(function (achievements) {
+        db.achievements.getAll().then(function (achievements) {
             deferred.resolve(achievements.map(function (achievement) {
                 return createRule(achievement);
             }));
@@ -33,11 +33,11 @@ var achievementManager = {
     },
 
     trackDump: function(uid, trackData) {
-        db.updateUserHits(uid, trackData).then(function () {
+        db.userHits.update(uid, trackData).then(function () {
             return Q.all([
-                db.getUserHits(uid),
-                achievementManager.getUserAchivements(uid),
-                db.getAllAchievements()
+                db.userHits.get(uid),
+                db.userAchievements.get(uid),
+                db.achievements.getAll()
             ]);
         }).then(function (res) {
             return this.brezhnevGlance.apply(this, res.concat(uid));
@@ -51,8 +51,8 @@ var achievementManager = {
     },
 
     // Поиск новых ачивок, учитывая полученные
-    brezhnevGlance: function (userHits, userAchivements, allAchievements, uid) {
-        userAchivements = userAchivements.map(function (achievement) {
+    brezhnevGlance: function (userHits, userAchievements, allAchievements, uid) {
+        userAchievements = userAchievements.map(function (achievement) {
             return achievement.id;
         });
         console.log('brezhnevGlance started for user', uid);
@@ -63,7 +63,7 @@ var achievementManager = {
         }, Object(null));
 
         console.log('---------');
-        console.log('userAchivements', userAchivements);
+        console.log('userAchievements', userAchievements);
         console.log('');
         console.log('userHits', userHits);
         console.log('');
@@ -71,7 +71,7 @@ var achievementManager = {
         console.log('---------');
 
         var newAchievements = allAchievements.reduce(function (newAchievements, achievement) {
-            if (userAchivements.indexOf(achievement.id) !== -1) {
+            if (userAchievements.indexOf(achievement.id) !== -1) {
                 return newAchievements;
             }
 
@@ -88,11 +88,7 @@ var achievementManager = {
         }
 
         console.log('New achievements', newAchievements);
-        db.addUserAchivements(uid, newAchievements);
-    },
-
-    getUserAchivements: function(uid) {
-        return db.getUserAchivements(uid);
+        db.userAchievements.add(uid, newAchievements);
     }
 };
 
