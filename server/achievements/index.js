@@ -3,36 +3,20 @@
 var Q = require('q');
 var db = require('../db');
 
-function Achievement (dbRow) {
-    this._id = dbRow._id;
-    this._name = dbRow.name;
-    this._url = dbRow.url;
-    this._hits = dbRow.hits;
-    this._time = dbRow.time;
-}
+function createRule(achievement) {
+    var rule = {};
 
-Achievement.prototype = {
-    constructor: Achievement,
-
-    getRule: function() {
-        var rule = {};
-
-        if (this._time) {
-            rule.time = this._time;
-        }
-
-        rule.url_pattern = this._url;
-        // TODO не в черный релиз
-        // rule.hits = this._hits;
-        rule.rule_id = this.name;
-
-        return rule;
-    },
-
-    get name() {
-        return this._name;
+    if (achievement.time) {
+        rule.time = achievement.time;
     }
-};
+
+    rule.url_pattern = achievement.url;
+    // TODO не в черный релиз
+    // rule.hits = this._hits;
+    rule.rule_id = achievement.id;
+
+    return rule;
+}
 
 var achievementManager = {
     // FIXME
@@ -41,7 +25,7 @@ var achievementManager = {
 
         db.getAllAchievements().then(function (achievements) {
             deferred.resolve(achievements.map(function (achievement) {
-                return new Achievement(achievement).getRule();
+                return createRule(achievement);
             }));
         }).fail(deferred.reject);
 
@@ -52,7 +36,7 @@ var achievementManager = {
         db.updateUserHits(uid, trackData).then(function () {
             return Q.all([
                 db.getUserHits(uid),
-                db.getUserAchivements(uid),
+                achievementManager.getUserAchivements(uid),
                 db.getAllAchievements()
             ]);
         }).then(function (res) {
@@ -105,6 +89,10 @@ var achievementManager = {
 
         console.log('New achievements', newAchievements);
         db.addUserAchivements(uid, newAchievements);
+    },
+
+    getUserAchivements: function(uid) {
+        return db.getUserAchivements(uid);
     }
 };
 
