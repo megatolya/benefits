@@ -105,8 +105,10 @@ var achievementManager = {
             db.achievements.getAll(),
             db.userAchievements.getOnlyIds(uid)
         ]).then(function (res) {
+            var userAchievements = res[1];
+
             return res[0].filter(function (achievement) {
-                if (res[1].indexOf(achievement.id) !== -1) {
+                if (userAchievements.indexOf(achievement.id) !== -1) {
                     return false;
                 }
 
@@ -118,7 +120,7 @@ var achievementManager = {
                     }
 
                     return achievement.availableAfter.every(function (achievement) {
-                        return res[1].indexOf(achievement) !== -1;
+                        return userAchievements.indexOf(achievement) !== -1;
                     });
                 }
 
