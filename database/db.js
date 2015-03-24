@@ -3,34 +3,50 @@ module.exports = {
         {
             id: 'vk1',
             url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
-            type: 'navigation',
-            hits: 50,
             title: 'Вконтактер',
-            description: 'Много раз был на вконтакте'
+            description: 'Был на вконтакте',
+            rules: [{
+                url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
+                type: 'navigation',
+                hits: 10
+            }]
         },
         {
             id: 'vk2',
-            url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
-            type: 'navigation',
-            hits: 100,
-            title: 'Вконтактер 2',
-            description: 'Много раз был на вконтакте'
+            title: 'Вконтактер 80 уровня',
+            description: 'Много раз был на вконтакте',
+            // работает как availableAfter, но указывает на предыдущую ачивку
+            parent: 'vk1',
+            rules: [{
+                url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
+                type: 'navigation',
+                hits: 20
+            }]
         },
         {
             id: 'vk3',
-            url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
-            type: 'navigation',
-            hits: 120,
-            title: 'Вконтактер 3',
-            description: 'Много раз был на вконтакте'
+            title: 'Павел Дуров',
+            description: 'Очень много раз был на вконтакте',
+            availableAfter: ['vk2'],
+            rules: [{
+                type: 'navigation',
+                url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
+                hits: 30
+            }, {
+                type: 'navigation',
+                url: 'https?:\\/\\/(www\\.)?(durov\\.ru)\\/.*',
+                hits: 1
+            }]
         },
         {
             id: 'ok',
-            url: 'https?:\\/\\/(www\\.)?(ok\\.ru|odnoklassniki\\.ru)\\/.*',
-            type: 'navigation',
-            hits: 100,
             title: 'Одноклассник',
-            description: 'Много раз был на вконтакте'
+            description: 'Много раз был на одноклассниках',
+            rules: [{
+                type: 'navigation',
+                url: 'https?:\\/\\/(www\\.)?(ok\\.ru|odnoklassniki\\.ru)\\/.*',
+                hits: 30
+            }]
         }
     ],
 
@@ -56,8 +72,7 @@ module.exports = {
 
     userHits: {
         uid1: {
-            vk1: 10,
-            vk2: 10
+            vk1: 5
         },
         uid2: {
             ok: 10

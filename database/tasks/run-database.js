@@ -27,14 +27,14 @@ module.exports = function (grunt) {
     grunt.registerTask('stop-database', ['shell:kill-database']);
 
     grunt.registerTask('run-database', function() {
-        if (grunt.option('clean')) {
+        if (grunt.option('fresh')) {
             grunt.task.run('stop-database');
             grunt.task.run('clean-database');
         }
 
         grunt.task.run('bgShell:mongodb');
 
-        if (grunt.option('clean')) {
+        if (grunt.option('fresh')) {
             grunt.task.run('init-database');
         }
     });

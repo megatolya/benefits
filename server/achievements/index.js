@@ -21,15 +21,24 @@ function createRule(achievement) {
 var achievementManager = {
     // FIXME
     getRulesForUser: function(uid) {
-        var deferred = Q.defer();
+        return this.getLockedForUser(uid).then(function (achievements) {
+            return achievements.reduce(function (rules, achievement) {
+                achievement.rules.forEach(function (raw, index) {
+                    var rule = {};
 
-        db.achievements.getAll().then(function (achievements) {
-            deferred.resolve(achievements.map(function (achievement) {
-                return createRule(achievement);
-            }));
-        }).fail(deferred.reject);
+                    if (raw.time) {
+                        rule.time = raw.time;
+                    }
 
-        return deferred.promise;
+                    rule.rule_id = achievement.id + '|' + index;
+                    rule.url_pattern = raw.url;
+
+                    rules.push(rule);
+                });
+
+                return rules;
+            }, []);
+        });
     },
 
     trackDump: function(uid, trackData) {
@@ -89,7 +98,34 @@ var achievementManager = {
 
         console.log('New achievements', newAchievements);
         db.userAchievements.add(uid, newAchievements);
-    }
+    },
+
+    getLockedForUser: function(uid) {
+        return Q.all([
+            db.achievements.getAll(),
+            db.userAchievements.getOnlyIds(uid)
+        ]).then(function (res) {
+            return res[0].filter(function (achievement) {
+                if (res[1].indexOf(achievement.id) !== -1) {
+                    return false;
+                }
+
+                if (achievement.availableAfter || achievement.parent) {
+                    if (achievement.parent) {
+                        achievement.availableAfter =
+                            (achievement.availableAfter || [])
+                            .concat(achievement.parent);
+                    }
+
+                    return achievement.availableAfter.every(function (achievement) {
+                        return res[1].indexOf(achievement) !== -1;
+                    });
+                }
+
+                return true;
+            });
+        });
+    },
 };
 
 module.exports = achievementManager;

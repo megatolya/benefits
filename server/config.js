@@ -1,5 +1,6 @@
 'use strict';
 
+var Q = require('q');
 var argv = require('minimist')(process.argv.slice(2));
 
 module.exports = {
@@ -43,3 +44,5 @@ module.exports = {
         return true;
     }
 };
+
+Q.longStackSupport = true;

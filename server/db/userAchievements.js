@@ -30,6 +30,14 @@ module.exports = {
         return deferred.promise;
     },
 
+    getOnlyIds: function (uid) {
+        return this.get(uid).then(function (achievements) {
+            return achievements.map(function (achievement) {
+                return achievement.id;
+            });
+        });
+    },
+
     add: function (uid, achievements) {
         return Q.all(achievements.map(function (achivementId) {
             var deferred = Q.defer();
