@@ -9,9 +9,9 @@ grunt db:start
 grunt db:restart # алиас для db:start
 ```
 
-Запустить с заполненными данными:
+Запустить чистую бд с предзаполненными данными:
 ```shell
-grunt db:start --clean
+grunt db:start --fresh
 ```
 
 Выключение:
