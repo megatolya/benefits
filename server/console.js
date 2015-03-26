@@ -1,4 +1,5 @@
 var config = require('./config');
+
 if (config.isTestsRunning) {
     var emptyFn = function () {};
     module.exports = {
@@ -9,4 +10,5 @@ if (config.isTestsRunning) {
     };
     return;
 }
+
 module.exports = console;
