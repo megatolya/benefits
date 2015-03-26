@@ -2,6 +2,7 @@
 
 var Q = require('q');
 var db = require('../db');
+var console = require('../console');
 var uuid = require('node-uuid');
 var md5 = require('MD5');
 

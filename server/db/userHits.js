@@ -2,6 +2,7 @@
 
 var Q = require('q');
 var utils = require('./utils');
+var console = require('../console');
 
 module.exports = {
     update: function (uid, trackData) {

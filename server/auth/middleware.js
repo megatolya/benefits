@@ -2,6 +2,7 @@
 
 var db = require('../db');
 var config = require('../config');
+var console = require('../console');
 
 function log(req, status, params) {
     console.log(req.method + ' ' + req.path + ' (' + status + ')', params || '');

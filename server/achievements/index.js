@@ -2,6 +2,7 @@
 
 var Q = require('q');
 var db = require('../db');
+var console = require('../console');
 
 function createRule(achievement) {
     var rule = {};
