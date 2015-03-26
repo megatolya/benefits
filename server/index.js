@@ -40,3 +40,7 @@ app.use(require('./error-handler'));
 
 app.listen(config.port);
 console.log('http://localhost:' + config.port);
+
+if (config.isTestsRunning) {
+    require('./tests/')(app);
+}

@@ -42,6 +42,10 @@ module.exports = {
         }
 
         return true;
+    },
+
+    get isTestsRunning() {
+        return Boolean(process.env.TEST || argv.tests);
     }
 };
 

@@ -12,6 +12,7 @@
     "bitwise": false,
     "newcap": true,
     "node": true,
+    "laxbreak": true,
 
     "predef": [
         "window",

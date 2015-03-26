@@ -4,7 +4,7 @@ var db = require('../../db');
 
 module.exports = function (req, res, next) {
     if (!req.authorized) {
-        next(401);
+        next(403);
         return;
     }
 
@@ -15,5 +15,7 @@ module.exports = function (req, res, next) {
                 return achievement;
             })
         });
-    }).fail(next);
+    }).fail(function () {
+        next(404);
+    });
 };

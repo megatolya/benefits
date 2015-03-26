@@ -38,7 +38,11 @@ module.exports = {
                     return;
                 }
 
-                deferred.resolve(user);
+                if (user) {
+                    deferred.resolve(user);
+                } else {
+                    deferred.reject(null);
+                }
             });
         }).fail(deferred.reject);
 

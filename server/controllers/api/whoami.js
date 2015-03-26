@@ -11,10 +11,11 @@ module.exports = function (req, res, next) {
 
     if (req.query.token !== validToken && config.useToken) {
         console.error('wrong token', req.query.token);
-        return next(401);
+        return next(403);
     }
 
     auth.registerUser().then(function (userInfo) {
+        res.status(201);
         res.json({
             whoami: {
                 uid: userInfo.id,
