@@ -3,6 +3,7 @@
 var Q = require('q');
 var utils = require('./utils');
 var console = require('../console');
+var uuid = require('node-uuid');
 
 module.exports = {
     add: function (achievement) {
@@ -10,6 +11,10 @@ module.exports = {
 
         utils.getDatabase('achievements').then(function (db) {
             var collection = db.collection('browser');
+
+            achievement.rules.forEach(function (rule) {
+                rule.id = uuid.v4();
+            });
 
             collection.insert(achievement, function (err, res) {
                 if (err) {

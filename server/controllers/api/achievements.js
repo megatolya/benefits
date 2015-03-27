@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
         return;
     }
 
-    db.userAchievements.get(req.uid).then(function (achievements) {
+    db.userAchievements.get(req.uid).then(function(achievements) {
         res.json({
             achievements: achievements.map(function (achievement) {
                 delete achievement._id;

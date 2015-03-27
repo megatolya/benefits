@@ -4,23 +4,7 @@ var Q = require('q');
 var db = require('../db');
 var console = require('../console');
 
-function createRule(achievement) {
-    var rule = {};
-
-    if (achievement.time) {
-        rule.time = achievement.time;
-    }
-
-    rule.url_pattern = achievement.url;
-    // TODO не в черный релиз
-    // rule.hits = this._hits;
-    rule.rule_id = achievement.id;
-
-    return rule;
-}
-
 var achievementManager = {
-    // FIXME
     getRulesForUser: function(uid) {
         return this.getLockedForUser(uid).then(function (achievements) {
             return achievements.reduce(function (rules, achievement) {
@@ -31,8 +15,9 @@ var achievementManager = {
                         rule.time = raw.time;
                     }
 
-                    rule.rule_id = achievement.id + '|' + index;
                     rule.url_pattern = raw.url;
+                    rule.rule_id = raw.id;
+                    rule.hits = raw.hits;
 
                     rules.push(rule);
                 });
@@ -43,7 +28,7 @@ var achievementManager = {
     },
 
     trackDump: function(uid, trackData) {
-        db.userHits.update(uid, trackData).then(function () {
+        return db.userHits.update(uid, trackData).then(function () {
             return Q.all([
                 db.userHits.get(uid),
                 db.userAchievements.get(uid),
@@ -85,7 +70,15 @@ var achievementManager = {
                 return newAchievements;
             }
 
-            if (userHits[achievement.id] >= achievement.hits) {
+            var satisfied = achievement.rules.every(function (rule) {
+                if (rule.id in userHits && userHits[rule.id] >= rule.hits) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            if (satisfied) {
                 newAchievements.push(achievement.id);
             }
 

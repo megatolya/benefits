@@ -1,6 +1,5 @@
 'use strict';
 
-require('./express-extensions');
 var express = require('express');
 var config = require('./config');
 var app = express();

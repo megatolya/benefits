@@ -70,12 +70,5 @@ module.exports = {
         uid3: ['ok']
     },
 
-    userHits: {
-        uid1: {
-            vk1: 5
-        },
-        uid2: {
-            ok: 10
-        }
-    }
+    userHits: {}
 };
