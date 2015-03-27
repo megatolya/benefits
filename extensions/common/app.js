@@ -19,8 +19,6 @@ app.start();
 
 timer.interval(function () {
     serverConnector.achievements().then(function (response) {
-        console.log('-----------------------------------');
         console.log('response achievements: ' + JSON.stringify(response));
-        console.log('-----------------------------------');
     });
 }, 5000);
