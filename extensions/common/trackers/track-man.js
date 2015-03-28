@@ -12,8 +12,7 @@ timer.interval(sendDump, SEND_DUMP_TIMEOUT);
 
 function sendDump() {
     var dumpData = collectDumpData();
-    console.log('dumpData: ', dumpData);
-    if (dumpData) {
+    if (isNotEmpty(dumpData)) {
         serverConnector.dump(dumpData);
     }
 }
@@ -37,6 +36,10 @@ function merge(parent, child) {
             parent[key] = child[key];
         }
     }
+}
+
+function isNotEmpty(data) {
+    return data && Object.keys(data).length > 0;
 }
 
 module.exports = {

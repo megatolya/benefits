@@ -105,6 +105,7 @@ var serverConnector = {
     },
 
     dump: function (body) {
+        console.log('Send dumpData: ', body);
         return this.post('dump', body);
     },
 
