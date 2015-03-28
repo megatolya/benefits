@@ -7,6 +7,7 @@ var bucketKing = require('common/buckets/bucket-king');
 var achievements = require('common/achievements');
 
 require('common/trackers/navigation-tracker');
+require('common/notifications');
 
 var REPEAT_AFTER_ERROR_TIMEOUT = 1000 * 60;
 

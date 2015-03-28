@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         dest: '<%= specific_path %>/'
     });
 
-    grunt.config('copy.out', {
+    grunt.config('copy.browser', {
         expand: true,
         cwd: '<%= browser_src_path %>/',
         filter: function (path) {
@@ -20,7 +20,14 @@ module.exports = function (grunt) {
         dest: '<%= dist_path %>/'
     });
 
+    grunt.config('copy.images', {
+        expand: true,
+        cwd: '<%= images_path %>/',
+        src: ['**'],
+        dest: '<%= dist_path %>/images'
+    });
+
     grunt.registerTask('copy-extension', function () {
-        grunt.task.run(['copy:specific', 'copy:out']);
+        grunt.task.run(['copy:specific', 'copy:browser', 'copy:images']);
     });
 };
