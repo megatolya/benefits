@@ -3,6 +3,8 @@
 var Q = require('q');
 var argv = require('minimist')(process.argv.slice(2));
 
+Q.longStackSupport = true;
+
 module.exports = {
     port: 3000,
 
@@ -48,5 +50,3 @@ module.exports = {
         return Boolean(process.env.TEST || argv.tests);
     }
 };
-
-Q.longStackSupport = true;

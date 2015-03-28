@@ -3,7 +3,7 @@
 var Q = require('q');
 
 var MongoClient = require('mongodb').MongoClient;
-var config = require('../config');
+var config = require('../../config');
 
 var errors = Object.create(null);
 var dbs = Object.create(null);

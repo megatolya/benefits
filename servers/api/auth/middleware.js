@@ -1,7 +1,7 @@
 'use strict';
 
 var db = require('../db');
-var config = require('../config');
+var config = require('../../config');
 var console = require('../console');
 var auth = require('./');
 var Q = require('q');

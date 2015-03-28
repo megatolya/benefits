@@ -2,7 +2,7 @@
 
 var mocha = require('mocha');
 var supertest = require('supertest');
-var config = require('../config');
+var config = require('../../config');
 var md5 = require('MD5');
 var db = require('../db');
 var Q = require('q');

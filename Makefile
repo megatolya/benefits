@@ -4,6 +4,6 @@ test::
 
 	@$(NODE)/grunt db:start
 	@$(NODE)/grunt db:start --fresh
-	@$(NODE)/mocha server --tests
+	@$(NODE)/mocha servers/api --tests
 
 .PHONY: test

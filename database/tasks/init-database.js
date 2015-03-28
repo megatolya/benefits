@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (grunt) {
-    var db = require('../../server/db');
+    var db = require('../../servers/api/db');
     var data = require('../db.js');
     var Q = require('q');
 

@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var config = require('./config');
+var config = require('../config');
 var app = express();
 var cookieParser = require('cookie-parser');
 var serve = require('serve-static');
