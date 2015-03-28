@@ -1,6 +1,6 @@
 'use strict';
 
-var navigationBucket = require('common/navigationBucket');
+var navigationBucket = require('common/buckets/navigation-bucket');
 var console = require('specific/console');
 var navigationManager = require('specific/navigation');
 

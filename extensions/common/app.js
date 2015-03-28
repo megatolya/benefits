@@ -1,12 +1,12 @@
 'use strict';
 
-var serverConnector = require('common/serverConnector');
-var sessionManager = require('common/sessionManager');
+var serverConnector = require('common/server-connector');
+var sessionManager = require('common/session-manager');
 var console = require('specific/console');
 var timer = require('specific/timer');
-var bucketKing = require('common/bucketKing');
+var bucketKing = require('common/buckets/bucket-king');
 
-require('common/navigationTracker');
+require('common/trackers/navigation-tracker');
 
 var app = {
     start: function () {

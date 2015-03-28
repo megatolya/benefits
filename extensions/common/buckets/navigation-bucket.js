@@ -1,7 +1,7 @@
 'use strict';
 
-var bucketKing = require('common/bucketKing');
-var trackMan = require('common/trackMan');
+var bucketKing = require('common/buckets/bucket-king');
+var trackMan = require('common/trackers/track-man');
 var console = require('specific/console');
 
 var Signal = require('common/signal');

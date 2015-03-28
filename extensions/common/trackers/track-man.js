@@ -1,6 +1,6 @@
 'use strict';
 
-var serverConnector = require('common/serverConnector');
+var serverConnector = require('common/server-connector');
 var console = require('specific/console');
 var timer = require('specific/timer');
 

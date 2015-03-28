@@ -4,7 +4,7 @@ var console = require('specific/console');
 var Signal = require('common/signal');
 
 var Request = require('specific/request');
-var sessionData = require('common/sessionData');
+var sessionData = require('common/session-data');
 
 var API_URL_TEMPLATE = 'http://localhost:3000/api/{version}/{method}?uid={uid}&token={token}';
 var currentVersion = 'v1';

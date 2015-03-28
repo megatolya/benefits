@@ -1,7 +1,7 @@
 'use strict';
 
-var serverConnector = require('common/serverConnector');
-var sessionData = require('common/sessionData');
+var serverConnector = require('common/server-connector');
+var sessionData = require('common/session-data');
 var console = require('specific/console');
 
 function handleWhoamiError(error) {
