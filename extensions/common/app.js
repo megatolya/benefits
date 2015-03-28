@@ -8,6 +8,7 @@ var achievements = require('common/achievements');
 
 require('common/trackers/navigation-tracker');
 require('common/notifications');
+require('common/button');
 
 var REPEAT_AFTER_ERROR_TIMEOUT = 1000 * 60;
 

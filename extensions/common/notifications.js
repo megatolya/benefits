@@ -6,8 +6,8 @@ var achievements = require('common/achievements');
 achievements.unlocked.add(onAchievementsUnlocked);
 
 var defaultOptions = {
-    iconUrl: 'images/icon.png',
-    imageUrl: 'images/unlocked.png',
+    iconUrl: 'images/notification-icon.png',
+    imageUrl: 'images/notification-unlocked.png',
     title: 'Achievement unlocked!',
     message: 'Social maniac',
     contextMessage: 'This achievement is awesome! (actually not)'
