@@ -15,6 +15,10 @@ function logErrors(error) {
     console.log('Achievements error: %o', error);
 }
 
+function parseResponse(data) {
+    return data ? data.achievements : [];
+}
+
 var achievements = {
     start: function () {
         if (pollInterval) {
@@ -30,14 +34,42 @@ var achievements = {
 
     update: function () {
         return serverConnector.achievements()
-            .then(this.parse.bind(this))
-            .then(this.save.bind(this))
-            .then(this.updated.dispatch.bind(this.updated))
+            .then(this._processResponse.bind(this))
             .catch(logErrors);
     },
 
-    parse: function (data) {
-        return data ? data.achievements : [];
+    _processResponse: function (data) {
+        var achievements = parseResponse(data);
+        var unlockedAchievements = this.findUnlocked(achievements);
+        this.save(achievements);
+        this._notify('updated', achievements);
+        this._notify('unlocked', unlockedAchievements);
+    },
+
+    _notify: function (type, achievements) {
+        if (achievements && achievements.length > 0) {
+            this[type].dispatch(achievements);
+        }
+    },
+
+    findUnlocked: function (achievements) {
+        var savedAchievements = this.get();
+        if (Array.isArray(achievements) && Array.isArray(savedAchievements)) {
+            return achievements.filter(function (achievement) {
+                return this.isNew(achievement, savedAchievements);
+            }, this);
+        }
+        return achievements;
+    },
+
+    isNew: function (achievement, savedAchievements) {
+        for (var i = 0; i < savedAchievements.length; i++) {
+            var savedAchivka = savedAchievements[i];
+            if (savedAchivka.id === achievement.id) {
+                return false;
+            }
+        }
+        return true;
     },
 
     save: function (achievements) {
@@ -45,7 +77,12 @@ var achievements = {
         return achievements;
     },
 
-    updated: new Signal()
+    get: function () {
+        return storage.get(ACHIEVEMENTS_STORAGE_KEY);
+    },
+
+    updated: new Signal(),
+    unlocked: new Signal()
 };
 
 module.exports = achievements;

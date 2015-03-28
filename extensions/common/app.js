@@ -28,4 +28,10 @@ achievements.updated.add(function (achievements) {
     console.log('Achievements updated: ', achievements);
 });
 
+achievements.unlocked.add(function (achievements) {
+    console.log('----------------------------------');
+    console.log('Achievements unlocked: ', achievements);
+    console.log('----------------------------------');
+});
+
 app.start();
