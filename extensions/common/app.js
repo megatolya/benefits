@@ -8,17 +8,28 @@ var bucketKing = require('common/buckets/bucket-king');
 
 require('common/trackers/navigation-tracker');
 
+var REPEAT_AFTER_ERROR_TIMEOUT = 1000 * 60;
+
 var app = {
     start: function () {
         sessionManager.startSession()
-            .then(bucketKing.start);
+            .then(bucketKing.start)
+            .then(pollAchievements)
+            .catch(catchErrors);
     }
 };
 
-app.start();
+function catchErrors(data) {
+    console.log('Fatal error: %o', data);
+    timer.shot(app.start, REPEAT_AFTER_ERROR_TIMEOUT, app);
+}
 
-timer.interval(function () {
-    serverConnector.achievements().then(function (response) {
-        console.log('response achievements: ' + JSON.stringify(response));
-    });
-}, 5000);
+function pollAchievements() {
+    timer.interval(function () {
+        serverConnector.achievements().then(function (response) {
+            console.log('response achievements: ' + JSON.stringify(response));
+        });
+    }, 5000);
+}
+
+app.start();
