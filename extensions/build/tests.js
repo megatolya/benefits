@@ -7,7 +7,8 @@ module.exports = function (grunt) {
         extension_common: {
             options: {
                 reporter: 'spec',
-                clearRequireCache: false
+                clearRequireCache: false,
+                require: ['<%= extensions_path %>/build/utils/globals-for-tests.js']
             },
             src: ['<%= common_path %>/**/*-test.js']
         }
