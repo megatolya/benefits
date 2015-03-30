@@ -266,7 +266,7 @@ module.exports = function (app) {
 
 
     describe('difficult cases', function () {
-        it('registrater and reach 2 achievements', function (done) {
+        it('register and reach 2 achievements', function (done) {
             function onFail(err) {
                 done(err);
                 throw err;

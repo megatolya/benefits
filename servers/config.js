@@ -6,7 +6,13 @@ var argv = require('minimist')(process.argv.slice(2));
 Q.longStackSupport = true;
 
 module.exports = {
-    port: 3000,
+    apiServer: {
+        port: 3000
+    },
+
+    webServer: {
+        port: 3001
+    },
 
     cookie: {
         secret: 'cook it bitch'
