@@ -231,7 +231,7 @@ module.exports = function (app) {
             return deferred.promise;
         },
 
-        dumpData: function(trackData) {
+        dumpData: function (trackData) {
             var achievements = require('../achievements');
 
             return achievements.trackDump(this.uid, trackData);
@@ -263,7 +263,6 @@ module.exports = function (app) {
 
         return deferred.promise;
     }
-
 
     describe('difficult cases', function () {
         it('register and reach 2 achievements', function (done) {
@@ -379,4 +378,3 @@ module.exports = function (app) {
         });
     });
 };
-
