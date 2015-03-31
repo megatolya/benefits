@@ -11,7 +11,7 @@ const {
 
 Cu.import('resource://gre/modules/Services.jsm');
 
-const APP_NAME = 'peepl';
+const APP_NAME = 'benefits';
 const APP_CHROME_PATH = 'chrome://' + APP_NAME + '/content/';
 
 let core = {

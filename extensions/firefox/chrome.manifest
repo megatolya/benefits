@@ -1,4 +1,4 @@
-content peepl chrome/content/
+content benefits chrome/content/
 
-locale peepl ru locale/ru/
-locale peepl en locale/ru/
+locale benefits ru locale/ru/
+locale benefits en locale/ru/

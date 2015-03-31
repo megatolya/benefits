@@ -4,7 +4,7 @@
     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
     <Description about="urn:mozilla:install-manifest">
         <!-- <em:id>{564912a8-b697-41cd-9452-53b3f5e535f5}</em:id> -->
-        <em:id>peepl@tolya.me</em:id>
+        <em:id>benefits@tolya.me</em:id>
 
         <em:version>1.0</em:version>
         <em:type>2</em:type>
@@ -18,7 +18,7 @@
             </Description>
         </em:targetApplication>
 
-        <em:name>peepl</em:name>
+        <em:name>benefits</em:name>
         <em:description>Achieve me, bitch!</em:description>
 
         <em:developer>Ilya Babanov</em:developer>
