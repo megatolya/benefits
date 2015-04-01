@@ -2,7 +2,7 @@
 
 var mocha = require('mocha');
 var supertest = require('supertest');
-var config = require('../config');
+var config = require('../../config');
 var md5 = require('MD5');
 var db = require('../db');
 var Q = require('q');
@@ -231,7 +231,7 @@ module.exports = function (app) {
             return deferred.promise;
         },
 
-        dumpData: function(trackData) {
+        dumpData: function (trackData) {
             var achievements = require('../achievements');
 
             return achievements.trackDump(this.uid, trackData);
@@ -264,9 +264,8 @@ module.exports = function (app) {
         return deferred.promise;
     }
 
-
     describe('difficult cases', function () {
-        it('registrater and reach 2 achievements', function (done) {
+        it('register and reach 2 achievements', function (done) {
             function onFail(err) {
                 done(err);
                 throw err;
@@ -379,4 +378,3 @@ module.exports = function (app) {
         });
     });
 };
-

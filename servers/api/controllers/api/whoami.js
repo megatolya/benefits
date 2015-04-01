@@ -2,7 +2,7 @@
 
 var auth = require('../../auth');
 var md5 = require('MD5');
-var config = require('../../config');
+var config = require('../../../config');
 var validToken = md5(config.tokens.whoami);
 var console = require('../../console');
 

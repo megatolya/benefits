@@ -5,7 +5,7 @@ var db = require('../db');
 var console = require('../console');
 
 var achievementManager = {
-    getRulesForUser: function(uid) {
+    getRulesForUser: function (uid) {
         return this.getLockedForUser(uid).then(function (achievements) {
             return achievements.reduce(function (rules, achievement) {
                 achievement.rules.forEach(function (raw, index) {
@@ -27,7 +27,7 @@ var achievementManager = {
         });
     },
 
-    trackDump: function(uid, trackData) {
+    trackDump: function (uid, trackData) {
         return db.userHits.update(uid, trackData).then(function () {
             return Q.all([
                 db.userHits.get(uid),
@@ -94,7 +94,7 @@ var achievementManager = {
         db.userAchievements.add(uid, newAchievements);
     },
 
-    getLockedForUser: function(uid) {
+    getLockedForUser: function (uid) {
         return Q.all([
             db.achievements.getAll(),
             db.userAchievements.getOnlyIds(uid)

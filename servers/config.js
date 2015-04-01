@@ -3,8 +3,18 @@
 var Q = require('q');
 var argv = require('minimist')(process.argv.slice(2));
 
+Q.longStackSupport = true;
+
 module.exports = {
-    port: 3000,
+    apiServer: {
+        port: 3000,
+        host: 'localhost'
+    },
+
+    webServer: {
+        port: 3001,
+        host: 'localhost'
+    },
 
     cookie: {
         secret: 'cook it bitch'
@@ -46,7 +56,9 @@ module.exports = {
 
     get isTestsRunning() {
         return Boolean(process.env.TEST || argv.tests);
+    },
+
+    get uidHeader() {
+        return 'x-uid';
     }
 };
-
-Q.longStackSupport = true;
