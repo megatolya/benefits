@@ -7,11 +7,13 @@ Q.longStackSupport = true;
 
 module.exports = {
     apiServer: {
-        port: 3000
+        port: 3000,
+        host: 'localhost'
     },
 
     webServer: {
-        port: 3001
+        port: 3001,
+        host: 'localhost'
     },
 
     cookie: {
@@ -54,5 +56,9 @@ module.exports = {
 
     get isTestsRunning() {
         return Boolean(process.env.TEST || argv.tests);
+    },
+
+    get uidHeader() {
+        return 'x-uid';
     }
 };
