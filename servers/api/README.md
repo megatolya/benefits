@@ -1,5 +1,5 @@
 # Как поднять сервер локально
-Предварительно нужно  [настроить окружение](https://github.com/megatolya/achivki/blob/master/README.md) и [включить БД](https://github.com/megatolya/achivki/blob/master/database/README.md).
+Предварительно нужно  [настроить окружение](https://github.com/megatolya/benefits/blob/master/README.md) и [включить БД](https://github.com/megatolya/benefits/blob/master/database/README.md).
 
 Запуск
 ```shell

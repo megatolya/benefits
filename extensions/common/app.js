@@ -1,24 +1,39 @@
 'use strict';
 
-var serverConnector = require('common/serverConnector');
-var sessionManager = require('common/sessionManager');
+var sessionManager = require('common/session-manager');
 var console = require('specific/console');
 var timer = require('specific/timer');
-var bucketKing = require('common/bucketKing');
+var bucketKing = require('common/buckets/bucket-king');
+var achievements = require('common/achievements');
 
-require('common/navigationTracker');
+require('common/trackers/navigation-tracker');
+require('common/notifications');
+require('common/button');
+
+var REPEAT_AFTER_ERROR_TIMEOUT = 1000 * 60;
 
 var app = {
     start: function () {
         sessionManager.startSession()
-            .then(bucketKing.start);
+            .then(bucketKing.start.bind(bucketKing))
+            .then(achievements.start.bind(achievements))
+            .catch(catchErrors);
     }
 };
 
-app.start();
+function catchErrors(data) {
+    console.log('Fatal error: %o', data);
+    timer.shot(app.start, REPEAT_AFTER_ERROR_TIMEOUT, app);
+}
 
-timer.interval(function () {
-    serverConnector.achievements().then(function (response) {
-        console.log('response achievements: ' + JSON.stringify(response));
-    });
-}, 5000);
+achievements.updated.add(function (achievements) {
+    console.log('Achievements updated: ', achievements);
+});
+
+achievements.unlocked.add(function (achievements) {
+    console.log('----------------------------------');
+    console.log('Achievements unlocked: ', achievements);
+    console.log('----------------------------------');
+});
+
+app.start();

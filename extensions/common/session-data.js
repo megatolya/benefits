@@ -58,6 +58,11 @@ var sessionManagerWrapper = (function () {
 
         getSalt: function () {
             return storage.get(storageKeys.SALT) || '';
+        },
+
+        clear: function () {
+            this.setUID();
+            this.setSalt();
         }
     };
 })();

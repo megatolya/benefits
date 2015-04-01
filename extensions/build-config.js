@@ -5,6 +5,8 @@ module.exports = function (grunt) {
     grunt.initConfig({
         extensions_path: 'extensions',
 
+        images_path: cwd + 'images',
+
         firefox: {
             src: cwd + 'firefox',
             modules: cwd + 'firefox/chrome/content/modules',
