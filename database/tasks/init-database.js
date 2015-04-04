@@ -14,12 +14,12 @@ module.exports = function (grunt) {
 
         function getDistPath(imageName) {
             var extName = path.extname(imageName);
-            var webPath = path.join('public', 'achievements', md5(imageName) + extName);
+            var webPath = path.join('achievements', md5(imageName) + extName);
             grunt.file.mkdir(path.join('public', 'achievements'));
 
             return {
                 web: webPath,
-                abs: path.resolve(__dirname, path.join('..', '..', webPath))
+                abs: path.resolve(__dirname, path.join('..', '..', 'public', webPath))
             };
         }
 

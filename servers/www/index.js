@@ -19,6 +19,9 @@ app.set('case sensitive routing', true);
 app.set('views', path.resolve(path.join(__dirname, 'views')));
 app.set('view engine', 'jade');
 
+app.use(serve(path.join(__dirname, '..', '..', '/public')));
+console.log((path.join(__dirname, '..', '..', '/public')));
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -26,12 +29,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use(session({
-    secret: config.session.secret
+    secret: config.session.secret,
+    resave: true,
+    saveUninitialized: false
 }));
 app.use(cookieParser(config.cookie.secret));
 
 app.use(require('./auth/middleware'));
-require('./seo')(app);
+require('./request')(app);
+require('./response')(app);
 
 require('./controllers/morda')(app);
 require('./controllers/profile')(app);

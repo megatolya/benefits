@@ -11,9 +11,7 @@ module.exports = function (app) {
         }
 
         userProvider.get(req.uid).then(function (user) {
-            res.render('dashboard', _.extend({
-                user: user,
-            }, req.getRequestData()));
+            res.magicRender('dashboard', req, user);
         }).fail(next);
     });
 };

@@ -16,6 +16,8 @@ module.exports = function (req, res, next) {
     db.users.get(uid).then(function (user) {
         return db.userAchievements.get(user.id).then(function (userAchievements) {
             user.achievements = userAchievements;
+            delete user.password;
+            delete user.salt;
 
             return Q.all(userAchievements.map(function (userAchievement) {
                 return db.achievements.get(userAchievement.id).then(function (achievement) {

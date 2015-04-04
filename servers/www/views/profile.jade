@@ -1,0 +1,10 @@
+extends ./layout.jade
+
+block content
+    h1=i18n.achievements
+
+    - achievements.forEach(function (achievement) {
+        .achievement
+            p=achievement.title
+            img(src=achievement.image)
+    - });
