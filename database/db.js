@@ -5,6 +5,7 @@ module.exports = {
             url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
             title: 'Вконтактер',
             description: 'Был на вконтакте',
+            image: 'vk.png',
             rules: [{
                 url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
                 type: 'navigation',
@@ -17,6 +18,7 @@ module.exports = {
             description: 'Много раз был на вконтакте',
             // работает как availableAfter, но указывает на предыдущую ачивку
             parent: 'vk1',
+            image: 'vk.png',
             rules: [{
                 url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
                 type: 'navigation',
@@ -28,6 +30,7 @@ module.exports = {
             title: 'Павел Дуров',
             description: 'Очень много раз был на вконтакте',
             availableAfter: ['vk2'],
+            image: 'durov.jpg',
             rules: [{
                 type: 'navigation',
                 url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
@@ -42,6 +45,7 @@ module.exports = {
             id: 'ok',
             title: 'Одноклассник',
             description: 'Много раз был на одноклассниках',
+            image: 'ok.png',
             rules: [{
                 type: 'navigation',
                 url: 'https?:\\/\\/(www\\.)?(ok\\.ru|odnoklassniki\\.ru)\\/.*',

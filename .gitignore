@@ -16,3 +16,5 @@ server/node_modules
 
 # Common files
 node_modules/
+
+public/
