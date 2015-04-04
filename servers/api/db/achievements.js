@@ -54,5 +54,28 @@ module.exports = {
         });
 
         return deferred.promise;
+    },
+
+    get: function (id) {
+        var deferred = Q.defer();
+
+        utils.getDatabase('achievements').then(function (db) {
+            var collection = db.collection('browser');
+
+            collection.findOne({id: id}, function (err, achievement) {
+                if (err) {
+                    deferred.reject(err);
+                    return;
+                }
+
+                if (achievement) {
+                    deferred.resolve(achievement);
+                } else {
+                    deferred.reject();
+                }
+            });
+        });
+
+        return deferred.promise;
     }
 };

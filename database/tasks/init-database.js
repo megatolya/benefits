@@ -45,7 +45,8 @@ module.exports = function (grunt) {
                 cropwidth: IMAGE_SIZE,
                 cropheight: IMAGE_SIZE,
                 x:0,
-                y:0
+                y:0,
+                fill: true
             });
         }));
 
