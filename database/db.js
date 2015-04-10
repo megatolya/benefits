@@ -16,7 +16,6 @@ module.exports = {
             id: 'vk2',
             title: 'Вконтактер 80 уровня',
             description: 'Много раз был на вконтакте',
-            // работает как availableAfter, но указывает на предыдущую ачивку
             parent: 'vk1',
             image: 'vk.png',
             rules: [{
@@ -29,7 +28,7 @@ module.exports = {
             id: 'vk3',
             title: 'Павел Дуров',
             description: 'Очень много раз был на вконтакте',
-            availableAfter: ['vk2'],
+            parent: 'vk2',
             image: 'durov.jpg',
             rules: [{
                 type: 'navigation',
@@ -74,7 +73,7 @@ module.exports = {
 
     userAchievements: {
         uid2: ['vk1'],
-        uid3: ['ok']
+        uid3: ['ok', 'vk2', 'vk1']
     },
 
     userHits: {}

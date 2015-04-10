@@ -4,6 +4,7 @@
 }
 
 .achievement {
+    text-align: left;
     background: white;
     border: 1px solid rgba(128, 128, 128, 0.04);
     border-radius: 2px;
@@ -81,7 +82,8 @@
     display: inline-block;
     margin: 4px;
     text-align: center;
-    min-width: 367px;
+    width: 30%;
+    min-width: 360px;
     height: 131px;
     vertical-align: top;
 }

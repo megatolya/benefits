@@ -15,8 +15,10 @@ html
         .container-fluid
             .collapse.navbar-collapse
                 ul.nav.navbar-nav
+                    li(class='activj')
+                        a(href="/achievements") Каталог достижений
                     li
-                        a.active(href="/achievements") Достижения
+                        a(href="/achievements/new") Новое достижение
     block content
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')

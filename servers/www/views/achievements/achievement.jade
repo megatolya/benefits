@@ -2,7 +2,7 @@ include ../mixins/index
 extends ./layout.jade
 
 block content
-    h1.achievement-header Достижение
+    h2.achievement-header=achievement.title
     +achievement(achievement, true)
 
     - if (achievement.children.length || achievement.parents.length) {
