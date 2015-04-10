@@ -1,0 +1,17 @@
+mixin achievement-content(achievement)
+    img.achievement__image(src=achievement.image)
+    .achievement__main-info
+        .achievement__name=achievement.title
+        .achievement__desc=achievement.description
+
+mixin achievement(achievement, big)
+    if big
+        - attributes.class = 'achievement_size_big';
+        div(class=attributes.class).achievement
+            + achievement-content(achievement)
+    else
+        a(href='/achievements/' + achievement.id, class=attributes.class).achievement
+            + achievement-content(achievement)
+
+mixin holder(holder)
+    .holder=holder.name

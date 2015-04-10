@@ -1,12 +1,9 @@
+include ../mixins/index
 extends ./layout.jade
 
 block content
     h1.achievement-header Достижение
-    .achievement.achievement_size_big
-        .achievement__main-info
-            img.achievement__image(src=achievement.image)
-            h1.achievement__name=achievement.title
-        span.achievement__desc=achievement.description
+    +achievement(achievement, true)
 
     - if (achievement.children.length || achievement.parents.length) {
         .well
@@ -14,11 +11,7 @@ block content
                 .achievement-info-block
                     h4 Содержится в
                     - achievement.children.forEach(function (achievement) {
-                        a(href='/achievements/' + achievement.id).achievement
-                            .achievement__main-info
-                                img.achievement__image(src=achievement.image)
-                                span.achievement__name=achievement.title
-                            span.achievement__desc=achievement.description
+                        +achievement(achievement)
                     - });
             - }
 
@@ -26,23 +19,15 @@ block content
                 .achievement-info-block
                     h4 Содержит
                     - achievement.parents.forEach(function (achievement) {
-                        a(href='/achievements/' + achievement.id).achievement
-                            .achievement__main-info
-                                img.achievement__image(src=achievement.image)
-                                span.achievement__name=achievement.title
-                            span.achievement__desc=achievement.description
+                        +achievement(achievement)
                     - });
             - }
 
             - if (achievement.holders.length) {
                 .achievement-info-block
                     h4 Держатели
-                    - achievement.parents.forEach(function (achievement) {
-                        a(href='/achievements/' + achievement.id).achievement
-                            .achievement__main-info
-                                img.achievement__image(src=achievement.image)
-                                span.achievement__name=achievement.title
-                            span.achievement__desc=achievement.description
+                    - achievement.holders.forEach(function (holder) {
+                        +holder(holder)
                     - });
             - }
     - }

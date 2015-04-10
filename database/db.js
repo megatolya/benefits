@@ -56,17 +56,17 @@ module.exports = {
 
     users: [
         {
-            uid: 'uid1',
+            id: 'uid1',
             salt: 'salt1',
             name: 'Николай'
         },
         {
-            uid: 'uid2',
+            id: 'uid2',
             salt: 'salt2',
             name: 'Степан'
         },
         {
-            uid: 'uid3',
+            id: 'uid3',
             salt: 'salt3',
             name: 'Наташа'
         }

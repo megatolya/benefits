@@ -31,7 +31,7 @@ module.exports = {
     },
 
     find: function (dataToFind) {
-         var deferred = Q.defer();
+        var deferred = Q.defer();
 
         utils.getDatabase('users')
             .then(function (db) {
