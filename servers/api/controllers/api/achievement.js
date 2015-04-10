@@ -5,7 +5,7 @@ var normalizer = require('../../db/normalizer');
 var Q = require('q');
 
 // TODO
-function normalizeAchievement (achievement) {
+function normalizeAchievement(achievement) {
     delete achievement._id;
     delete achievement.url;
     delete achievement.rules;
@@ -42,7 +42,6 @@ module.exports = function (req, res, next) {
                 res.json(achievement);
             }).fail(next);
         }).fail(next);
-
 
         normalizeAchievement(achievement);
     }).fail(next);
