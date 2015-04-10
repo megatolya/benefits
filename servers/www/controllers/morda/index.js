@@ -5,13 +5,11 @@ var _ = require('lodash');
 
 module.exports = function (app) {
     app.get('/', function (req, res, next) {
-        if (!req.uid) {
+        if (!req.user) {
             res.render('promo');
             return;
         }
 
-        userProvider.get(req.uid).then(function (user) {
-            res.magicRender('dashboard', req, user);
-        }).fail(next);
+        res.magicRender('dashboard', req, req.user);
     });
 };

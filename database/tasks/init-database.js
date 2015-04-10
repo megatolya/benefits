@@ -51,7 +51,7 @@ module.exports = function (grunt) {
         }));
 
         var users = Q.all(data.users.map(function (user) {
-            return db.users.add(user.uid, user.salt);
+            return db.users.add({id: user.uid, salt: user.salt});
         }));
 
         var userAchievements = Q.all(Object.keys(data.userAchievements).map(function (uid) {

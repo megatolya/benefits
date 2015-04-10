@@ -5,4 +5,7 @@ module.exports = function (app) {
         res.magicRender('auth', req);
         next();
     });
+
+    require('./serialize-users');
+    require('./twitter-strategy')(app);
 };

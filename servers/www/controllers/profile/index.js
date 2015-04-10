@@ -4,13 +4,11 @@ var userProvider = require('../../dataproviders/user');
 
 module.exports = function (app) {
     app.get('/me', function (req, res, next) {
-        if (!req.uid) {
+        if (!req.user) {
             res.render('promo');
             return;
         }
 
-        userProvider.get(req.uid).then(function (user) {
-            res.magicRender('profile', req, user);
-        }).fail(next);
+        res.magicRender('profile', req, req.user);
     });
 };

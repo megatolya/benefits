@@ -5,22 +5,22 @@ var db = require('../db');
 var console = require('../console');
 var uuid = require('node-uuid');
 var md5 = require('MD5');
+var _ = require('lodash');
 
 module.exports = {
-    registerUser: function () {
+    registerUser: function (userData) {
         var deferred = Q.defer();
-        var id = uuid.v4();
-        var salt = uuid.v4();
 
-        db.users.add(id, salt).then(function () {
-            var newUser = {
-                id: id,
-                salt: salt
-            };
+        userData = userData || {};
+        userData.id = uuid.v4();
+        userData.salt = uuid.v4();
 
-            deferred.resolve(newUser);
-            console.log('new user created', newUser);
-        }).fail(deferred.reject);
+        db.users.add(userData)
+            .then(function () {
+                deferred.resolve(userData);
+                console.log('new user created', userData);
+            })
+            .fail(deferred.reject);
 
         return deferred.promise;
     },

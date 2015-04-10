@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var uuid = require('node-uuid');
 var path = require('path');
+var passport = require('passport');
 
 app.disable('x-powered-by');
 app.disable('etag');
@@ -22,20 +23,25 @@ app.set('view engine', 'jade');
 app.use(serve(path.join(__dirname, '..', '..', '/public')));
 console.log((path.join(__dirname, '..', '..', '/public')));
 
+app.use(session({
+    secret: config.session.secret,
+    resave: true,
+    saveUninitialized: false
+}));
+
+app.use(cookieParser(config.cookie.secret));
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
 
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(session({
-    secret: config.session.secret,
-    resave: true,
-    saveUninitialized: false
-}));
-app.use(cookieParser(config.cookie.secret));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(require('./auth/middleware'));
+
 require('./request')(app);
 require('./response')(app);
 

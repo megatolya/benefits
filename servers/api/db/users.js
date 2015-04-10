@@ -2,26 +2,26 @@
 
 var Q = require('q');
 var utils = require('./utils');
+var _ = require('lodash');
 
 module.exports = {
-    add: function (uid, salt) {
+    add: function (userData) {
         var deferred = Q.defer();
 
-        utils.getDatabase('users').then(function (db) {
-            var collection = db.collection('userInfo');
+        utils.getDatabase('users')
+            .then(function (db) {
+                var collection = db.collection('userInfo');
 
-            collection.insert({
-                id: uid,
-                salt: salt
-            }, function (err, res) {
-                if (err) {
-                    deferred.reject(err);
-                    return;
-                }
+                collection.insert(userData, function (err, res) {
+                    if (err) {
+                        deferred.reject(err);
+                        return;
+                    }
 
-                deferred.resolve();
-            });
-        }).fail(deferred.reject);
+                    deferred.resolve();
+                });
+            })
+            .fail(deferred.reject);
 
         return deferred.promise;
     },

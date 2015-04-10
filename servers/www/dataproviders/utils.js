@@ -6,19 +6,25 @@ var config = require('../../config');
 var _ = require('lodash');
 
 module.exports = {
-    askApi: function (path) {
-        var requestOptions = _.extend(config.apiServer, {bodyEncoding: 'json', path: path});
-        return ask(requestOptions).then(function (res) {
-            var json = null;
-            try {
-                json = JSON.parse(res.data.toString());
-            } catch (err) {}
+    askApi: function (path, options) {
+        var requestOptions = _.extend(
+            config.apiServer,
+            {bodyEncoding: 'json', path: path, method: 'GET'},
+            options
+        );
+        return ask(requestOptions).then(this._onApiResponse.bind(this));
+    },
 
-            if (json) {
-                return json;
-            }
+    _onApiResponse: function (res) {
+        var json = null;
+        try {
+            json = JSON.parse(res.data.toString());
+        } catch (err) {}
 
-            return Q.reject(json);
-        });
+        if (json) {
+            return json;
+        }
+
+        return Q.reject(json);
     }
 };
