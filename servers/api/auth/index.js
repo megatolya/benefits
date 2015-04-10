@@ -18,7 +18,7 @@ module.exports = {
         db.users.add(userData)
             .then(function () {
                 deferred.resolve(userData);
-                console.log('new user created', userData);
+                console.log('New user created', userData.id);
             })
             .fail(deferred.reject);
 

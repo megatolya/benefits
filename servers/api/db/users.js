@@ -27,25 +27,35 @@ module.exports = {
     },
 
     get: function (uid) {
-        var deferred = Q.defer();
+        return this.find({id: uid});
+    },
 
-        utils.getDatabase('users').then(function (db) {
-            var users = db.collection('userInfo');
+    find: function (dataToFind) {
+         var deferred = Q.defer();
 
-            users.findOne({id: uid}, function (err, user) {
-                if (err) {
-                    deferred.reject(err);
-                    return;
-                }
+        utils.getDatabase('users')
+            .then(function (db) {
+                var users = db.collection('userInfo');
 
-                if (user) {
-                    deferred.resolve(user);
-                } else {
-                    deferred.reject(null);
-                }
-            });
-        }).fail(deferred.reject);
+                console.log('Find user by: ', dataToFind);
+
+                users.findOne(dataToFind, function (err, user) {
+                    if (err) {
+                        deferred.reject(err);
+                        return;
+                    }
+
+                    if (user) {
+                        console.log('User found');
+                        deferred.resolve(user);
+                    } else {
+                        console.log('User not found');
+                        deferred.reject(null);
+                    }
+                });
+            })
+            .fail(deferred.reject);
 
         return deferred.promise;
-    },
+    }
 };

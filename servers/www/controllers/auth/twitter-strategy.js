@@ -5,6 +5,11 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 
 var userProvider = require('../../dataproviders/user');
 
+var _ = require('lodash');
+var authUtils = require('./utils');
+
+var config = require('../../../config');
+
 // TODO get this values from environment variables
 var TWITTER_CONSUMER_KEY = 'xr3M1vwLGBRI91jgYqn4WKfYb';
 var TWITTER_CONSUMER_SECRET = 'wNWTdK1x5fOUKeDXBTpMAbMPpJ2Oc9JE5V1Vbhwtw1gEpgDyt5';
@@ -18,15 +23,23 @@ passport.use(new TwitterStrategy({
     },
 
     function (token, tokenSecret, profile, done) {
-        console.log('token, tokenSecret, username: ', token, tokenSecret, profile.username);
-        userProvider.put(profile)
+        console.log('User accepted authorization');
+        userProvider
+            .put(config.providers.twitter, getUserDataFromProfile(profile))
             .then(function (user) {
-                console.log('user saved', user.id);
+                console.log('User saved', user.id);
                 done(null, user);
             })
             .fail(done);
     }
 ));
+
+function getUserDataFromProfile(profile) {
+    return {
+        twitterId: profile.id,
+        twitterData: authUtils.cleanProfile(profile)
+    };
+}
 
 module.exports = function (app) {
     app.get('/auth/twitter', passport.authenticate('twitter'));

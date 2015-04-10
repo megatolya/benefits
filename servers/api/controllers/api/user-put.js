@@ -6,7 +6,18 @@ var auth = require('../../auth');
 var console = require('../../console');
 
 module.exports = function (req, res, next) {
-    auth.registerUser(req.body)
+    var provider = req.body.provider;
+    var userData = req.body.userData;
+
+    var dataToFind = {};
+    var idFieldName = provider + 'Id';
+    dataToFind[idFieldName] = userData[idFieldName];
+
+    db.users.find(dataToFind)
         .then(res.json.bind(res))
-        .fail(next);
+        .fail(function () {
+            auth.registerUser(userData)
+                .then(res.json.bind(res))
+                .fail(next);
+        });
 };

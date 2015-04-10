@@ -24,6 +24,11 @@ module.exports = {
         secret: 'russia'
     },
 
+    providers: {
+        twitter: 'twitter',
+        facebook: 'facebook'
+    },
+
     db: {
         userHits: {
             connectionUrl: 'mongodb://localhost:27017/user-hits'
