@@ -1,0 +1,54 @@
+.achievement-header {
+    text-align: center;
+    margin: 32px;
+}
+
+.achievement {
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: inline-block;
+    box-shadow: 0 0 10px 0.5px rgba(0,0,0,0.5);
+    padding: 10px;
+    width: 340px;
+    margin: 10px;
+}
+
+.achievement_size_big {
+    display: block;
+    width: auto;
+    padding: 40px;
+    margin: 10px 0;
+}
+
+.achievement_size_big .achievement__image {
+    width: 100px;
+    height: 100px;
+}
+
+.achievement_size_big .achievement__desc {
+    color: black;
+    font-size: 15px;
+    margin: 10px;
+}
+
+.achievement:link,
+.achievement:visited,
+.achievement:active {
+    text-decoration: none;
+}
+
+.achievement__name {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.achievement__image {
+    height: 50px;
+    width: 50px;
+}
+
+.achievement__desc {
+    display: inline-block;
+    font-size: 12px;
+    color: grey;
+}

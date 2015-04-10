@@ -1,0 +1,9 @@
+extends ./layout.jade
+
+block content
+    h1.achievement-header Достижение
+    .achievement.achievement_size_big
+        .achievement__main-info
+            img.achievement__image(src=achievement.image)
+            h1.achievement__name=achievement.title
+        span.achievement__desc=achievement.description

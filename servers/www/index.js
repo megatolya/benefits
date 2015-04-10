@@ -41,6 +41,7 @@ require('./response')(app);
 
 require('./controllers/morda')(app);
 require('./controllers/profile')(app);
+require('./controllers/achievements')(app);
 
 app.use(require('./error-handler'));
 

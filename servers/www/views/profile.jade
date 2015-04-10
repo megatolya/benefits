@@ -5,6 +5,6 @@ block content
 
     - achievements.forEach(function (achievement) {
         .achievement
-            p=achievement.title
-            img(src=achievement.image)
+            span.achievement__name=achievement.title
+            img.achievement__image(src=achievement.image)
     - });
