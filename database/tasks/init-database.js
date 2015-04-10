@@ -18,7 +18,7 @@ module.exports = function (grunt) {
             grunt.file.mkdir(path.join('public', 'achievements'));
 
             return {
-                web: webPath,
+                web: '/' + webPath,
                 abs: path.resolve(__dirname, path.join('..', '..', 'public', webPath))
             };
         }
