@@ -18,11 +18,14 @@ module.exports = function (req, res, next) {
     Q.all([
         db.achievements.get(req.params.id),
         normalizer.getParentAchievements(id),
-        normalizer.getChildrenAchievements(id)
+        normalizer.getChildrenAchievements(id),
+        normalizer.getAchievementHolders(id)
     ]).then(function (results) {
         var achievement = results[0];
         var parents = results[1];
         var children = results[2];
+        var achievementHolders = results[3];
+
         var parentsPromises = Q.all(parents.map(function (parent) {
             return db.achievements.get(parent);
         }));
@@ -36,10 +39,14 @@ module.exports = function (req, res, next) {
             parentsPromises.then(function (parents) {
                 parents = parents.map(normalizeAchievement);
 
-                achievement.parents = parents;
-                achievement.children = children;
-
-                res.json(achievement);
+                Q.all(achievementHolders.map(function (uid) {
+                    return db.users.get(uid);
+                })).then(function (holders) {
+                    achievement.parents = parents;
+                    achievement.children = children;
+                    achievement.holders = holders;
+                    res.json(achievement);
+                });
             }).fail(next);
         }).fail(next);
 

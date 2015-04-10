@@ -13,6 +13,11 @@
     margin: 10px;
 }
 
+.achievement_block {
+    display: block;
+    width: auto;
+}
+
 .achievement_size_big {
     display: block;
     width: auto;
