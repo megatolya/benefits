@@ -66,7 +66,6 @@ require('./request')(app);
 require('./response')(app);
 
 require('./controllers/morda')(app);
-require('./controllers/promo')(app);
 require('./controllers/profile')(app);
 require('./controllers/settings')(app);
 require('./controllers/achievements')(app);
