@@ -8,9 +8,18 @@ html
 
     meta(name='description', content=description)
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    //-link(rel='stylesheet', href='stylesheets/normalize.css')
-    //-link(rel='stylesheet', href='stylesheets/main.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/index.css')
   body
+    nav.navbar.navbar-default
+        .container-fluid
+            .collapse.navbar-collapse
+                ul.nav.navbar-nav
+                    li(class='activj')
+                        a(href="/achievements") Каталог достижений
+                    li
+                        a(href="/achievements/new") Новое достижение
     block content
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')

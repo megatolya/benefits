@@ -41,6 +41,7 @@
     "lodash": "^3.5.0",
     "minimist": "^1.1.1",
     "mongodb": "^1.4.34",
+    "node-sass": "^2.1.1",
     "node-uuid": "^1.4.3",
     "passport": "^0.2.1",
     "passport-twitter": "^1.0.3",

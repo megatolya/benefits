@@ -10,6 +10,7 @@ module.exports = function (grunt) {
     grunt.loadTasks('./database/tasks/');
 
     grunt.loadTasks('./servers/tasks/');
+    grunt.loadTasks('./servers/www/tasks/');
 
     grunt.registerTask('setup', 'Установка окружения', ['githooks']);
 
@@ -24,7 +25,7 @@ module.exports = function (grunt) {
         options: {
             jshintrc: true
         },
-        server: ['servers/**/*.js'],
+        server: ['servers/**/*.js', '!servers/www/public/libs/**'],
         db: ['database/**/*.js'],
         extensions: ['<%= extensions_path %>/**/*.js', '!<%= dist_root_path %>/**', '!<%= specific_path %>/**']
     });
@@ -37,7 +38,8 @@ module.exports = function (grunt) {
             'servers/**/controllers/**.js',
             'servers/**/*.js',
             'extensions/common/**.js',
-            'extensions/build/**.js'
+            'extensions/build/**.js',
+            '!servers/www/public/libs/**'
         ],
         options: {
             config: '.jscsrc'
