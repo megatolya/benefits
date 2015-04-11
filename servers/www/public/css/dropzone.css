@@ -1,0 +1,5 @@
+.dropzone {
+    &_done {
+        border: 2px solid transparent;
+    }
+}

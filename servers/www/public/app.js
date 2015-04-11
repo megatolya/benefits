@@ -8,6 +8,7 @@ $(function () {
     setTimeout(function () {
         Dropzone.instances[0].on('addedfile', function (file) {
             fileAdded = true;
+            $('.dropzone').addClass('dropzone_done');
         });
     }, 0);
 
