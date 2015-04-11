@@ -9,6 +9,6 @@ module.exports = function (app) {
             return;
         }
 
-        res.magicRender('profile', req, req.user);
+        res.magicRender('profile', req);
     });
 };

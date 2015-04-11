@@ -12,6 +12,7 @@ express.response.magicRender = function (templateName, req, params) {
         uid: req.uid,
         path: req.path,
         description: 'FIXME',
-        i18n: i18n[req.getLang()]
+        i18n: i18n[req.getLang()],
+        user: req.user
     }, params || {}));
 };

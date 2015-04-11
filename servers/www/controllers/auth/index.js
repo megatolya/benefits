@@ -8,4 +8,5 @@ module.exports = function (app) {
 
     require('./serialize-users');
     require('./twitter-strategy')(app);
+    require('./facebook-strategy')(app);
 };

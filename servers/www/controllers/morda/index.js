@@ -10,6 +10,6 @@ module.exports = function (app) {
             return;
         }
 
-        res.magicRender('dashboard', req, req.user);
+        res.magicRender('dashboard', req);
     });
 };

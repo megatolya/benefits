@@ -26,7 +26,7 @@ module.exports = {
         secret: 'russia'
     },
 
-    // TODO get keys and secrets from environment variables
+    // TODO get secrets from environment variables
     providers: {
         twitter: {
             name: 'twitter',
@@ -35,8 +35,8 @@ module.exports = {
         },
         facebook: {
             name: 'facebook',
-            key: '',
-            secret: ''
+            key: '255470687970868',
+            secret: 'a6e2830ab502a59b5c7192f60c4ec1ef'
         }
     },
 

@@ -45,6 +45,7 @@
     "node-sass": "^2.1.1",
     "node-uuid": "^1.4.3",
     "passport": "^0.2.1",
+    "passport-facebook": "^2.0.0",
     "passport-twitter": "^1.0.3",
     "q": "^1.2.0",
     "q-io": "^1.12.0",

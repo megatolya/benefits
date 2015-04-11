@@ -1,6 +1,8 @@
 'use strict';
 
 var config = require('../../../config');
+var userProvider = require('../../dataproviders/user');
+var _ = require('lodash');
 
 module.exports = {
     /**
@@ -16,9 +18,45 @@ module.exports = {
         return profile;
     },
 
+    /**
+     * Returns callback url for given provider name
+     * @param {string} provider
+     * @returns {string}
+     */
     getCallbackUrl: function (provider) {
         var webServer = config.webServer;
         return webServer.scheme + '://' + webServer.host + ':' +
                 webServer.port + '/auth/' + provider + '/callback';
+    },
+
+    /**
+     * Creates user data for given provider name
+     * Adds name, providerId and providerData fields to result object
+     * @param {string} provider
+     * @param {object} profile
+     * @param {object} customData
+     * @returns {object}
+     */
+    createUserData: function (provider, profile, customData) {
+        var userData = {};
+        userData.name = profile.displayName;
+        userData[provider + 'Id'] = profile.id;
+        userData[provider + 'Data'] = _.extend(this.cleanProfile(profile), customData);
+        return userData;
+    },
+
+    /**
+     * Saves user to db (or updates, if user already exists)
+     * @param {{provider: string, userData: object}} options
+     * @param {function} done
+     */
+    finishAuth: function (options, done) {
+        return userProvider
+            .put(options.provider, options.userData)
+            .then(function (user) {
+                console.log('User saved', user.id);
+                done(null, user);
+            })
+            .fail(done);
     }
 };
