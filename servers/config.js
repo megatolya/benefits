@@ -37,6 +37,11 @@ module.exports = {
             name: 'facebook',
             key: '255470687970868',
             secret: 'a6e2830ab502a59b5c7192f60c4ec1ef'
+        },
+        github: {
+            name: 'github',
+            key: 'f9f6f5c98d894d92bad6',
+            secret: 'd8625cdcbca84ac0ef2e506c61f060968e84d7ff'
         }
     },
 

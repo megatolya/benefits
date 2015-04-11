@@ -1,23 +1,23 @@
 'use strict';
 
 var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
 
 var config = require('../../../config');
-var facebookConfig = config.providers.facebook;
+var gitHubConfig = config.providers.github;
 
 var registerStrategy = require('./register-strategy');
 
 registerStrategy({
-    config: facebookConfig,
-    strategy: FacebookStrategy
+    config: gitHubConfig,
+    strategy: GitHubStrategy
 });
 
 module.exports = function (app) {
-    app.get('/auth/facebook', passport.authenticate('facebook'));
-    app.get('/auth/facebook/callback',
+    app.get('/auth/github', passport.authenticate('github'));
+    app.get('/auth/github/callback',
         passport.authenticate(
-            'facebook',
+            'github',
             {successRedirect: '/', failureRedirect: '/auth'}
         ));
 };
