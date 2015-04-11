@@ -53,10 +53,19 @@
         text-align: center;
         width: 30%;
         min-width: 360px;
-        height: 131px;
+        min-height: 131px;
         vertical-align: top;
     }
+
+    & form.achievement__image {
+        width: 200px;
+        height: 200px;
+        display: inline-block;
+        vertical-align: top;
+        margin: 20px;
+    }
 }
+
 
 .achievement_size_big {
     display: block;

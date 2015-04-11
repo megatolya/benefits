@@ -1,21 +1,27 @@
-mixin achievement-content(achievement)
+mixin achievement-content(achievement, big)
     - if (achievement) {
         img.achievement__image(src=achievement.image)
         .achievement__main-info
-            .achievement__name=achievement.title
-            .achievement__desc=achievement.description
+            .achievement__name(contenteditable=(big ? 'true' : 'false'))=achievement.title
+            .achievement__desc(contenteditable=(big ? 'true' : 'false'))=achievement.description
     - } else {
-        input(type='file').achievement__image
-        .achievement__main-info
-            input.achievement__name
-            input.achievement__desc
+        form(action='/achievements/new-image').dropzone.achievement__image
+        form.achievement__main-info(action='/achievements/new', method='PUT')
+            input.form-control.achievement__name(placeholder='Название')
+            textarea.form-control.achievement__desc(placeholder='Описание')
+            button.btn.btn-default='Создать'
     - }
 
 mixin achievement(achievement, big)
     if big
         - attributes.class = 'achievement_size_big';
-        div(class=attributes.class).achievement
-            +achievement-content(achievement)
+        - if (achievement) {
+            div(class=attributes.class).achievement
+                +achievement-content(achievement, big)
+        - } else {
+            div(class=attributes.class).achievement
+                +achievement-content(achievement, big)
+        - }
     else
         - if (achievement) {
             a(href='/achievements/' + achievement.id, class=attributes.class).achievement
