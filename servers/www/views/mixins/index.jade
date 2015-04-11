@@ -8,8 +8,8 @@ mixin achievement-content(achievement, big)
         form(action='/achievements/new-image').dropzone.achievement__image
             input(name='token', value=token, type='hidden')
         form.achievement__main-info(action='/achievements/new', method='POST')
-            input.form-control.achievement__name(autocomplete='off', name='title', placeholder='Название')
-            textarea.form-control.achievement__desc(name='description', placeholder='Описание')
+            input.form-control.achievement__name(required, autocomplete='off', name='title', placeholder='Название')
+            textarea.form-control.achievement__desc(required, name='description', placeholder='Описание')
             input(name='token', value=token, type='hidden')
             button.btn.btn-default='Создать'
     - }
