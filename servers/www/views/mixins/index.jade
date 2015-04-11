@@ -35,3 +35,10 @@ mixin achievement(achievement, big)
 
 mixin holder(holder)
     .holder=holder.name
+
+mixin headerProfile()
+    - if (user) {
+        a(href="/me/")= user.name
+    - } else {
+        a(href="/auth/") Войти
+    - }

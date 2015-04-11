@@ -31,7 +31,7 @@ module.exports = {
 
     /**
      * Creates user data for given provider name
-     * Adds name, providerId and providerData fields to result object
+     * Adds name, [provider]Id and [provider]Data fields to result object
      * @param {string} provider
      * @param {object} profile
      * @param {object} customData
