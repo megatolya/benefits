@@ -1,6 +1,5 @@
 'use strict';
 
-var sidToUid = Object.create(null);
 var config = require('../../config');
 
 module.exports = function (req, res, next) {

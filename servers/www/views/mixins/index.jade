@@ -38,7 +38,7 @@ mixin holder(holder)
 
 mixin headerProfile()
     - if (user) {
-        a(href="/me/")= user.name
+        a(href="/settings/")= user.name
     - } else {
         a(href="/auth/") Войти
     - }

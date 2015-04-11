@@ -60,13 +60,15 @@ app.use(multer({dest: './temp/',
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(require('./auth/middleware'));
+app.use(require('./middleware/auth'));
 
 require('./request')(app);
 require('./response')(app);
 
 require('./controllers/morda')(app);
+require('./controllers/promo')(app);
 require('./controllers/profile')(app);
+require('./controllers/settings')(app);
 require('./controllers/achievements')(app);
 require('./controllers/auth')(app);
 

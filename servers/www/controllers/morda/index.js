@@ -1,15 +1,10 @@
 'use strict';
 
-var userProvider = require('../../dataproviders/user');
+var guestToPromo = require('../../middleware/guest-to-promo');
 var _ = require('lodash');
 
 module.exports = function (app) {
-    app.get('/', function (req, res, next) {
-        if (!req.user) {
-            res.render('promo');
-            return;
-        }
-
+    app.get('/', guestToPromo, function (req, res, next) {
         res.magicRender('dashboard', req);
     });
 };
