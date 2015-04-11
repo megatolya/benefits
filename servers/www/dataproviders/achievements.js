@@ -9,5 +9,12 @@ module.exports = {
 
     get: function (id) {
         return utils.askApi('/api/v1/achievement/' + id);
+    },
+
+    create: function (achievement) {
+        return utils.askApi('/api/v1/achievement', {
+            method: 'PUT',
+            body: achievement
+        });
     }
 };

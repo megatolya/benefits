@@ -6,9 +6,11 @@ mixin achievement-content(achievement, big)
             .achievement__desc(contenteditable=(big ? 'true' : 'false'))=achievement.description
     - } else {
         form(action='/achievements/new-image').dropzone.achievement__image
-        form.achievement__main-info(action='/achievements/new', method='PUT')
-            input.form-control.achievement__name(placeholder='Название')
-            textarea.form-control.achievement__desc(placeholder='Описание')
+            input(name='token', value=token, type='hidden')
+        form.achievement__main-info(action='/achievements/new', method='POST')
+            input.form-control.achievement__name(autocomplete='off', name='title', placeholder='Название')
+            textarea.form-control.achievement__desc(name='description', placeholder='Описание')
+            input(name='token', value=token, type='hidden')
             button.btn.btn-default='Создать'
     - }
 
@@ -28,7 +30,7 @@ mixin achievement(achievement, big)
                 +achievement-content(achievement)
         - } else {
             .div(class=attributes.class).achievement
-                +achievement-content(achievement)
+                +achievement-content(null)
         - }
 
 mixin holder(holder)

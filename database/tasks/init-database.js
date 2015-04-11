@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     var data = require('../db.js');
     var Q = require('q');
     var _ = require('lodash');
-    var easyimg = require('easyimage');
+    var images = require('../../servers/www/images');
     var path = require('path');
     var md5 = require('MD5');
 
@@ -35,19 +35,7 @@ module.exports = function (grunt) {
         }));
 
         var achievementImages = Q.all(data.achievements.map(function (achievement) {
-            var IMAGE_SIZE = 100;
-
-            return easyimg.rescrop({
-                src: getSourcePath(achievement.image),
-                dst: getDistPath(achievement.image).abs,
-                width: IMAGE_SIZE,
-                height: IMAGE_SIZE,
-                cropwidth: IMAGE_SIZE,
-                cropheight: IMAGE_SIZE,
-                x:0,
-                y:0,
-                fill: true
-            });
+            return images.crop(getSourcePath(achievement.image), getDistPath(achievement.image).abs);
         }));
 
         var users = Q.all(data.users.map(function (user) {

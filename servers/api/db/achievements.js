@@ -12,7 +12,7 @@ module.exports = {
         utils.getDatabase('achievements').then(function (db) {
             var collection = db.collection('browser');
 
-            achievement.rules.forEach(function (rule) {
+            (achievement.rules || []).forEach(function (rule) {
                 rule.id = uuid.v4();
             });
 
@@ -22,7 +22,6 @@ module.exports = {
                     return;
                 }
 
-                console.log('inserted', achievement.id);
                 deferred.resolve(res);
             });
         });

@@ -3,5 +3,7 @@ include ../mixins/index
 extends ../layout
 
 block content
+    script.
+        var token = '!{token}';
     h2.achievement-header Новое достижение
     +achievement(null, true)

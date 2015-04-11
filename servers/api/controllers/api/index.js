@@ -9,6 +9,8 @@ module.exports = function (app) {
     app.get('/api/v1/all-achievements', require('./allAchievements'));
     app.get('/api/v1/achievement/:id', require('./achievement'));
 
+    app.put('/api/v1/achievement/', require('./achievement-put'));
+
     app.get('/api/v1/user/:uid', require('./user-get'));
     app.put('/api/v1/user', require('./user-put'));
 

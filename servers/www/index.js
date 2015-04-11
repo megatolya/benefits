@@ -10,6 +10,9 @@ var session = require('express-session');
 var uuid = require('node-uuid');
 var path = require('path');
 var passport = require('passport');
+var multer  = require('multer');
+var easyimage = require('easyimage');
+var fs = require('q-io/fs');
 
 app.disable('x-powered-by');
 app.disable('etag');
@@ -21,7 +24,6 @@ app.set('views', path.resolve(path.join(__dirname, 'views')));
 app.set('view engine', 'jade');
 
 app.use(serve(path.join(__dirname, '..', '..', '/public')));
-console.log((path.join(__dirname, '..', '..', '/public')));
 
 app.use(session({
     secret: config.session.secret,
@@ -36,6 +38,24 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // parse application/json
 app.use(bodyParser.json());
+
+// parse multipart
+app.use(multer({dest: './temp/',
+    rename: function (fieldname, filename, req) {
+        return req.body.token;
+    },
+    onFileUploadComplete: function (file) {
+        var extname = path.extname(file.path);
+        if (extname !== '.png') {
+            easyimage.convert({
+                src: file.path,
+                dst: file.path.replace(extname, '.png')
+            }).then(function () {
+                fs.remove(file.path);
+            });
+        }
+    }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
