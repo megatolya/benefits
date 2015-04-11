@@ -1,5 +1,7 @@
 'use strict';
 
+var config = require('../../../config');
+
 module.exports = {
     /**
      * Deletes all keys with '_' from profile
@@ -12,5 +14,11 @@ module.exports = {
             }
         });
         return profile;
+    },
+
+    getCallbackUrl: function (provider) {
+        var webServer = config.webServer;
+        return webServer.scheme + '://' + webServer.host + ':' +
+                webServer.port + '/auth/' + provider + '/callback';
     }
 };

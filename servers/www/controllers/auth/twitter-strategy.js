@@ -9,21 +9,16 @@ var _ = require('lodash');
 var authUtils = require('./utils');
 
 var config = require('../../../config');
-
-// TODO get this values from environment variables
-var TWITTER_CONSUMER_KEY = 'xr3M1vwLGBRI91jgYqn4WKfYb';
-var TWITTER_CONSUMER_SECRET = 'wNWTdK1x5fOUKeDXBTpMAbMPpJ2Oc9JE5V1Vbhwtw1gEpgDyt5';
-
-var callbackUrl = 'http://localhost:3001/auth/twitter/callback';
+var twitterConfig = config.providers.twitter;
 
 passport.use(new TwitterStrategy({
-        consumerKey: TWITTER_CONSUMER_KEY,
-        consumerSecret: TWITTER_CONSUMER_SECRET,
-        callbackURL: callbackUrl
+        consumerKey: twitterConfig.key,
+        consumerSecret: twitterConfig.secret,
+        callbackURL: authUtils.getCallbackUrl(twitterConfig.name)
     },
 
     function (token, tokenSecret, profile, done) {
-        console.log('User accepted authorization');
+        console.log('User accepted authorization from twitter');
         userProvider
             .put(config.providers.twitter, getUserDataFromProfile(profile))
             .then(function (user) {

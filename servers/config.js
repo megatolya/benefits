@@ -7,11 +7,13 @@ Q.longStackSupport = true;
 
 module.exports = {
     apiServer: {
+        scheme: 'http',
         port: 3000,
         host: 'localhost'
     },
 
     webServer: {
+        scheme: 'http',
         port: 3001,
         host: 'localhost'
     },
@@ -24,9 +26,18 @@ module.exports = {
         secret: 'russia'
     },
 
+    // TODO get keys and secrets from environment variables
     providers: {
-        twitter: 'twitter',
-        facebook: 'facebook'
+        twitter: {
+            name: 'twitter',
+            key: 'xr3M1vwLGBRI91jgYqn4WKfYb',
+            secret: 'wNWTdK1x5fOUKeDXBTpMAbMPpJ2Oc9JE5V1Vbhwtw1gEpgDyt5'
+        },
+        facebook: {
+            name: 'facebook',
+            key: '',
+            secret: ''
+        }
     },
 
     db: {
