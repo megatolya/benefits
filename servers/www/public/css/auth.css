@@ -1,0 +1,11 @@
+
+.social-box {
+    margin: 0 auto;
+    display: block;
+    width: 510px;
+
+    & .btn {
+        width: 450px;
+        margin: 8px auto;
+    }
+}

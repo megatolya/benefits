@@ -1,6 +1,7 @@
 'use strict';
 
 var sass = require('node-sass');
+var path = require('path');
 
 module.exports = function (grunt) {
     grunt.registerTask('public', 'Верстка', function () {
@@ -10,6 +11,7 @@ module.exports = function (grunt) {
         var extensions = ['js', 'css'];
 
         function concat(extension, filename) {
+            console.log('reading', filename);
             output[extension] += grunt.file.read(filename);
         }
 
@@ -33,6 +35,12 @@ module.exports = function (grunt) {
 
         extensions.forEach(function (extension) {
             grunt.file.write('public/index.' + extension, output[extension]);
+        });
+
+        grunt.file.expand([
+            'servers/www/public/libs/fontawesome/fonts/*'
+        ]).forEach(function (font) {
+            grunt.file.copy(font, 'public/fonts/' + path.basename(font));
         });
     });
 };
