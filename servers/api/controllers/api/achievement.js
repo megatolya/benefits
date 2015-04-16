@@ -1,7 +1,7 @@
 'use strict';
 
 var db = require('../../db');
-var normalizer = require('../../db/normalizer');
+// var normalizer = require('../../db/normalizer');
 var Q = require('q');
 
 // TODO
@@ -16,10 +16,10 @@ module.exports = function (req, res, next) {
     var id = req.params.id;
 
     Q.all([
-        db.achievements.get(req.params.id),
-        normalizer.getParentAchievements(id),
-        normalizer.getChildrenAchievements(id),
-        normalizer.getAchievementHolders(id)
+        db.achievements.get(req.params.id)
+        // normalizer.getParentAchievements(id),
+        // normalizer.getChildrenAchievements(id),
+        // normalizer.getAchievementHolders(id)
     ]).then(function (results) {
         var achievement = results[0];
         var parents = results[1];
