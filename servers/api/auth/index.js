@@ -3,7 +3,7 @@
 var Q = require('q');
 var db = require('../db');
 var console = require('../console');
-var uuid = require('node-uuid');
+var uniq = require('../../common/uniq');
 var md5 = require('MD5');
 var _ = require('lodash');
 
@@ -12,8 +12,8 @@ module.exports = {
         var deferred = Q.defer();
 
         userData = userData || {};
-        userData.id = uuid.v4();
-        userData.salt = uuid.v4();
+        userData.id = uniq();
+        userData.salt = uniq();
 
         db.users.add(userData)
             .then(function () {

@@ -5,7 +5,6 @@ var config = require('../config');
 var app = express();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var uuid = require('node-uuid');
 
 app.disable('x-powered-by');
 app.disable('etag');

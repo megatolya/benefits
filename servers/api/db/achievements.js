@@ -3,7 +3,7 @@
 var Q = require('q');
 var utils = require('./utils');
 var console = require('../console');
-var uuid = require('node-uuid');
+var uniq = require('../../common/uniq');
 
 module.exports = {
     add: function (achievement) {
@@ -13,7 +13,7 @@ module.exports = {
             var collection = db.collection('browser');
 
             (achievement.rules || []).forEach(function (rule) {
-                rule.id = uuid.v4();
+                rule.id = uniq();
             });
 
             collection.insert(achievement, function (err, res) {

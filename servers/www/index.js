@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 var serve = require('serve-static');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var uuid = require('node-uuid');
 var path = require('path');
 var passport = require('passport');
 var multer  = require('multer');
