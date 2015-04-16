@@ -76,5 +76,28 @@ module.exports = {
         });
 
         return deferred.promise;
+    },
+
+    update: function (achievement) {
+        var deferred = Q.defer();
+
+        utils.getDatabase('achievements').then(function (db) {
+            var collection = db.collection('browser');
+
+            collection.update({_id: achievement._id}, achievement, function (err, res) {
+                if (err) {
+                    deferred.reject(err);
+                    return;
+                }
+
+                if (res) {
+                    deferred.resolve(achievement);
+                } else {
+                    deferred.reject();
+                }
+            });
+        });
+
+        return deferred.promise;
     }
 };

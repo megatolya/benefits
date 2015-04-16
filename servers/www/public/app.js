@@ -18,6 +18,14 @@ function main() {
             return false;
         }
     });
+
+    $('.achievement__name, .achievement__desc').on('input', function () {
+        var $this = $(this);
+        var data = {};
+
+        data[$this.data('name')] = $this.html();
+        $.post(window.location.pathname, data);
+    });
 }
 
 $(function () {
