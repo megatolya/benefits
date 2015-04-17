@@ -3,7 +3,7 @@
 var Q = require('q');
 var utils = require('./utils');
 var console = require('../console');
-var uuid = require('node-uuid');
+var uniq = require('../../common/uniq');
 
 module.exports = {
     add: function (achievement) {
@@ -13,7 +13,7 @@ module.exports = {
             var collection = db.collection('browser');
 
             (achievement.rules || []).forEach(function (rule) {
-                rule.id = uuid.v4();
+                rule.id = uniq();
             });
 
             collection.insert(achievement, function (err, res) {
@@ -68,6 +68,29 @@ module.exports = {
                 }
 
                 if (achievement) {
+                    deferred.resolve(achievement);
+                } else {
+                    deferred.reject();
+                }
+            });
+        });
+
+        return deferred.promise;
+    },
+
+    update: function (achievement) {
+        var deferred = Q.defer();
+
+        utils.getDatabase('achievements').then(function (db) {
+            var collection = db.collection('browser');
+
+            collection.update({_id: achievement._id}, achievement, function (err, res) {
+                if (err) {
+                    deferred.reject(err);
+                    return;
+                }
+
+                if (res) {
                     deferred.resolve(achievement);
                 } else {
                     deferred.reject();

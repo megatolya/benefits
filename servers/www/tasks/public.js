@@ -29,9 +29,14 @@ module.exports = function (grunt) {
             ]).forEach(concat.bind(null, extension));
         });
 
-        output.css = sass.renderSync({
-            data: output.css
-        }).css;
+        try {
+            output.css = sass.renderSync({
+                data: output.css
+            }).css;
+        } catch (err) {
+            grunt.fail.fatal(err);
+            return;
+        }
 
         extensions.forEach(function (extension) {
             grunt.file.write('public/index.' + extension, output[extension]);

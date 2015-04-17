@@ -28,6 +28,16 @@ module.exports = function (app) {
         }).fail(next);
     });
 
+    app.post('/achievements/:id', function (req, res, next) {
+        achievementsProvider.post(req.params.id, req.body).then(function (achievement) {
+            res.status(200);
+            res.end();
+        }).fail(function () {
+            res.status(200);
+            res.end();
+        });
+    });
+
     app.post('/achievements/new-image', function (req, res, next) {
         res.status(201);
         res.end();

@@ -2,15 +2,15 @@
 
 /* global $, alert, Dropzone */
 
-$(function () {
+function main() {
     var fileAdded = false;
 
-    setTimeout(function () {
+    if (Dropzone.instances.length > 0) {
         Dropzone.instances[0].on('addedfile', function (file) {
             fileAdded = true;
             $('.dropzone').addClass('dropzone_done');
         });
-    }, 0);
+    }
 
     $('.achievement__main-info').on('submit', function () {
         if (!fileAdded) {
@@ -18,4 +18,18 @@ $(function () {
             return false;
         }
     });
+
+    $('.achievement__name, .achievement__desc').on('input', function () {
+        var $this = $(this);
+        var data = {};
+
+        data[$this.data('name')] = $this.html();
+        $.post(window.location.pathname, data);
+    });
+}
+
+$(function () {
+    setTimeout(function () {
+        main();
+    }, 0);
 });
