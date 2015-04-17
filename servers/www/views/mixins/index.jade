@@ -1,38 +1,3 @@
-mixin achievement-content(achievement, big)
-    - if (achievement) {
-        img.achievement__image(src=achievement.image)
-        .achievement__main-info
-            .achievement__name(contenteditable=(big ? 'true' : 'false'), data-name='title')=achievement.title
-            .achievement__desc(contenteditable=(big ? 'true' : 'false'), data-name='description')=achievement.description
-    - } else {
-        form(action='/achievements/new-image').dropzone.achievement__image
-            input(name='token', value=token, type='hidden')
-        form.achievement__main-info(action='/achievements/new', method='POST')
-            input.form-control.achievement__name(required, autocomplete='off', name='title', placeholder='Название')
-            textarea.form-control.achievement__desc(required, name='description', placeholder='Описание')
-            input(name='token', value=token, type='hidden')
-            button.btn.btn-default='Создать'
-    - }
-
-mixin achievement(achievement, big)
-    if big
-        - attributes.class = 'achievement_size_big';
-        - if (achievement) {
-            div(class=attributes.class).achievement
-                +achievement-content(achievement, big)
-        - } else {
-            div(class=attributes.class).achievement
-                +achievement-content(achievement, big)
-        - }
-    else
-        - if (achievement) {
-            a(href='/achievements/' + achievement.id, class=attributes.class).achievement
-                +achievement-content(achievement)
-        - } else {
-            .div(class=attributes.class).achievement
-                +achievement-content(null)
-        - }
-
 mixin holder(holder)
     .holder=holder.name
 
@@ -40,5 +5,5 @@ mixin headerProfile()
     - if (user) {
         a(href="/settings/")= user.name
     - } else {
-        a(href="/auth/") Войти
+        a(href="/auth/")=i18n.get('auth.login.login')
     - }

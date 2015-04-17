@@ -1,5 +1,5 @@
 extends ./layout.jade
 
 block content
-    h1 Hello!
-    p You are not authorized
+    h1=i18n.get('common.helloHeader')
+    p=i18n.get('auth.state.notAuthorized')

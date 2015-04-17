@@ -1,9 +1,9 @@
-include ../mixins/index
+include mixins
 
 extends ../layout
 
 block content
     script.
         var token = '!{token}';
-    h2.achievement-header Новое достижение
+    h2.achievement-header=i18n.get('achievements.newAchievement')
     +achievement(null, true)

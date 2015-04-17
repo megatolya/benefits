@@ -18,9 +18,9 @@ html
             .navbar-collapse
                 ul.nav.navbar-nav
                     li
-                        a(href="/achievements") Каталог достижений
+                        a(href="/achievements")=i18n.get('achievements.catalogue')
                     li
-                        a(href="/achievements/new") Новое достижение
+                        a(href="/achievements/new")=i18n.get('achievements.newAchievement')
                 ul.nav.navbar-nav.navbar-right
                     li
                         +headerProfile()
@@ -30,4 +30,6 @@ html
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')
+    script.
+        var _lang = '!{i18n.lang}';
     script(src='/index.js')

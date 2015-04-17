@@ -1,6 +1,6 @@
 'use strict';
 
-/* global $, alert, Dropzone */
+/* global $, alert, Dropzone, i18n */
 
 function main() {
     var fileAdded = false;
@@ -14,7 +14,7 @@ function main() {
 
     $('.achievement__main-info').on('submit', function () {
         if (!fileAdded) {
-            alert('Картинку добавь');
+            alert(i18n.get('messages.addImage'));
             return false;
         }
     });

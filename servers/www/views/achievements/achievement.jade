@@ -1,4 +1,4 @@
-include ../mixins/index
+include mixins
 extends ../layout
 
 block no-container
@@ -9,7 +9,7 @@ block no-container
         .well
             - if (achievement.children.length) {
                 .achievement-info-block
-                    h4 Содержится в
+                    h4=i18n.get('achievements.parents')
                     - achievement.children.forEach(function (achievement) {
                         +achievement(achievement)
                     - });
@@ -17,7 +17,7 @@ block no-container
 
             - if (achievement.parents.length) {
                 .achievement-info-block
-                    h4 Содержит
+                    h4=i18n.get('achievements.children')
                     - achievement.parents.forEach(function (achievement) {
                         +achievement(achievement)
                     - });
@@ -25,7 +25,7 @@ block no-container
 
             - if (achievement.holders.length) {
                 .achievement-info-block
-                    h4 Держатели
+                    h4=i18n.get('achievements.holders')
                     - achievement.holders.forEach(function (holder) {
                         +holder(holder)
                     - });
