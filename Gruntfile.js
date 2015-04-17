@@ -58,6 +58,8 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('run', ['public', 'run-servers']);
+
     grunt.registerTask('pre-commit-check', ['jscs', 'jshint']);
     grunt.registerTask('pre-push-check', ['grunt-commit-message-verify']);
 };
