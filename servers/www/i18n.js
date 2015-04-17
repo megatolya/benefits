@@ -15,7 +15,10 @@ module.exports = {
 
         auth: {
             login: {
-                login: 'Войти'
+                login: 'Войти',
+                facebook: 'Войти через фейсбук',
+                twitter: 'Войти через твитер',
+                github: 'Войти через гитхаб'
             }
         },
 
