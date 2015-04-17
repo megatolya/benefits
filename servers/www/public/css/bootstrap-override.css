@@ -1,0 +1,8 @@
+
+.navbar-default {
+    background-color: white;
+}
+
+.navbar-nav a:hover {
+    color: red !important;
+}
