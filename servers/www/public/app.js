@@ -29,16 +29,32 @@ function main() {
 
     $('.achievement__edit').on('click', function () {
         $('.form-wrapper').removeClass('hide');
-        $(['.achievement_size_big .achievement__name',
-            '.achievement_size_big .achievement__desc'].join(',')).attr('contenteditable', 'true');
+        $('.achievement_size_big .achievement__table').remove();
         $(this).remove();
+    });
+
+    [
+        'name',
+        'description'
+    ].forEach(function (name) {
+        var selector = '.form-%name'.replace('%name', name);
+        var form = $(selector);
+        var input = form.find('input,textarea');
+
+        form.on('submit', function () {
+            var val = input.val();
+            $.post(form.attr('action'), {
+                data: val
+            });
+            return false;
+        });
     });
 
     [
         'holders',
         'creators',
         'children',
-        'parents'
+        'parents',
     ].forEach(function (name) {
         var selector = '.form-%name'.replace('%name', name);
         var form = $(selector);

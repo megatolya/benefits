@@ -8,9 +8,9 @@ module.exports = {
             name: 'Название',
             description: 'Описание',
             create: 'Создать',
-            parents: 'Содержится в',
+            parents: 'Критерии',
             creators: 'Создатели',
-            children: 'Содержит',
+            children: 'Критерий для',
             holders: 'Получили',
             edit: 'Редактировать',
             suggestSubmit: {
@@ -40,7 +40,8 @@ module.exports = {
 
         common: {
             achievements: 'Достижения',
-            helloHeader: 'Benefits!'
+            helloHeader: 'Benefits!',
+            save: 'Сохранить'
         },
 
         app: {

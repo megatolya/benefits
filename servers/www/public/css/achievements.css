@@ -36,8 +36,6 @@
 
     &__image {
         vertical-align: top;
-        height: 50px;
-        width: 50px;
     }
 
     &__desc {
@@ -61,20 +59,24 @@
         display: inline-block;
     }
 
-    &__name[contenteditable=true],
-    &__desc[contenteditable=true] {
-        background: rgb(255, 252, 217);
-        border-radius: 7px;
-        box-shadow: inset 0px 2px 2px 0px rgba(0,0,0,0.1);
+    &__table td {
+        vertical-align: baseline;
+    }
+
+    & input,
+    & textarea,
+    & select {
+        width: 500px;
     }
 }
 
 
 .achievement_size_big {
-    box-shadow: 0 4px 9px -2.5px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+    border: none;
     display: block;
     width: auto;
-    padding: 40px;
+    padding: 0 40px;
     margin: 10px 0;
 
     & .achievement__image {
@@ -87,19 +89,42 @@
     }
 
     & .achievement__name {
-        font-size: 20px;
-    }
-
-    & .achievement__name,
-    & .achievement__desc {
-        padding: 10px;
-        margin-bottom: 20px;
+        font-weight: bold;
     }
 
     & .achievement__main-info {
         margin: 0 30px;
-        font-size: 15px;
+    }
+
+    & input.achievement__name,
+    & input.achievement__description {
+        margin-bottom: 10px;
+    }
+
+    & .achievement__table {
+        width: 100%;
+
+        & td {
+            padding: 10px 0;
+        }
     }
 }
 
+.achievement_size_small {
+    & .achievement__image {
+        height: 50px;
+        width: 50px;
+    }
 
+    & .achievement__name {
+        font-weight: normal;
+    }
+
+    & .achievement__table td {
+        padding: 5px 0;
+    }
+
+    & .achievement__main-info {
+        margin: 0 10px;
+    }
+}

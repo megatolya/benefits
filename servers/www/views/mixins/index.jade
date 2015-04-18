@@ -3,7 +3,7 @@ mixin holder(holder)
 
 mixin headerProfile()
     - if (user) {
-        a(href="/settings/")= user.name
+       a(href="/settings/")= user.name
     - } else {
         a(href="/auth/")=i18n.get('auth.login.login')
     - }
