@@ -37,8 +37,11 @@ mixin achievement-content(achievement, big)
                         tr
                             td=i18n.get('achievements.holders')
                             td
-                                - achievement.holders.forEach(function (holder) {
+                                - achievement.holders.forEach(function (holder, i) {
                                     +holder(holder)
+                                    - if (i !== achievement.holders.length - 1) {
+                                        |, 
+                                    - }
                                 - });
                     - }
 

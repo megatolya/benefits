@@ -1,5 +1,5 @@
 mixin holder(holder)
-    .holder=holder.name
+    a(href='/u/' + holder.id).holder=holder.name
 
 mixin headerProfile()
     - if (user) {
