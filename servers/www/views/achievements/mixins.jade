@@ -45,8 +45,8 @@ mixin suggest(values, target, suggest)
     form(action='/achievements/update-' + target, method='POST', class='form-' + target)
         table.suggest-table
             tr
-                td(width='20%')=i18n.get('achievements.' + target)
-                td(width='60%')
+                td(width='30%')=i18n.get('achievements.' + target)
+                td(width='50%')
                     select(name=target, class='suggest-' + target, data-suggest='/' + suggest + '-suggest',  multiple='multiple').suggest
                         - values.forEach(function (val) {
                             option(value=val.id)=val.name
