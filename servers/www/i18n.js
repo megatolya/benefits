@@ -41,6 +41,10 @@ module.exports = {
         common: {
             achievements: 'Достижения',
             helloHeader: 'Benefits!'
+        },
+
+        app: {
+            name: 'Benefits!'
         }
     }
 };

@@ -1,3 +1,11 @@
+.navbar-default .navbar-brand {
+    color: black;
+
+    &:hover {
+        color: orange;
+    }
+}
+
 .navbar-default {
     background-color: white;
     border: none;
