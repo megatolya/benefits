@@ -12,6 +12,7 @@ module.exports = {
             creators: 'Создатели',
             children: 'Содержит',
             holders: 'Получили',
+            edit: 'Редактировать',
             suggestSubmit: {
                 parents: 'Сохранить',
                 creators: 'Сохранить',
@@ -26,11 +27,20 @@ module.exports = {
                 facebook: 'Войти через фейсбук',
                 twitter: 'Войти через твитер',
                 github: 'Войти через гитхаб'
+            },
+
+            state: {
+                notAuthorized: 'Войдите, чтобы получить или выдать достижения!'
             }
         },
 
         messages: {
             addImage: 'Добавь картинку!'
+        },
+
+        common: {
+            achievements: 'Достижения',
+            helloHeader: 'Benefits!'
         }
     }
 };
