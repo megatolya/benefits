@@ -5,12 +5,19 @@ module.exports = {
         achievements: {
             catalogue: 'Каталог достижений',
             newAchievement: 'Новое достижение',
-            parents: 'Содержится в',
-            chidren: 'Содержит',
-            holders: 'Получили',
             name: 'Название',
             description: 'Описание',
-            create: 'Создать'
+            create: 'Создать',
+            parents: 'Содержится в',
+            creators: 'Создатели',
+            children: 'Содержит',
+            holders: 'Получили',
+            suggestSubmit: {
+                parents: 'Сохранить',
+                creators: 'Сохранить',
+                children: 'Сохранить',
+                holders: 'Сохранить'
+            }
         },
 
         auth: {

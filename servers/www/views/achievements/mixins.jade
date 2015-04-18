@@ -4,6 +4,8 @@ mixin achievement-content(achievement, big)
         .achievement__main-info
             .achievement__name(contenteditable=(big ? 'true' : 'false'), data-name='title')=achievement.title
             .achievement__desc(contenteditable=(big ? 'true' : 'false'), data-name='description')=achievement.description
+            if block
+                block
     - } else {
         form(action='/achievements/new-image').dropzone.achievement__image
             input(name='token', value=token, type='hidden')
@@ -12,6 +14,8 @@ mixin achievement-content(achievement, big)
             textarea.form-control.achievement__desc(required, name='description', placeholder=i18n.get('achievements.description'))
             input(name='token', value=token, type='hidden')
             button.btn.btn-default=i18n.get('achievements.create')
+            if block
+                block
     - }
 
 mixin achievement(achievement, big)
@@ -20,9 +24,11 @@ mixin achievement(achievement, big)
         - if (achievement) {
             div(class=attributes.class).achievement
                 +achievement-content(achievement, big)
+                    block
         - } else {
             div(class=attributes.class).achievement
                 +achievement-content(achievement, big)
+                    block
         - }
     else
         - if (achievement) {
@@ -33,3 +39,15 @@ mixin achievement(achievement, big)
                 +achievement-content(null)
         - }
 
+mixin suggest(values, target, suggest)
+    form(action='/achievements/update-' + target, method='POST', class='form-' + target)
+        table.suggest-table
+            tr
+                td(width='20%')=i18n.get('achievements.' + target)
+                td(width='60%')
+                    select(name=target, class='suggest-' + target, data-suggest='/' + suggest + '-suggest',  multiple='multiple').suggest
+                        - values.forEach(function (val) {
+                            option(value=val.id)=val.name
+                        - });
+                td(width='20%')
+                    button(type='submit').btn.btn-default=i18n.get('achievements.suggestSubmit.' + target)

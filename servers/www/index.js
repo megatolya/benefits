@@ -69,6 +69,7 @@ require('./controllers/profile')(app);
 require('./controllers/settings')(app);
 require('./controllers/achievements')(app);
 require('./controllers/auth')(app);
+require('./controllers/suggest')(app);
 
 app.use(require('./error-handler'));
 

@@ -10,7 +10,7 @@
     border-radius: 2px;
     box-sizing: border-box;
     display: inline-block;
-    box-shadow: 0 0 9px -0.5px rgba(0,0,0,0.1);
+    box-shadow: 0 0 9px -3.5px rgba(0, 0, 0, 0.1);
     padding: 10px;
     width: 340px;
     margin: 10px;
@@ -38,6 +38,7 @@
     }
 
     &__image {
+        vertical-align: top;
         height: 50px;
         width: 50px;
     }
@@ -61,8 +62,6 @@
         width: 200px;
         height: 200px;
         display: inline-block;
-        vertical-align: top;
-        margin: 20px;
     }
 
     &__name[contenteditable=true],
@@ -76,14 +75,15 @@
 
 
 .achievement_size_big {
+    box-shadow: 0 4px 9px -2.5px rgba(0, 0, 0, 0.1);
     display: block;
     width: auto;
     padding: 40px;
     margin: 10px 0;
 
     & .achievement__image {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
     }
 
     & .achievement__desc {
@@ -96,11 +96,11 @@
 
     & .achievement__name,
     & .achievement__desc {
-        margin: 20px 0;
+        margin-bottom: 20px;
     }
 
     & .achievement__main-info {
-        margin: 30px;
+        margin: 0 30px;
         font-size: 15px;
     }
 }

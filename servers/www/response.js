@@ -32,6 +32,11 @@ express.response.magicRender = function (templateName, req, params) {
 
             lang: req.getLang()
         },
-        user: req.user
+        user: req.user,
+        mapVals: function (val) {
+            return {
+                id: val.id, name: val.name || val.title || '???'
+            };
+        }
     }, params || {}));
 };
