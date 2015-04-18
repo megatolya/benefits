@@ -27,9 +27,6 @@
         color: black;
     }
 
-    &__name {
-    }
-
     &__main-info {
         vertical-align: middle;
         margin: 0 15px;
@@ -69,7 +66,6 @@
         background: rgb(255, 252, 217);
         border-radius: 7px;
         box-shadow: inset 0px 2px 2px 0px rgba(0,0,0,0.1);
-        padding: 10px;
     }
 }
 
@@ -96,6 +92,7 @@
 
     & .achievement__name,
     & .achievement__desc {
+        padding: 10px;
         margin-bottom: 20px;
     }
 

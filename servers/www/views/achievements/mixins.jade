@@ -2,10 +2,12 @@ mixin achievement-content(achievement, big)
     - if (achievement) {
         img.achievement__image(src=achievement.image)
         .achievement__main-info
-            .achievement__name(contenteditable=(big ? 'true' : 'false'), data-name='title')=achievement.title
-            .achievement__desc(contenteditable=(big ? 'true' : 'false'), data-name='description')=achievement.description
-            if block
+            .achievement__name(contenteditable=('false'), data-name='title')=achievement.title
+            .achievement__desc(contenteditable=('false'), data-name='description')=achievement.description
+            .hide.form-wrapper
                 block
+            if big
+                .btn.btn-default.achievement__edit=i18n.get('achievements.edit')
     - } else {
         form(action='/achievements/new-image').dropzone.achievement__image
             input(name='token', value=token, type='hidden')

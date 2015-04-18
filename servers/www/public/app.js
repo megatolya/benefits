@@ -27,6 +27,13 @@ function main() {
         $.post(window.location.pathname, data);
     });
 
+    $('.achievement__edit').on('click', function () {
+        $('.form-wrapper').removeClass('hide');
+        $(['.achievement_size_big .achievement__name',
+            '.achievement_size_big .achievement__desc'].join(',')).attr('contenteditable', 'true');
+        $(this).remove();
+    });
+
     [
         'holders',
         'creators',
