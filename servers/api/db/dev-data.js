@@ -3,42 +3,46 @@
 var db = require('./db');
 var _ = require('lodash');
 
-var User = require('./models/user');
-var Achievement = require('./models/achievement');
-var Rule = require('./models/rule');
-var Hits = require('./models/hits');
+var models = require('./models');
+
+var User = models.User;
+var Achievement = models.Achievement;
+var Rule = models.Rule;
+var Hits = models.Hits;
 
 var devData = {
     achievements: [
         {
             id: 1,
             url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
-            title: 'Вконтактер',
+            name: 'Вконтактер',
             description: 'Был на вконтакте',
             image: 'vk.png',
+            children: [],
             rules: [1]
         },
         {
             id: 2,
-            title: 'Вконтактер 80 уровня',
+            name: 'Вконтактер 80 уровня',
             description: 'Много раз был на вконтакте',
-            parent: 'vk1',
             image: 'vk.png',
+            children: [1, 3],
             rules: [2]
         },
         {
             id: 3,
-            title: 'Павел Дуров',
+            name: 'Павел Дуров',
             description: 'Очень много раз был на вконтакте',
-            parent: 'vk2',
             image: 'durov.jpg',
+            children: [4],
             rules: [3, 4]
         },
         {
             id: 4,
-            title: 'Одноклассник',
+            name: 'Одноклассник',
             description: 'Много раз был на одноклассниках',
             image: 'ok.png',
+            children: [],
             rules: [5]
         }
     ],
@@ -48,27 +52,27 @@ var devData = {
             id: 1,
             url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
             type: 'navigation',
-            hits: 10
+            aim: 10
         }, {
             id: 2,
             url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
             type: 'navigation',
-            hits: 20
+            aim: 20
         }, {
             id: 3,
             url: 'https?:\\/\\/(www\\.)?(vk\\.com|vkontakte\\.ru)\\/.*',
             type: 'navigation',
-            hits: 30
+            aim: 30
         }, {
             id: 4,
             type: 'navigation',
             url: 'https?:\\/\\/(www\\.)?(ok\\.ru|odnoklassniki\\.ru)\\/.*',
-            hits: 30
+            aim: 30
         }, {
             id: 5,
             type: 'navigation',
             url: 'https?:\\/\\/(www\\.)?(durov\\.ru)\\/.*',
-            hits: 1
+            aim: 1
         }
     ],
 
@@ -95,9 +99,9 @@ var devData = {
 
     hits: [
         {
-            UserId: 1,
-            RuleId: 1,
-            hits: 12
+            userId: 1,
+            ruleId: 1,
+            count: 12
         }
     ]
 };
@@ -115,12 +119,19 @@ module.exports = {
             var achDataToSave = _.extend({}, ach);
             delete achDataToSave.rules;
             Achievement.create(achDataToSave)
-                .then(this._linkAchievementsWithRules.bind(this, ach));
+                .then(this._linkAchievementsWithRules.bind(this, ach))
+                .then(this._addAchievementChildren.bind(this, ach));
         }, this);
     },
 
     _linkAchievementsWithRules: function (achievementData, achievementModel) {
         achievementModel.setRules(achievementData.rules);
+        return achievementModel;
+    },
+
+    _addAchievementChildren: function (achievementData, achievementModel) {
+        achievementModel.setChildren(achievementData.children);
+        return achievementModel;
     },
 
     _createRules: function (rules) {

@@ -1,9 +1,10 @@
 'use strict';
 
-var db = require('../db');
+var sq = require('sequelize');
 
-var Hits = db.define('Hits', {
-    hits: {type: db.st.INTEGER}
-});
-
-module.exports = Hits;
+module.exports = [
+    'hits',
+    {
+        count: {type: sq.INTEGER}
+    }
+];

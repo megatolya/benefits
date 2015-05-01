@@ -1,22 +1,35 @@
 'use strict';
 
-var db = require('../db');
-var Hits = require('./hits');
+var sq = require('sequelize');
+var models = require('../models');
 
-var User = db.define('User', {
-    salt: {type: db.st.STRING},
-    name: {type: db.st.STRING, allowNull: false},
+module.exports = [
+    'user',
+    {
+        salt: {type: sq.STRING},
+        name: {type: sq.STRING, allowNull: false},
 
-    twitterID: {type: db.st.STRING, unique: true},
-    twitterData: {type: db.st.JSON},
+        twitterID: {type: sq.STRING, unique: true},
+        twitterData: {type: sq.JSON},
 
-    facebookID: {type: db.st.STRING, unique: true},
-    facebookData: {type: db.st.JSON},
+        facebookID: {type: sq.STRING, unique: true},
+        facebookData: {type: sq.JSON},
 
-    githubID: {type: db.st.STRING, unique: true},
-    githubData: {type: db.st.JSON}
-});
-
-User.hasMany(Hits);
-
-module.exports = User;
+        githubID: {type: sq.STRING, unique: true},
+        githubData: {type: sq.JSON}
+    },
+    {
+        classMethods: {
+            findReceivedAchievements: function (uidToFind) {
+                return models.User.find({
+                    where: {id: uidToFind},
+                    attributes: ['id'],
+                    include: [{model: models.Achievement, include: [models.Rule]}]
+                }).then(function (user) {
+                    return user.get('achievements');
+                });
+            }
+        },
+        instanceMethods: {}
+    }
+];

@@ -1,6 +1,6 @@
 'use strict';
 
-var db = require('../../db');
+var models = require('../../db/models');
 
 module.exports = function (req, res, next) {
     if (!req.authorized) {
@@ -8,14 +8,8 @@ module.exports = function (req, res, next) {
         return;
     }
 
-    db.userAchievements.get(req.uid).then(function (achievements) {
-        res.json({
-            achievements: achievements.map(function (achievement) {
-                delete achievement._id;
-                return achievement;
-            })
-        });
-    }).fail(function () {
-        next(404);
-    });
+    models.User.findReceivedAchievements(req.uid)
+        .then(function (achievements) {
+            res.json({achievements: achievements});
+        }).catch(next);
 };

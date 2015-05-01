@@ -4,9 +4,6 @@ var _ = require('lodash');
 var debug = require('debug')('db-init');
 
 var db = require('./db');
-
-require('./models');
-
 var devData = require('./dev-data');
 
 module.exports = {

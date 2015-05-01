@@ -1,13 +1,48 @@
 'use strict';
 
-var db = require('../db');
+var sq = require('sequelize');
+var models = require('../models');
 
-// TODO add pretty id and logic for it
-var Achievement = db.define('Achievement', {
-    url: {type: db.st.STRING},
-    title: {type: db.st.STRING, allowNull: false},
-    descriptor: {type: db.st.TEXT},
-    image: {type: db.st.STRING}
-});
+module.exports = [
+    'achievement',
+    {
+        url: {type: sq.STRING},
+        name: {type: sq.STRING, allowNull: false},
+        description: {type: sq.TEXT},
+        image: {type: sq.STRING}
+    },
+    {
+        classMethods: {
+            _byId: function (findType, achievementId) {
+                return models.Achievement[findType]({
+                    where: {id: achievementId},
+                    include: [{model: models.Achievement, as: 'children'}, models.User, models.Rule]
+                });
+            },
 
-module.exports = Achievement;
+            findWithParents: function (achievementId) {
+                return Promise.all([
+                    this._byId('find', achievementId),
+                    this.findParents(achievementId)
+                ]).then(function (results) {
+                    var achievement = results[0];
+                    if (achievement) {
+                        achievement.dataValues.parents = results[1];
+                    }
+                    return achievement;
+                });
+            },
+
+            findParents: function (achievementId) {
+                return models.AchievementChild.findAll({
+                    where: {childId: achievementId}
+                }).then(function (parentChildRows) {
+                    var ids = parentChildRows.map(function (row) {
+                        return row.achievementId;
+                    });
+                    return this._byId('findAll', ids);
+                }.bind(this));
+            }
+        }
+    }
+];
