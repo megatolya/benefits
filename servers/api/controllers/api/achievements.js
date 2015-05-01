@@ -11,5 +11,6 @@ module.exports = function (req, res, next) {
     models.User.findReceivedAchievements(req.uid)
         .then(function (achievements) {
             res.json({achievements: achievements});
-        }).catch(next);
+        })
+        .catch(next);
 };

@@ -1,9 +1,7 @@
 'use strict';
 
-var db = require('../../db');
-var Q = require('q');
 var auth = require('../../auth');
-var console = require('../../console');
+var models = require('../../db/models');
 
 module.exports = function (req, res, next) {
     var provider = req.body.provider;
@@ -13,11 +11,15 @@ module.exports = function (req, res, next) {
     var idFieldName = provider + 'Id';
     dataToFind[idFieldName] = userData[idFieldName];
 
-    db.users.find(dataToFind)
-        .then(res.json.bind(res))
-        .fail(function () {
-            auth.registerUser(userData)
-                .then(res.json.bind(res))
-                .fail(next);
-        });
+    models.User.scope('withAchievements')
+        .find({where: dataToFind})
+        .then(function (user) {
+            if (user) {
+                res.json(user);
+            } else {
+                return auth.registerUser(userData)
+                    .then(res.json.bind(res));
+            }
+        })
+        .catch(next);
 };

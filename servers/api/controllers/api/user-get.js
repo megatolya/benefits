@@ -1,33 +1,20 @@
 'use strict';
 
-var db = require('../../db');
-var Q = require('q');
-var _ = require('lodash');
+var models = require('../../db/models');
+var debug = require('debug')('user-get');
 
 module.exports = function (req, res, next) {
     var uid = req.params.uid;
 
     if (!uid) {
-        console.log('not a uid: ', uid);
+        debug('uid is missing');
         res.status(400);
         return;
     }
 
-    db.users.get(uid).then(function (user) {
-        return db.userAchievements.get(user.id).then(function (userAchievements) {
-            user.achievements = userAchievements;
-            delete user.password;
-            delete user.salt;
-
-            return Q.all(userAchievements.map(function (userAchievement) {
-                return db.achievements.get(userAchievement.id).then(function (achievement) {
-                    _.assign(userAchievement, achievement);
-                    delete userAchievement.rules;
-                });
-            })).then(function () {
-                res.json(user);
-            }).fail(next);
-        }).fail(next);
-    })
-    .fail(next);
+    // TODO delete salt
+    models.User.scope('withAchievements')
+        .find(uid)
+        .then(res.json.bind(res))
+        .catch(next);
 };

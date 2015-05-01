@@ -13,22 +13,16 @@ module.exports = [
     },
     {
         classMethods: {
-            _byId: function (findType, achievementId) {
-                return models.Achievement[findType]({
-                    where: {id: achievementId},
-                    include: [{model: models.Achievement, as: 'children'}, models.User, models.Rule]
-                });
-            },
-
             findWithParents: function (achievementId) {
                 return Promise.all([
-                    this._byId('find', achievementId),
+                    models.Achievement.scope('allRelations').find(achievementId),
                     this.findParents(achievementId)
                 ]).then(function (results) {
                     var achievement = results[0];
                     if (achievement) {
                         achievement.dataValues.parents = results[1];
                     }
+                    console.log('achievements found: ');
                     return achievement;
                 });
             },
@@ -40,8 +34,24 @@ module.exports = [
                     var ids = parentChildRows.map(function (row) {
                         return row.achievementId;
                     });
-                    return this._byId('findAll', ids);
+                    console.log('finding parents: ');
+                    return models.Achievement.scope('allRelations').findAll({where: {id: ids}});
                 }.bind(this));
+            }
+        },
+
+        instanceMethods: {},
+
+        defaultScope: {},
+        scopes: {
+            allRelations: function () {
+                return {
+                    include: [
+                        {model: models.Achievement, as: 'children'},
+                        {model: models.User, as: 'holders'},
+                        {model: models.Rule}
+                    ]
+                };
             }
         }
     }

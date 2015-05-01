@@ -7,29 +7,50 @@ module.exports = [
     'user',
     {
         salt: {type: sq.STRING},
-        name: {type: sq.STRING, allowNull: false},
+        name: {type: sq.STRING},
 
-        twitterID: {type: sq.STRING, unique: true},
-        twitterData: {type: sq.JSON},
+        twitterId: {type: sq.STRING},
+        twitterData: {type: sq.JSONB},
 
-        facebookID: {type: sq.STRING, unique: true},
-        facebookData: {type: sq.JSON},
+        facebookId: {type: sq.STRING},
+        facebookData: {type: sq.JSONB},
 
-        githubID: {type: sq.STRING, unique: true},
-        githubData: {type: sq.JSON}
+        githubId: {type: sq.STRING},
+        githubData: {type: sq.JSONB}
     },
     {
         classMethods: {
             findReceivedAchievements: function (uidToFind) {
-                return models.User.find({
-                    where: {id: uidToFind},
-                    attributes: ['id'],
-                    include: [{model: models.Achievement, include: [models.Rule]}]
-                }).then(function (user) {
-                    return user.get('achievements');
-                });
+                return models.User
+                    .scope('withAchievementsAndRules')
+                    .find({
+                        where: {id: uidToFind},
+                        attributes: ['id']
+                    }).then(function (user) {
+                        return user.get('achievements');
+                    });
             }
         },
-        instanceMethods: {}
+
+        instanceMethods: {},
+
+        defaultScope: {},
+        scopes: {
+            withAchievements: function () {
+                return {
+                    include: [{
+                        model: models.Achievement
+                    }]
+                };
+            },
+            withAchievementsAndRules: function () {
+                return {
+                    include: [{
+                        model: models.Achievement,
+                        include: [{model: models.Rule}]
+                    }]
+                };
+            }
+        }
     }
 ];

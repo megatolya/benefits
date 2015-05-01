@@ -1,28 +1,20 @@
 'use strict';
 
-var Q = require('q');
-var db = require('../db');
-var console = require('../console');
 var uniq = require('../../common/uniq');
 var md5 = require('MD5');
-var _ = require('lodash');
+var models = require('../db/models');
+var debug = require('debug')('auth');
 
 module.exports = {
     registerUser: function (userData) {
-        var deferred = Q.defer();
-
-        userData = userData || {};
-        userData.id = uniq();
+        userData = userData || {name: uniq()};
         userData.salt = uniq();
 
-        db.users.add(userData)
-            .then(function () {
-                deferred.resolve(userData);
-                console.log('New user created', userData.id);
-            })
-            .fail(deferred.reject);
-
-        return deferred.promise;
+        return models.User.create(userData)
+            .then(function (createdUser) {
+                debug('new user created:', createdUser.get('name'));
+                return createdUser;
+            });
     },
 
     generateToken: function (uid, salt, method) {

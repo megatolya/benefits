@@ -1,15 +1,13 @@
 'use strict';
 
-var db = require('../../db');
 var _ = require('lodash');
-var console = require('../../console');
+var models = require('../../db/models');
 
 module.exports = function (req, res, next) {
-    db.achievements.get(req.params.id).then(function (achievement) {
-        _.assign(achievement, req.body);
-        db.achievements.update(achievement).then(function () {
-            res.status(200);
-            res.end();
-        }, next);
-    }, next);
+    models.Achievement.find(req.params.id)
+        .then(function (achievement) {
+            return achievement.update(req.body);
+        })
+        .then(res.sendStatus.bind(res, 200))
+        .catch(next);
 };

@@ -27,7 +27,7 @@
     "grunt-shell": "^1.1.2",
     "mocha": "^2.2.1",
     "proxyquire": "^1.4.0",
-    "sequelize": "^2.0.5",
+    "sequelize": "git://github.com/sequelize/sequelize#14e98ff256",
     "sinon": "^1.14.1"
   },
   "dependencies": {

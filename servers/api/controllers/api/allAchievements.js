@@ -1,14 +1,11 @@
 'use strict';
 
-var db = require('../../db');
+var models = require('../../db/models');
 
 module.exports = function (req, res, next) {
-    db.achievements.getAll().then(function (all) {
-        res.json(all.map(function (achievement) {
-            delete achievement.rules;
-            delete achievement._id;
-            delete achievement.url;
-            return achievement;
-        }));
-    }).fail(next);
+    models.Achievement.findAll()
+        .then(function (results) {
+            res.json(results);
+        })
+        .catch(next);
 };
