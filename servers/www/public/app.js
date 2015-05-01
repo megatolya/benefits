@@ -1,6 +1,6 @@
 'use strict';
 
-/* global $, alert, Dropzone */
+/* global $, alert, Dropzone, i18n */
 
 function main() {
     var fileAdded = false;
@@ -14,7 +14,7 @@ function main() {
 
     $('.achievement__main-info').on('submit', function () {
         if (!fileAdded) {
-            alert('Картинку добавь');
+            alert(i18n.get('messages.addImage'));
             return false;
         }
     });
@@ -25,6 +25,90 @@ function main() {
 
         data[$this.data('name')] = $this.html();
         $.post(window.location.pathname, data);
+    });
+
+    $('.achievement__edit').on('click', function () {
+        $('.form-wrapper').removeClass('hide');
+        $('.achievement_size_big .achievement__table').remove();
+        $(this).remove();
+    });
+
+    [
+        'name',
+        'description'
+    ].forEach(function (name) {
+        var selector = '.form-%name'.replace('%name', name);
+        var form = $(selector);
+        var input = form.find('input,textarea');
+
+        form.on('submit', function () {
+            var val = input.val();
+            $.post(form.attr('action'), {
+                data: val
+            });
+            return false;
+        });
+    });
+
+    [
+        'holders',
+        'creators',
+        'children',
+        'parents',
+    ].forEach(function (name) {
+        var selector = '.form-%name'.replace('%name', name);
+        var form = $(selector);
+        var suggest = $(selector + ' .suggest');
+
+        form.on('submit', function () {
+            var vals = suggest.val();
+            $.post(form.attr('action'), {
+                data: JSON.stringify(vals || [])
+            });
+            return false;
+        });
+
+        var data = [];
+        suggest.find('option').map(function () {
+            data.push({
+                id: $(this).attr('value'),
+                text: $(this).html(),
+                name: $(this).html()
+            });
+        });
+
+        suggest.select2({
+            data: data,
+            ajax: {
+                url: suggest.data('suggest'),
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data, page) {
+                    return {
+                        results: data.users
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            },
+            minimumInputLength: 1,
+            templateResult: function  (val) {
+                return val.name || val.text;
+            },
+            templateSelection: function (val) {
+                return val.name || val.text;
+            }
+        });
+        suggest.val(data.map(function (val) {
+            return val.id;
+        }));
+        suggest.trigger('change');
     });
 }
 

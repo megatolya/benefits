@@ -1,0 +1,115 @@
+mixin achievement-content(achievement, big)
+    - if (achievement) {
+        img.achievement__image(src=achievement.image)
+        .achievement__main-info
+            table.achievement__table
+                tr
+                    if big
+                        td(width='15%')=i18n.get('achievements.name')
+                    td(width='85%')
+                        .achievement__name(data-name='title')=achievement.title
+                tr
+                    if big
+                        td(width='15%')=i18n.get('achievements.description')
+                    td(width='85%')
+                        .achievement__desc(data-name='description')=achievement.description
+
+                if big
+                    - if (achievement.children.length) {
+                        tr
+                            td(width='15%')=i18n.get('achievements.children')
+                            td(width='85%')
+                                - achievement.children.forEach(function (achievement) {
+                                    +achievement(achievement)
+                                - });
+                    - }
+
+                    - if (achievement.parents.length) {
+                        tr
+                            td(width='15%')=i18n.get('achievements.parents')
+                            td(width='85%')
+                                - achievement.parents.forEach(function (achievement) {
+                                    +achievement(achievement)
+                                - });
+                    - }
+
+                    - if (achievement.holders.length) {
+                        tr
+                            td=i18n.get('achievements.holders')
+                            td
+                                - achievement.holders.forEach(function (holder, i) {
+                                    +holder(holder)
+                                    - if (i !== achievement.holders.length - 1) {
+                                        |, 
+                                    - }
+                                - });
+                    - }
+
+            if big
+                .hide.form-wrapper
+                    +input('name', achievement.title)
+                    +input('description', achievement.description, true)
+                    +suggest([], 'creators', 'users')
+                    +suggest(achievement.parents.map(mapVals), 'parents', 'achievements')
+                    +suggest(achievement.children.map(mapVals), 'children', 'achievements')
+                    +suggest(achievement.holders.map(mapVals), 'holders', 'users')
+                .btn.btn-default.achievement__edit=i18n.get('achievements.edit')
+    - } else {
+        form(action='/achievements/new-image').dropzone.achievement__image
+            input(name='token', value=token, type='hidden')
+        form.achievement__main-info(action='/achievements/new', method='POST')
+            input.form-control.achievement__name(required, autocomplete='off', name='title', placeholder=i18n.get('achievements.name'))
+            textarea.form-control.achievement__desc(required, name='description', placeholder=i18n.get('achievements.description'))
+            input(name='token', value=token, type='hidden')
+            button.btn.btn-default=i18n.get('achievements.create')
+            if block
+                block
+    - }
+
+mixin achievement(achievement, big)
+    if big
+        - attributes.class = 'achievement_size_big';
+        - if (achievement) {
+            div(class=attributes.class).achievement
+                +achievement-content(achievement, big)
+                    block
+        - } else {
+            div(class=attributes.class).achievement
+                +achievement-content(achievement, big)
+                    block
+        - }
+    else
+        - attributes.class = 'achievement_size_small';
+        - if (achievement) {
+            a(href='/achievements/' + achievement.id, class=attributes.class).achievement
+                +achievement-content(achievement)
+        - } else {
+            .div(class=attributes.class).achievement
+                +achievement-content(null)
+        - }
+
+mixin suggest(values, target, suggest)
+    form(action='/achievements/update-' + target, method='POST', class='form-' + target)
+        table.suggest-table
+            tr
+                td(width='15%')=i18n.get('achievements.' + target)
+                td(width='70%')
+                    select.form-control(name=target, class='suggest-' + target, data-suggest='/' + suggest + '-suggest',  multiple='multiple').suggest
+                        - values.forEach(function (val) {
+                            option(value=val.id)=val.name
+                        - });
+                td(width='15%')
+                    button(type='submit').btn.btn-default=i18n.get('common.save')
+
+mixin input(name, value, isTextarea)
+    form(action='/achievements/update-' + name, method='POST', class='form-' + name)
+        table.suggest-table
+            tr
+                td(width='15%')=i18n.get('achievements.' + name)
+                td(width='70%')
+                    if isTextarea
+                        textarea.form-control(name=name)=value
+                    else
+                        input.form-control(autocomplete='off', name=name, value=value).achievement__input
+                td(width='15%')
+                    button(type='submit').btn.btn-default=i18n.get('common.save')

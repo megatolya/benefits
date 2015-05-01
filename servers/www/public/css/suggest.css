@@ -1,0 +1,12 @@
+.form-creator,
+.form-holder {
+    margin: 20px 0;
+}
+
+.suggest-table {
+    width: 100%;
+
+    & td {
+        padding-right: 10px;
+    }
+}

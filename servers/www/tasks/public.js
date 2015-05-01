@@ -29,6 +29,8 @@ module.exports = function (grunt) {
             ]).forEach(concat.bind(null, extension));
         });
 
+        output.js = 'window._i18n = ' + JSON.stringify(require('../i18n')) + ';\n' + output.js;
+
         try {
             output.css = sass.renderSync({
                 data: output.css

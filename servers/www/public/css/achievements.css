@@ -10,7 +10,7 @@
     border-radius: 2px;
     box-sizing: border-box;
     display: inline-block;
-    box-shadow: 0 0 9px -0.5px rgba(0,0,0,0.1);
+    box-shadow: 0 0 9px -3.5px rgba(0, 0, 0, 0.1);
     padding: 10px;
     width: 340px;
     margin: 10px;
@@ -27,9 +27,6 @@
         color: black;
     }
 
-    &__name {
-    }
-
     &__main-info {
         vertical-align: middle;
         margin: 0 15px;
@@ -38,8 +35,7 @@
     }
 
     &__image {
-        height: 50px;
-        width: 50px;
+        vertical-align: top;
     }
 
     &__desc {
@@ -61,21 +57,31 @@
         width: 200px;
         height: 200px;
         display: inline-block;
-        vertical-align: top;
-        margin: 20px;
+    }
+
+    &__table td {
+        vertical-align: baseline;
+    }
+
+    & input,
+    & textarea,
+    & select {
+        width: 500px;
     }
 }
 
 
 .achievement_size_big {
+    box-shadow: none;
+    border: none;
     display: block;
     width: auto;
-    padding: 40px;
+    padding: 0 40px;
     margin: 10px 0;
 
     & .achievement__image {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
     }
 
     & .achievement__desc {
@@ -83,18 +89,42 @@
     }
 
     & .achievement__name {
-        font-size: 20px;
-    }
-
-    & .achievement__name,
-    & .achievement__desc {
-        margin: 20px 0;
+        font-weight: bold;
     }
 
     & .achievement__main-info {
-        margin: 30px;
-        font-size: 15px;
+        margin: 0 30px;
+    }
+
+    & input.achievement__name,
+    & input.achievement__description {
+        margin-bottom: 10px;
+    }
+
+    & .achievement__table {
+        width: 100%;
+
+        & td {
+            padding: 10px 0;
+        }
     }
 }
 
+.achievement_size_small {
+    & .achievement__image {
+        height: 50px;
+        width: 50px;
+    }
 
+    & .achievement__name {
+        font-weight: normal;
+    }
+
+    & .achievement__table td {
+        padding: 5px 0;
+    }
+
+    & .achievement__main-info {
+        margin: 0 10px;
+    }
+}

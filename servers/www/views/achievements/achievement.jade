@@ -1,33 +1,7 @@
-include ../mixins/index
+include mixins
 extends ../layout
 
 block no-container
     h2.achievement-header=achievement.title
     +achievement(achievement, true)
 
-    - if (achievement.children.length || achievement.parents.length) {
-        .well
-            - if (achievement.children.length) {
-                .achievement-info-block
-                    h4 Содержится в
-                    - achievement.children.forEach(function (achievement) {
-                        +achievement(achievement)
-                    - });
-            - }
-
-            - if (achievement.parents.length) {
-                .achievement-info-block
-                    h4 Содержит
-                    - achievement.parents.forEach(function (achievement) {
-                        +achievement(achievement)
-                    - });
-            - }
-
-            - if (achievement.holders.length) {
-                .achievement-info-block
-                    h4 Держатели
-                    - achievement.holders.forEach(function (holder) {
-                        +holder(holder)
-                    - });
-            - }
-    - }
