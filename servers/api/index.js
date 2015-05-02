@@ -5,6 +5,11 @@ var config = require('../config');
 var app = express();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var uuid = require('node-uuid');
+var db = require('./db');
+
+// TODO get this options from env vars or somewhere else
+db.init({initDevData: true, force: true});
 
 app.disable('x-powered-by');
 app.disable('etag');
