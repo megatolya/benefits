@@ -9,6 +9,7 @@ module.exports = function (req, res, next) {
 
     var dataToFind = {};
     var idFieldName = provider + 'Id';
+    userData[idFieldName] = String(userData[idFieldName]); // social id should be string
     dataToFind[idFieldName] = userData[idFieldName];
 
     models.User.scope('withAchievements')
