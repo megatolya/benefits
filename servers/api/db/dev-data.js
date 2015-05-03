@@ -2,9 +2,6 @@
 
 var db = require('./db');
 var _ = require('lodash');
-var images = require('../../www/images');
-var path = require('path');
-var md5 = require('MD5');
 
 var models = require('./models');
 
