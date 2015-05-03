@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = function (grunt) {
+    var initiallizer = require('../../servers/api/db/dev-data');
     var db = require('../../servers/api/db');
-    var data = require('../db.js');
+    var data = require('../data');
     var Q = require('q');
     var _ = require('lodash');
     var images = require('../../servers/www/images');
@@ -27,37 +28,13 @@ module.exports = function (grunt) {
             return path.resolve(path.join('database', 'images', imageName));
         }
 
-        var achievements = Q.all(data.achievements.map(function (achievement) {
-            achievement = _.assign({}, achievement);
-            achievement.image = getDistPath(achievement.image).web;
-
-            return db.achievements.add(achievement);
-        }));
-
-        var achievementImages = Q.all(data.achievements.map(function (achievement) {
-            return images.crop(getSourcePath(achievement.image), getDistPath(achievement.image).abs);
-        }));
-
-        var users = Q.all(data.users.map(function (user) {
-            return db.users.add(user);
-        }));
-
-        var userAchievements = Q.all(Object.keys(data.userAchievements).map(function (uid) {
-            var achievements = data.userAchievements[uid];
-
-            return db.userAchievements.add(uid, achievements);
-        }));
-
-        var userHits = Q.all(Object.keys(data.userHits).map(function (uid) {
-            var hits = data.userHits[uid];
-
-            return db.userHits.update(uid, hits);
-        }));
-
-        Q.all([achievements, users, achievementImages, userAchievements, userHits]).then(function () {
-            done();
-        }).fail(function (reason) {
-            grunt.fail.fatal(reason);
-        });
+        Q.all(data.achievements.map(function (achievement) {
+            return images.crop(getSourcePath(achievement.image), getDistPath(achievement.image).abs).then(function () {
+                achievement.image = getDistPath(achievement.image).web;
+            });
+        })).then(function () {
+            db.init({force: true});
+            initiallizer.insertInitialData(data);
+        }).fail(grunt.fail.fatal);
     });
 };
