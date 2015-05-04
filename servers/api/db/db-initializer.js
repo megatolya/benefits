@@ -28,16 +28,12 @@ module.exports = {
     },
 
     _createAchievements: function (achievements) {
-        var promises = [];
-        achievements.forEach(function (ach) {
+        return Promise.all(achievements.map(function (ach) {
             var achDataToSave = _.extend({}, ach);
             delete achDataToSave.rules;
-            promises.push(
-                Achievement.create(achDataToSave)
-                    .then(this._addAchievementsRelations.bind(this, ach))
-            );
-        }, this);
-        return Promise.all(promises);
+            return Achievement.create(achDataToSave)
+                .then(this._addAchievementsRelations.bind(this, ach));
+        }, this));
     },
 
     _addAchievementsRelations: function (achievementData, achievementModel) {
@@ -56,24 +52,18 @@ module.exports = {
     },
 
     _createRules: function (rules) {
-        var promises = [];
-        rules.forEach(function (rule) {
-            promises.push(Rule.create(rule));
-        });
-        return Promise.all(promises);
+        return Promise.all(rules.map(function (rule) {
+            return Rule.create(rule);
+        }));
     },
 
     _createUsers: function (users) {
-        var promises = [];
-        users.forEach(function (user) {
+        return Promise.all(users.map(function (user) {
             var userToSave = _.extend({}, user);
             delete userToSave.achievements;
-            promises.push(
-                User.create(user)
-                    .then(this._linkUserWithAchievements.bind(this, user))
-            );
-        }, this);
-        return Promise.all(promises);
+            return User.create(user)
+                .then(this._linkUserWithAchievements.bind(this, user));
+        }, this));
     },
 
     _linkUserWithAchievements: function (userData, userModel) {
@@ -81,10 +71,8 @@ module.exports = {
     },
 
     _createHits: function (hits) {
-        var promises = [];
-        hits.forEach(function (hit) {
-            promises.push(Hits.create(hit));
-        });
-        return Promise.all(promises);
+        return Promise.all(hits.map(function (hit) {
+            return Hits.create(hit);
+        }));
     }
 };
