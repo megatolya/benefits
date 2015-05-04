@@ -6,6 +6,10 @@
     }
 }
 
+.form-control {
+    margin: 15px 0;
+}
+
 .navbar-default {
     background-color: white;
     border: none;

@@ -28,15 +28,6 @@ module.exports = function (app) {
         }).fail(next);
     });
 
-    app.post('/achievements/update-:target', function (req, res, next) {
-        console.log(req.params.target);
-        var data = req.body.data;
-        // ["vk3","vk1"]
-        console.log(data);
-        res.status(202);
-        res.end();
-    });
-
     app.post('/achievements/new-image', function (req, res, next) {
         res.status(201);
         res.end();
@@ -61,6 +52,7 @@ module.exports = function (app) {
     });
 
     app.post('/achievements/:id', function (req, res, next) {
+        console.log(req.body);
         achievementsProvider.post(req.params.id, req.body).then(function (achievement) {
             res.status(200);
             res.end();

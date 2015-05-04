@@ -46,7 +46,7 @@ mixin achievement-content(achievement, big)
                     - }
 
             if big
-                .hide.form-wrapper
+                form.hide.form-wrapper
                     +input('name', achievement.title)
                     +input('description', achievement.description, true)
                     +suggest([], 'creators', 'users')
@@ -89,27 +89,21 @@ mixin achievement(achievement, big)
         - }
 
 mixin suggest(values, target, suggest)
-    form(action='/achievements/update-' + target, method='POST', class='form-' + target)
-        table.suggest-table
-            tr
-                td(width='15%')=i18n.get('achievements.' + target)
-                td(width='70%')
-                    select.form-control(name=target, class='suggest-' + target, data-suggest='/' + suggest + '-suggest',  multiple='multiple').suggest
-                        - values.forEach(function (val) {
-                            option(value=val.id)=val.name
-                        - });
-                td(width='15%')
-                    button(type='submit').btn.btn-default=i18n.get('common.save')
+    table.suggest-table(class='form-' + target)
+        tr
+            td(width='30%')=i18n.get('achievements.' + target)
+            td(width='70%')
+                select.form-control(name=target, class='suggest-' + target, data-suggest='/' + suggest + '-suggest',  multiple='multiple').suggest
+                    - values.forEach(function (val) {
+                        option(value=val.id)=val.name
+                    - });
 
 mixin input(name, value, isTextarea)
-    form(action='/achievements/update-' + name, method='POST', class='form-' + name)
-        table.suggest-table
-            tr
-                td(width='15%')=i18n.get('achievements.' + name)
-                td(width='70%')
-                    if isTextarea
-                        textarea.form-control(name=name)=value
-                    else
-                        input.form-control(autocomplete='off', name=name, value=value).achievement__input
-                td(width='15%')
-                    button(type='submit').btn.btn-default=i18n.get('common.save')
+    table.suggest-table
+        tr
+            td(width='30%')=i18n.get('achievements.' + name)
+            td(width='70%')
+                if isTextarea
+                    textarea.form-control(name=name)=value
+                else
+                    input.form-control(autocomplete='off', name=name, value=value).achievement__input

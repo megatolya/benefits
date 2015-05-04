@@ -19,34 +19,29 @@ function main() {
         }
     });
 
-    $('.achievement__name, .achievement__desc').on('input', function () {
-        var $this = $(this);
-        var data = {};
-
-        data[$this.data('name')] = $this.html();
-        $.post(window.location.pathname, data);
-    });
-
-    $('.achievement__edit').on('click', function () {
-        $('.form-wrapper').removeClass('hide');
+    $('.achievement__edit').one('click', function () {
+        var form = $('.form-wrapper');
+        form.removeClass('hide');
         $('.achievement_size_big .achievement__table').remove();
-        $(this).remove();
-    });
+        var $this = $(this);
+        $this.text(i18n.get('achievements.save'));
+        $this.one('click', function () {
+            var data = {};
 
-    [
-        'name',
-        'description'
-    ].forEach(function (name) {
-        var selector = '.form-%name'.replace('%name', name);
-        var form = $(selector);
-        var input = form.find('input,textarea');
-
-        form.on('submit', function () {
-            var val = input.val();
-            $.post(form.attr('action'), {
-                data: val
+            form.serializeArray().forEach(function (serialzedProp) {
+                if (['name', 'description'].indexOf(serialzedProp.name) !== -1) {
+                    data[serialzedProp.name] = serialzedProp.value;
+                } else {
+                    data[serialzedProp.name] = data[serialzedProp.name] || [];
+                    data[serialzedProp.name].push(serialzedProp.value);
+                }
             });
-            return false;
+
+            $.ajax(window.location.pathname, {
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                type: 'POST'
+            });
         });
     });
 
@@ -56,19 +51,10 @@ function main() {
         'children',
         'parents',
     ].forEach(function (name) {
-        var selector = '.form-%name'.replace('%name', name);
-        var form = $(selector);
-        var suggest = $(selector + ' .suggest');
-
-        form.on('submit', function () {
-            var vals = suggest.val();
-            $.post(form.attr('action'), {
-                data: JSON.stringify(vals || [])
-            });
-            return false;
-        });
-
+        var selector = '.form-%name .suggest'.replace('%name', name);
+        var suggest = $(selector);
         var data = [];
+
         suggest.find('option').map(function () {
             data.push({
                 id: $(this).attr('value'),

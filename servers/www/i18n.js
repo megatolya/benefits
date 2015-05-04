@@ -13,6 +13,7 @@ module.exports = {
             children: 'Критерий для',
             holders: 'Получили',
             edit: 'Редактировать',
+            save: 'Сохранить',
             suggestSubmit: {
                 parents: 'Сохранить',
                 creators: 'Сохранить',
