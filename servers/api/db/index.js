@@ -1,22 +1,28 @@
 'use strict';
 
-var _ = require('lodash');
-var debug = require('debug')('db-init');
+var debug = require('debug')('db');
+var Sequelize = require('sequelize');
+var execSync = require('child_process').execSync;
 
-var db = require('./db');
+// TODO get real dbName, userName and password.
+var whoami = execSync('whoami'); // it is Buffer
+var userName = whoami.toString('utf8', 0, whoami.length - 1); // delete '\n' from the end
+var dbName = userName;
+var password = null;
 
-module.exports = {
-    options: {
-        initDevData: false
-    },
+debug('user - %s, db - %s', userName, dbName);
 
-    init: function (options) {
-        options = options || {};
-        this.options = _.extend(this.options, options || {});
-        return db.sync({force: options.force}).then(this._onInit.bind(this));
-    },
-
-    _onInit: function () {
-        debug('initialization completed');
+var sequelize = new Sequelize(dbName, userName, password, {
+    host: 'localhost',
+    port: 5432,
+    dialect: 'postgres',
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
     }
-};
+});
+
+sequelize.st = Sequelize;
+
+module.exports = sequelize;

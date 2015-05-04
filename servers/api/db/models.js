@@ -2,7 +2,7 @@
 
 var models = module.exports = {};
 
-var db = require('./db');
+var db = require('./index');
 
 models.Hits = db.define.apply(db, require('./models/hits'));
 

@@ -1,5 +1,6 @@
 'use strict';
 
+var debug = require('debug')('main');
 var express = require('express');
 var config = require('../config');
 var app = express();
@@ -8,7 +9,7 @@ var bodyParser = require('body-parser');
 var uuid = require('node-uuid');
 var db = require('./db');
 
-db.init();
+debug('db connected: %s', db.getDialect());
 
 app.disable('x-powered-by');
 app.disable('etag');
