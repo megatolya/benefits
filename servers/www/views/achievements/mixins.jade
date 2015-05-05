@@ -7,7 +7,7 @@ mixin achievement-content(achievement, big)
                     if big
                         td(width='15%')=i18n.get('achievements.name')
                     td(width='85%')
-                        .achievement__name(data-name='title')=achievement.title
+                        .achievement__name(data-name='name')=achievement.name
                 tr
                     if big
                         td(width='15%')=i18n.get('achievements.description')
@@ -47,7 +47,7 @@ mixin achievement-content(achievement, big)
 
             if big
                 form.hide.form-wrapper
-                    +input('name', achievement.title)
+                    +input('name', achievement.name)
                     +input('description', achievement.description, true)
                     +suggest([], 'creators', 'users')
                     +suggest(achievement.parents.map(mapVals), 'parents', 'achievements')
@@ -58,7 +58,7 @@ mixin achievement-content(achievement, big)
         form(action='/achievements/new-image').dropzone.achievement__image
             input(name='token', value=token, type='hidden')
         form.achievement__main-info(action='/achievements/new', method='POST')
-            input.form-control.achievement__name(required, autocomplete='off', name='title', placeholder=i18n.get('achievements.name'))
+            input.form-control.achievement__name(required, autocomplete='off', name='name', placeholder=i18n.get('achievements.name'))
             textarea.form-control.achievement__desc(required, name='description', placeholder=i18n.get('achievements.description'))
             input(name='token', value=token, type='hidden')
             button.btn.btn-default=i18n.get('achievements.create')

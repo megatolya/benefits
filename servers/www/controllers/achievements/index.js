@@ -38,10 +38,11 @@ module.exports = function (app) {
         var from = path.resolve(__dirname + '/../../../../' + './temp/' + req.body.token + '.png');
         var to = path.resolve(__dirname + '/../../../../' + './public/achievements/' + id + '.png');
 
+        console.log(req.body);
         images.crop(from, to).then(function () {
             var achievement = {
                 id: id,
-                title: req.body.title,
+                name: req.body.name,
                 description: req.body.description,
                 image: '/achievements/' + id + '.png'
             };
