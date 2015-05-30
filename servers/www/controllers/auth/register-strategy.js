@@ -2,7 +2,7 @@
 
 var passport = require('passport');
 var authUtils = require('./utils');
-var debug = require('debug')('CommonAuthStrategy');
+var debug = require('debug')('app:common-auth-strategy');
 
 function createStrategyOptions(options) {
     if (options.strategyOptions) {

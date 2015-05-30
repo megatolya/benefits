@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = require('debug')('main');
+var debug = require('debug')('app:main');
 var express = require('express');
 var config = require('../config');
 var app = express();

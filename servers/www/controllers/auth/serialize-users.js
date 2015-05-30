@@ -2,7 +2,7 @@
 
 var userProvider = require('../../dataproviders/user');
 var passport = require('passport');
-var debug = require('debug')('UserSerializer');
+var debug = require('debug')('app:user-serializer');
 
 passport.serializeUser(function (user, done) {
     debug('Serialize user: ', user.id);

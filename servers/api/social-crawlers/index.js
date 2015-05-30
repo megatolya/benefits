@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = require('debug')('CrawlerManager');
+var debug = require('debug')('app:crawler-manager');
 var config = require('../../config');
 var twitterCrawler = require('./twitter');
 

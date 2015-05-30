@@ -3,7 +3,7 @@
 var uniq = require('../../common/uniq');
 var md5 = require('MD5');
 var models = require('../db/models');
-var debug = require('debug')('auth');
+var debug = require('debug')('app:auth');
 
 module.exports = {
     registerUser: function (userData) {

@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = require('debug')('db');
+var debug = require('debug')('app:db');
 var Sequelize = require('sequelize');
 var execSync = require('child_process').execSync;
 

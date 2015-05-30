@@ -2,7 +2,7 @@
 
 var db = require('./index');
 var _ = require('lodash');
-var debug = require('debug')('dev-data');
+var debug = require('debug')('app:dev-data');
 
 var models = require('./models');
 

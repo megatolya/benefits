@@ -3,7 +3,7 @@
 var config = require('../../../config');
 var userProvider = require('../../dataproviders/user');
 var _ = require('lodash');
-var debug = require('debug')('AuthHelper');
+var debug = require('debug')('app:auth-helper');
 
 module.exports = {
     /**

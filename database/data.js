@@ -7,6 +7,7 @@ module.exports = {
             description: 'Был на вконтакте',
             image: 'vk.png',
             children: [3],
+            tags: [1],
             rules: [1]
         },
         {
@@ -15,6 +16,7 @@ module.exports = {
             description: 'Много раз был на вконтакте',
             image: 'vk.png',
             children: [1, 3],
+            tags: [1],
             rules: [2]
         },
         {
@@ -23,6 +25,7 @@ module.exports = {
             description: 'Очень много раз был на вконтакте',
             image: 'durov.jpg',
             children: [4],
+            tags: [1],
             rules: [3, 4]
         },
         {
@@ -31,6 +34,7 @@ module.exports = {
             description: 'Много раз был на одноклассниках',
             image: 'ok.png',
             children: [2],
+            tags: [2],
             rules: [5]
         },
         {
@@ -38,7 +42,8 @@ module.exports = {
             name: 'Птенчик',
             description: 'Меньше 10 фолловеров в твиттере',
             image: 'twitter.png',
-            children: [7],
+            children: [],
+            tags: [3],
             rules: []
         },
         {
@@ -46,7 +51,8 @@ module.exports = {
             name: 'Тебя знают на районе',
             description: 'Болше 50 фолловеров в твиттере',
             image: 'twitter.png',
-            children: [7],
+            children: [],
+            tags: [3],
             rules: []
         },
         {
@@ -55,9 +61,24 @@ module.exports = {
             description: 'Болше 500 фолловеров в твиттере',
             image: 'twitter.png',
             children: [],
+            tags: [3],
             rules: []
         }
+    ],
 
+    achievementTags: [
+        {
+            // id: 1,
+            name: 'vk'
+        },
+        {
+            // id: 2,
+            name: 'ok'
+        },
+        {
+            // id: 3,
+            name: 'twitter'
+        }
     ],
 
     rules: [

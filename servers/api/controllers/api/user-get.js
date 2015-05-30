@@ -1,7 +1,7 @@
 'use strict';
 
 var models = require('../../db/models');
-var debug = require('debug')('user-get');
+var debug = require('debug')('app:user-get');
 
 module.exports = function (req, res, next) {
     var uid = req.params.uid;

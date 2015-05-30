@@ -8,9 +8,9 @@ module.exports = {
     _checkFollowersCount: function (user) {
         var profile = user.twitterData.specific;
         if (profile.followers_count < 10) {
-            user.setAchievements([5]);
+            user.addAchievements([5]);
         } else if (profile.followers_count > 10) {
-            user.setAchievements([6]);
+            user.addAchievements([6]);
         }
     }
 };

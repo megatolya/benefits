@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = require('debug')('TwitterCrawler');
+var debug = require('debug')('app:twitter-crawler');
 var Twit = require('twit');
 var config = require('../../../config');
 var twitterConfig = config.providers.twitter;

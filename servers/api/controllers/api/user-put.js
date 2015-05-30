@@ -3,7 +3,7 @@
 var auth = require('../../auth');
 var models = require('../../db/models');
 var socialCrawlers = require('../../social-crawlers');
-var debug = require('debug')('UserPut');
+var debug = require('debug')('app:user-put');
 
 function registerUser(userData, provider, res) {
     return auth.registerUser(userData)
