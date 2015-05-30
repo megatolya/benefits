@@ -3,6 +3,7 @@
 var config = require('../../../config');
 var userProvider = require('../../dataproviders/user');
 var _ = require('lodash');
+var debug = require('debug')('AuthHelper');
 
 module.exports = {
     /**
@@ -54,7 +55,7 @@ module.exports = {
         return userProvider
             .put(options.provider, options.userData)
             .then(function (user) {
-                console.log('User saved', user.id);
+                debug('User saved', user.id);
                 done(null, user);
             })
             .fail(done);

@@ -2,17 +2,18 @@
 
 var userProvider = require('../../dataproviders/user');
 var passport = require('passport');
+var debug = require('debug')('UserSerializer');
 
 passport.serializeUser(function (user, done) {
-    console.log('serialize user: ', user.id);
+    debug('Serialize user: ', user.id);
     done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-    console.log('deserialize user with id: ', id);
+    debug('Deserialize user: ', id);
     userProvider.get(id)
         .then(function (user) {
-            console.log('user loaded');
+            debug('User loaded!');
             done(null, user);
         })
         .fail(done);
