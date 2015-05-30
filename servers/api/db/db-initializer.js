@@ -30,13 +30,15 @@ module.exports = {
     },
 
     _createAchievements: function (achievements) {
-        return Promise.all(achievements.map(function (ach) {
-            debug('_createAchievements');
-            var achDataToSave = _.extend({}, ach);
-            delete achDataToSave.rules;
-            return Achievement.create(achDataToSave).then(function (achModel) {
-                this._relationsQueue.push(this._addAchievementsRelations.bind(this, ach, achModel));
-            }.bind(this));
+        return this._createSeries(achievements.map(function (ach) {
+            return function () {
+                debug('_createAchievements');
+                var achDataToSave = _.extend({}, ach);
+                delete achDataToSave.rules;
+                return Achievement.create(achDataToSave).then(function (achModel) {
+                    this._relationsQueue.push(this._addAchievementsRelations.bind(this, ach, achModel));
+                }.bind(this));
+            }.bind(this);
         }, this));
     },
 
@@ -64,20 +66,24 @@ module.exports = {
     },
 
     _createRules: function (rules) {
-        return Promise.all(rules.map(function (rule) {
-            debug('_createRules');
-            return Rule.create(rule);
+        return this._createSeries(rules.map(function (rule) {
+            return function () {
+                debug('_createRules');
+                return Rule.create(rule);
+            };
         }));
     },
 
     _createUsers: function (users) {
-        return Promise.all(users.map(function (user) {
-            debug('_createUsers');
-            var userToSave = _.extend({}, user);
-            delete userToSave.achievements;
-            return User.create(user).then(function (userModel) {
-                this._relationsQueue.push(this._linkUserWithAchievements.bind(this, user, userModel));
-            }.bind(this));
+        return this._createSeries(users.map(function (user) {
+            return function () {
+                debug('_createUsers');
+                var userToSave = _.extend({}, user);
+                delete userToSave.achievements;
+                return User.create(user).then(function (userModel) {
+                    this._relationsQueue.push(this._linkUserWithAchievements.bind(this, user, userModel));
+                }.bind(this));
+            }.bind(this);
         }, this));
     },
 
@@ -87,16 +93,20 @@ module.exports = {
     },
 
     _createHits: function (hits) {
-        return Promise.all(hits.map(function (hit) {
-            debug('_createHits');
-            return Hits.create(hit);
+        return this._createSeries(hits.map(function (hit) {
+            return function () {
+                debug('_createHits');
+                return Hits.create(hit);
+            };
         }));
     },
 
     _createTags: function (tags) {
-        return Promise.all(tags.map(function (tag) {
-            debug('_createTags');
-            return Tag.create(tag);
+        return this._createSeries(tags.map(function (tag) {
+            return function () {
+                debug('_createTags');
+                return Tag.create(tag);
+            };
         }));
     },
 
