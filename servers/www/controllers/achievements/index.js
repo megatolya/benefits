@@ -34,26 +34,23 @@ module.exports = function (app) {
     });
 
     app.post('/achievements/new', function (req, res, next) {
-        var id = uniq();
-        var from = path.resolve(__dirname + '/../../../../' + './temp/' + req.body.token + '.png');
-        var to = path.resolve(__dirname + '/../../../../' + './public/achievements/' + id + '.png');
+        var imageId = uniq();
 
-        console.log(req.body);
-        images.crop(from, to).then(function () {
-            var achievement = {
-                id: id,
-                name: req.body.name,
-                description: req.body.description,
-                image: '/achievements/' + id + '.png'
-            };
-
-            achievementsProvider.create(achievement);
-            res.redirect('/achievements/' + id);
+        achievementsProvider.create({
+            name: req.body.name,
+            description: req.body.description,
+            image: '/achievements/' + imageId + '.png'
+        }).then(function (achievement) {
+            var id = achievement.id;
+            var from = path.resolve(__dirname + '/../../../../' + './temp/' + req.body.token + '.png');
+            var to = path.resolve(__dirname + '/../../../../' + './public/achievements/' + imageId + '.png');
+            images.crop(from, to).then(function () {
+                res.redirect('/achievements/' + id);
+            }, next);
         }, next);
     });
 
     app.post('/achievements/:id', function (req, res, next) {
-        console.log(req.body);
         achievementsProvider.post(req.params.id, req.body).then(function (achievement) {
             res.status(200);
             res.end();

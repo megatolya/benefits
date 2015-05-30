@@ -6,7 +6,6 @@ var config = require('../config');
 var app = express();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var uuid = require('node-uuid');
 var db = require('./db');
 
 debug('db connected: %s', db.getDialect());
