@@ -21,7 +21,6 @@ function createCallback(options) {
     }
     var config = options.config;
     return function (accessToken, refreshToken, profile, done) {
-        debug('User Profile: ', profile);
         authUtils.finishAuth({
             provider: config.name,
             userData: authUtils.createUserData(

@@ -5,13 +5,18 @@ var Twit = require('twit');
 var config = require('../../../config');
 var twitterConfig = config.providers.twitter;
 var profileChecker = require('./profile-checker');
+var models = require('../../db/models');
+
+var TWITTER_TAG_NAME = 'twitter';
 
 module.exports = {
     crawl: function (user) {
         var api = this._createApiInstance(user);
         debug('Start crawling for user: ', user.id);
-        profileChecker.check(user);
-        this._checkTweets(api, user);
+        this._getTwitterAchievements().then(function (achievements) {
+            profileChecker.check(user, achievements);
+            this._checkTweets(api, user, achievements);
+        }.bind(this));
     },
 
     _createApiInstance: function (user) {
@@ -23,6 +28,10 @@ module.exports = {
         });
     },
 
-    _checkTweets: function (api, user) {
+    _getTwitterAchievements: function () {
+        return models.Tag.findAchievements(TWITTER_TAG_NAME);
+    },
+
+    _checkTweets: function (api, user, achievements) {
     }
 };

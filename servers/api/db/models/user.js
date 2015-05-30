@@ -6,6 +6,7 @@ var models = require('../models');
 module.exports = [
     'user',
     {
+        id: {type: sq.INTEGER, primaryKey: true, autoIncrement: true},
         salt: {type: sq.STRING},
         name: {type: sq.STRING},
 

@@ -44,7 +44,7 @@ module.exports = {
             image: 'twitter.png',
             children: [],
             tags: [3],
-            rules: []
+            rules: [6]
         },
         {
             // id: 6,
@@ -53,7 +53,7 @@ module.exports = {
             image: 'twitter.png',
             children: [],
             tags: [3],
-            rules: []
+            rules: [7]
         },
         {
             // id: 7,
@@ -62,7 +62,7 @@ module.exports = {
             image: 'twitter.png',
             children: [],
             tags: [3],
-            rules: []
+            rules: [8]
         }
     ],
 
@@ -107,6 +107,21 @@ module.exports = {
             type: 'navigation',
             url: 'https?:\\/\\/(www\\.)?(durov\\.ru)\\/.*',
             aim: 1
+        }, {
+            // id: 6,
+            type: 'compareLess',
+            field: 'followers_count',
+            aim: 5
+        }, {
+            // id: 7,
+            type: 'compareMore',
+            field: 'followers_count',
+            aim: 20
+        }, {
+            // id: 8,
+            type: 'compareMore',
+            field: 'followers_count',
+            aim: 500
         }
     ],
 

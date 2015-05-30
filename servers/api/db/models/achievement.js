@@ -6,6 +6,7 @@ var models = require('../models');
 module.exports = [
     'achievement',
     {
+        id: {type: sq.INTEGER, primaryKey: true, autoIncrement: true},
         url: {type: sq.STRING},
         name: {type: sq.STRING, allowNull: false},
         description: {type: sq.TEXT},
