@@ -49,10 +49,10 @@ mixin achievement-content(achievement, big)
                 form.hide.form-wrapper
                     +input('name', achievement.name)
                     +input('description', achievement.description, true)
-                    +suggest([], 'creators', 'users')
-                    +suggest(achievement.parents.map(mapVals), 'parents', 'achievements')
-                    +suggest(achievement.children.map(mapVals), 'children', 'achievements')
-                    +suggest(achievement.holders.map(mapVals), 'holders', 'users')
+                    +suggest([], 'creators', 'user')
+                    +suggest(achievement.parents.map(mapVals), 'parents', 'achievement')
+                    +suggest(achievement.children.map(mapVals), 'children', 'achievement')
+                    +suggest(achievement.holders.map(mapVals), 'holders', 'user')
                 .btn.btn-default.achievement__edit=i18n.get('achievements.edit')
     - } else {
         form(action='/achievements/new-image').dropzone.achievement__image
@@ -88,12 +88,12 @@ mixin achievement(achievement, big)
                 +achievement-content(null)
         - }
 
-mixin suggest(values, target, suggest)
+mixin suggest(values, target, suggestType)
     table.suggest-table(class='form-' + target)
         tr
             td(width='30%')=i18n.get('achievements.' + target)
             td(width='70%')
-                select.form-control(name=target, class='suggest-' + target, data-suggest='/' + suggest + '-suggest',  multiple='multiple').suggest
+                select.form-control(name=target, class='suggest-' + target, data-suggest=('/suggest/' + suggestType),  multiple='multiple').suggest
                     - values.forEach(function (val) {
                         option(value=val.id)=val.name
                     - });

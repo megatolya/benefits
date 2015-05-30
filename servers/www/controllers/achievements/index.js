@@ -1,13 +1,13 @@
 'use strict';
 
 var images = require('../../images');
-var achievementsProvider = require('../../dataproviders/achievements');
+var achievementProvider = require('../../dataproviders/achievement');
 var path = require('path');
 var uniq = require('../../../common/uniq');
 
 module.exports = function (app) {
     app.get('/achievements', function (req, res, next) {
-        achievementsProvider.getAll().then(function (achievements) {
+        achievementProvider.getAll().then(function (achievements) {
             res.magicRender('achievements/catalogue', req, {
                 achievements: achievements
             });
@@ -21,7 +21,7 @@ module.exports = function (app) {
     });
 
     app.get('/achievements/:id', function (req, res, next) {
-        achievementsProvider.get(req.params.id).then(function (achievement) {
+        achievementProvider.get(req.params.id).then(function (achievement) {
             res.magicRender('achievements/achievement', req, {
                 achievement: achievement
             });
@@ -36,7 +36,7 @@ module.exports = function (app) {
     app.post('/achievements/new', function (req, res, next) {
         var imageId = uniq();
 
-        achievementsProvider.create({
+        achievementProvider.create({
             name: req.body.name,
             description: req.body.description,
             image: '/achievements/' + imageId + '.png'
@@ -51,7 +51,7 @@ module.exports = function (app) {
     });
 
     app.post('/achievements/:id', function (req, res, next) {
-        achievementsProvider.post(req.params.id, req.body).then(function (achievement) {
+        achievementProvider.update(req.params.id, req.body).then(function (achievement) {
             res.status(200);
             res.end();
         }).fail(function () {

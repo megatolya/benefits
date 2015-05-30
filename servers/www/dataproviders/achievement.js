@@ -11,7 +11,11 @@ module.exports = {
         return utils.askApi('/api/v1/achievement/' + id);
     },
 
-    post: function (id, data) {
+    find: function (str) {
+        return utils.askApi('/api/v1/suggest/achievement/' + encodeURIComponent(str));
+    },
+
+    update: function (id, data) {
         return utils.askApi('/api/v1/achievement/' + id, {
             method: 'POST',
             body: data

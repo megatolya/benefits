@@ -1,20 +1,38 @@
 'use strict';
 
 module.exports = function (app) {
-    app.get('/api/v1/whoami', require('./whoami'));
-    app.get('/api/v1/token', require('./token'));
-    app.get('/api/v1/rules', require('./rules'));
-    app.get('/api/v1/achievements', require('./achievements'));
+    function get() {
+        arguments[0] = '/api/v1' + arguments[0];
+        app.get.apply(app, arguments);
+    }
 
-    app.get('/api/v1/all-achievements', require('./allAchievements'));
-    app.get('/api/v1/achievement/:id', require('./achievement'));
+    function post() {
+        arguments[0] = '/api/v1' + arguments[0];
+        app.post.apply(app, arguments);
+    }
 
-    app.post('/api/v1/achievement/:id', require('./achievement-post'));
+    function put() {
+        arguments[0] = '/api/v1' + arguments[0];
+        app.put.apply(app, arguments);
+    }
 
-    app.put('/api/v1/achievement/', require('./achievement-put'));
+    get('/whoami', require('./whoami'));
+    get('/token', require('./token'));
+    get('/rules', require('./rules'));
+    get('/achievements', require('./achievements'));
 
-    app.get('/api/v1/user/:uid', require('./user-get'));
-    app.put('/api/v1/user', require('./user-put'));
+    get('/all-achievements', require('./allAchievements'));
+    get('/achievement/:id', require('./achievement'));
 
-    app.post('/api/v1/dump', require('./dump'));
+    post('/achievement/:id', require('./achievement-post'));
+
+    put('/achievement/', require('./achievement-put'));
+
+    get('/user/:uid', require('./user-get'));
+    put('/user', require('./user-put'));
+
+    post('/dump', require('./dump'));
+
+    get('/suggest/user/:query', require('./userSuggest'));
+    get('/suggest/achievement/:query', require('./achievementSuggest'));
 };
