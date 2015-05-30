@@ -7,7 +7,17 @@ var debug = require('debug')('AuthHelper');
 
 module.exports = {
     /**
-     * Deletes all keys with '_' from profile
+     * Returns _json object
+     * @param {Object} profile
+     */
+    extractSpecificData: function (profile) {
+        return {
+           specific: profile._json
+        };
+    },
+
+    /**
+     * Removes all underscored fields from profile
      * @param {Object} profile
      */
     cleanProfile: function (profile) {
@@ -42,7 +52,7 @@ module.exports = {
         var userData = {};
         userData.name = profile.displayName;
         userData[provider + 'Id'] = profile.id;
-        userData[provider + 'Data'] = _.extend(this.cleanProfile(profile), customData);
+        userData[provider + 'Data'] = _.extend(this.extractSpecificData(profile), customData);
         return userData;
     },
 

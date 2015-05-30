@@ -32,7 +32,32 @@ module.exports = {
             image: 'ok.png',
             children: [2],
             rules: [5]
+        },
+        {
+            // id: 5,
+            name: 'Птенчик',
+            description: 'Меньше 10 фолловеров в твиттере',
+            image: 'twitter.png',
+            children: [7],
+            rules: []
+        },
+        {
+            // id: 6,
+            name: 'Тебя знают на районе',
+            description: 'Болше 50 фолловеров в твиттере',
+            image: 'twitter.png',
+            children: [7],
+            rules: []
+        },
+        {
+            // id: 7,
+            name: 'Широко известен в узких кругах',
+            description: 'Болше 500 фолловеров в твиттере',
+            image: 'twitter.png',
+            children: [],
+            rules: []
         }
+
     ],
 
     rules: [
