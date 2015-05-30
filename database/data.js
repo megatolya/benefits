@@ -127,19 +127,16 @@ module.exports = {
 
     users: [
         {
-            // id: 1,
             salt: 'salt1',
             name: 'Николай',
             achievements: [1]
         },
         {
-            // id: 2,
             salt: 'salt2',
             name: 'Степан',
             achievements: [4]
         },
         {
-            // id: 3,
             salt: 'salt3',
             name: 'Наташа',
             achievements: [1, 2, 3]

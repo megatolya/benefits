@@ -17,6 +17,14 @@ mixin achievement-content(achievement, big)
                         .achievement__desc(data-name='description')=achievement.description
 
                 if big
+                    if achievement.creator
+                        tr
+                            td(width='15%')=i18n.get('achievements.creator')
+                            td(width='85%')
+                                a(href='/user/' +  achievement.creator.id)=achievement.creator.name
+
+
+
                     if achievement.children.length
                         tr
                             td(width='15%')=i18n.get('achievements.children')
@@ -56,7 +64,7 @@ mixin achievement-content(achievement, big)
                 form.hide.form-wrapper
                     +input('name', achievement.name)
                     +input('description', achievement.description, true)
-                    +suggest([], 'creators', 'user')
+                    //-+suggest([], 'creatorId', 'user')
                     +suggest(achievement.parents.map(mapVals), 'parents', 'achievement')
                     +suggest(achievement.children.map(mapVals), 'children', 'achievement')
                     +suggest(achievement.holders.map(mapVals), 'holders', 'user')

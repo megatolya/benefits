@@ -1,15 +1,8 @@
 mixin holder(holder)
     a(href='/user/' + holder.id).holder=holder.name
 
-- i = 0;
-- themes = ['default', 'primary', 'success', 'info', 'warning', 'danger'];
-- i++;
-- if (i > themes.length - 1) {
-    - i = 0;
-- }
-
 mixin tag(tag)
-    span.label(class=('label-' + themes[i]), href='/tag/' + tag.id)=tag.name
+    a.label(class=('label-' + tag.theme), href='/tag/' + tag.name)=tag.name
 
 mixin headerProfile()
     - if (me) {

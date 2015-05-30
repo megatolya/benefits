@@ -24,7 +24,7 @@ module.exports = {
         if (provider === 'api') {
             path = '/api/v1' + path;
         } else {
-            return Q.reject(new TypeError('Uknown provider ' + provider));
+            return Q.reject(new TypeError('Unknown provider ' + provider));
         }
 
         var requestOptions = _.extend(
@@ -46,6 +46,6 @@ module.exports = {
             return json;
         }
 
-        return Q.reject(json);
+        return Q.reject(new Error('failed to parse json: ' + json));
     }
 };

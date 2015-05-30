@@ -13,7 +13,7 @@ module.exports = {
             description: 'Описание',
             create: 'Создать',
             parents: 'Критерии',
-            creators: 'Создатели',
+            creator: 'Автор',
             children: 'Критерий для',
             holders: 'Получили',
             edit: 'Редактировать',

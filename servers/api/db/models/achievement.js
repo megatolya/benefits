@@ -2,11 +2,11 @@
 
 var sq = require('sequelize');
 var models = require('../models');
+var Q = require('q');
 
 module.exports = [
     'achievement',
     {
-        id: {type: sq.INTEGER, primaryKey: true, autoIncrement: true},
         url: {type: sq.STRING},
         name: {type: sq.STRING, allowNull: false},
         description: {type: sq.TEXT},
@@ -14,17 +14,27 @@ module.exports = [
     },
     {
         classMethods: {
-            findWithParents: function (achievementId) {
-                return Promise.all([
+            getFullData: function (achievementId) {
+                return Q.all([
                     models.Achievement.scope('allRelations').find(achievementId),
                     this.findParents(achievementId)
-                ]).then(function (results) {
-                    var achievement = results[0];
+                ]).spread(function (achievement, parents) {
                     if (achievement) {
-                        achievement.dataValues.parents = results[1];
+                        achievement.dataValues.parents = parents;
                     }
-                    return achievement;
-                });
+
+                    // FIXME так быть не должно
+                    if (!achievement.creatorId) {
+                        achievement.creator = null;
+                        return achievement;
+                    }
+
+                    return this.getCreator(achievement.creatorId)
+                        .then(function (creator) {
+                            achievement.dataValues.creator = creator;
+                            return achievement;
+                        });
+                }.bind(this));
             },
 
             findParents: function (achievementId) {
@@ -36,6 +46,12 @@ module.exports = [
                     });
                     return models.Achievement.scope('allRelations').findAll({where: {id: ids}});
                 }.bind(this));
+            },
+
+            getCreator: function (creatorId) {
+                return models.User.find(creatorId).then(function (creator) {
+                    return creator.dataValues;
+                });
             }
         },
 

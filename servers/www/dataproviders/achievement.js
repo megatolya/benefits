@@ -2,6 +2,17 @@
 
 var utils = require('./utils');
 
+var i = 0;
+var labelThemes = ['default', 'primary', 'success', 'info', 'warning', 'danger'];
+
+function getLabelTheme() {
+    i++;
+    if (i > labelThemes.length - 1) {
+        i = 0;
+    }
+    return labelThemes[i];
+}
+
 function AchievementProvider(req) {
     this.req = req || {};
 }
@@ -56,6 +67,12 @@ AchievementProvider.prototype = {
             achievement.children = achievement.children.map(this.normalize.bind(this));
         }
 
+        achievement.tags = (achievement.tags || []).map(function (tag) {
+            tag.theme = getLabelTheme();
+            return tag;
+        });
+
+        console.log('achievement', achievement);
         return achievement;
     }
 };

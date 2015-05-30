@@ -3,6 +3,7 @@
 var images = require('../../images');
 var path = require('path');
 var uniq = require('../../../common/uniq');
+var authRequired = require('../../middleware/authRequired');
 
 module.exports = function (app) {
     app.get('/achievements', function (req, res, next) {
@@ -13,32 +14,35 @@ module.exports = function (app) {
         }).fail(next);
     });
 
-    app.get('/achievements/new', function (req, res, next) {
+    app.get('/achievements/new', authRequired, function (req, res, next) {
         res.magicRender('achievements/new', req, {
             token: uniq()
         });
     });
 
     app.get('/achievements/:id', function (req, res, next) {
+        console.log('hello');
         req.getProvider('achievement').get(req.params.id).then(function (achievement) {
+            console.log('hello2');
             res.magicRender('achievements/achievement', req, {
                 achievement: achievement
             });
-        }).fail(next);
+        }, next);
     });
 
-    app.post('/achievements/new-image', function (req, res, next) {
+    app.post('/achievements/new-image', authRequired, function (req, res, next) {
         res.status(201);
         res.end();
     });
 
-    app.post('/achievements/new', function (req, res, next) {
+    app.post('/achievements/new', authRequired, function (req, res, next) {
         var imageId = uniq();
 
         req.getProvider('achievement').create({
             name: req.body.name,
             description: req.body.description,
-            image: '/achievements/' + imageId + '.png'
+            image: '/achievements/' + imageId + '.png',
+            creatorId: req.user.id
         }).then(function (achievement) {
             var id = achievement.id;
             var from = path.resolve(__dirname + '/../../../../' + './temp/' + req.body.token + '.png');
@@ -49,7 +53,7 @@ module.exports = function (app) {
         }, next);
     });
 
-    app.post('/achievements/:id', function (req, res, next) {
+    app.post('/achievements/:id', authRequired, function (req, res, next) {
         req.getProvider('achievement').update(req.params.id, req.body).then(function (achievement) {
             res.status(200);
             res.end();
