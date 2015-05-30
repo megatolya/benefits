@@ -10,6 +10,7 @@ var User = models.User;
 var Achievement = models.Achievement;
 var Rule = models.Rule;
 var Hits = models.Hits;
+var Tag = models.Tag;
 
 module.exports = {
     initSchema: function (force) {
@@ -23,7 +24,8 @@ module.exports = {
             this._createAchievements(data.achievements),
             this._createRules(data.rules),
             this._createUsers(data.users),
-            this._createHits(data.hits)
+            this._createHits(data.hits),
+            this._createTags(data.tags)
         ]);
     },
 
@@ -39,12 +41,17 @@ module.exports = {
     _addAchievementsRelations: function (achievementData, achievementModel) {
         return Promise.all([
             this._linkAchievementsWithRules(achievementData, achievementModel),
+            this._addAchievementTags(achievementData, achievementModel),
             this._addAchievementChildren(achievementData, achievementModel)
         ]);
     },
 
     _linkAchievementsWithRules: function (achievementData, achievementModel) {
         return achievementModel.setRules(achievementData.rules);
+    },
+
+    _addAchievementTags: function (achievementData, achievementModel) {
+        return achievementModel.setTags(achievementData.tags);
     },
 
     _addAchievementChildren: function (achievementData, achievementModel) {
@@ -73,6 +80,12 @@ module.exports = {
     _createHits: function (hits) {
         return Promise.all(hits.map(function (hit) {
             return Hits.create(hit);
+        }));
+    },
+
+    _createTags: function (tags) {
+        return Promise.all(tags.map(function (tag) {
+            return Tag.create(tag);
         }));
     }
 };

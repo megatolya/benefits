@@ -66,7 +66,7 @@ module.exports = {
         }
     ],
 
-    achievementTags: [
+    tags: [
         {
             // id: 1,
             name: 'vk'
