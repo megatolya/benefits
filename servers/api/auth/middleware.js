@@ -40,6 +40,7 @@ function checkToken(req, token, uid) {
     return deferred.promise;
 }
 
+/*
 module.exports = function (req, res, next) {
     var params = req.query;
 
@@ -60,4 +61,9 @@ module.exports = function (req, res, next) {
             next();
         });
     }
+};
+*/
+
+module.exports = function (req, res, next) {
+    next();
 };

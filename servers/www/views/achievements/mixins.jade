@@ -1,5 +1,7 @@
 mixin achievement-content(achievement, big)
     - if (achievement) {
+        if achievement.received
+            i.achievement__tick(title=i18n.get('achievements.received'))='✓'
         img.achievement__image(src=achievement.image)
         .achievement__main-info
             table.achievement__table
@@ -72,8 +74,9 @@ mixin achievement-content(achievement, big)
     - }
 
 mixin achievement(achievement, big)
+
     if big
-        - attributes.class = 'achievement_size_big';
+        - attributes.class = 'achievement_size_big ';
         - if (achievement) {
             div(class=attributes.class).achievement
                 +achievement-content(achievement, big)

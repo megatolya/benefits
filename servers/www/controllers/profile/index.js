@@ -1,7 +1,6 @@
 'use strict';
 
 var guestToPromo = require('../../middleware/guest-to-promo');
-var userProvider = require('../../dataproviders/user');
 
 module.exports = function (app) {
     app.get('/me', guestToPromo, function (req, res, next) {
@@ -11,7 +10,7 @@ module.exports = function (app) {
     });
 
     app.get('/user/:userId', function (req, res, next) {
-        userProvider.get(req.params.userId).then(function (user) {
+        req.getProvider('user').get(req.params.userId).then(function (user) {
             res.magicRender('profile', req, {
                 user: user
             });

@@ -1,8 +1,6 @@
 'use strict';
 
 var uniq = require('../../../common/uniq');
-var userProvider = require('../../dataproviders/user.js');
-var achievementProvider = require('../../dataproviders/achievement');
 
 module.exports = function (app) {
     app.get('/suggest/user/', function (req, res) {
@@ -12,7 +10,7 @@ module.exports = function (app) {
             });
         }
 
-        userProvider.find(req.query.q).then(send, send.bind(null, []));
+        req.getProvider('user').find(req.query.q).then(send, send.bind(null, []));
     });
 
     app.get('/suggest/achievement/', function (req, res) {
@@ -23,6 +21,6 @@ module.exports = function (app) {
             });
         }
 
-        achievementProvider.find(req.query.q).then(send, send.bind(null, []));
+        req.getProvider('achievement').find(req.query.q).then(send, send.bind(null, []));
     });
 };

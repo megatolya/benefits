@@ -1,6 +1,7 @@
 'use strict';
+
 var config = require('../../../config');
-var userProvider = require('../../dataproviders/user');
+var userProvider = new (require('../../dataproviders/user'))();
 var _ = require('lodash');
 var debug = require('debug')('app:auth-helper');
 
@@ -63,10 +64,9 @@ module.exports = {
     finishAuth: function (options, done) {
         return userProvider
             .put(options.provider, options.userData)
-            .then(function (user) {
-                debug('User saved', user.id);
-                done(null, user);
-            })
-            .fail(done);
+                .then(function (user) {
+                    debug('User saved', user.id);
+                    done(null, user);
+                }, done);
     }
 };

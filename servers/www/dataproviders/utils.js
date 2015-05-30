@@ -6,12 +6,33 @@ var config = require('../../config');
 var _ = require('lodash');
 
 module.exports = {
-    askApi: function (path, options) {
+    askApi: function (req, path, options) {
+        var args = [].slice.call(arguments);
+        args[0] = 'api';
+        options = args[2] = options || {};
+
+        if (req.user) {
+            options.headers = _.assign(options.headers || {}, {
+                'X-Uid': req.user.id
+            });
+        }
+
+        return this.askProvider.apply(this, args);
+    },
+
+    askProvider: function (provider, path, options) {
+        if (provider === 'api') {
+            path = '/api/v1' + path;
+        } else {
+            return Q.reject(new TypeError('Uknown provider ' + provider));
+        }
+
         var requestOptions = _.extend(
             config.apiServer,
             {bodyEncoding: 'json', path: path, method: 'GET'},
             options
         );
+
         return ask(requestOptions).then(this._onApiResponse.bind(this));
     },
 

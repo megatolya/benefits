@@ -1,6 +1,6 @@
 'use strict';
 
-var userProvider = require('../../dataproviders/user');
+var userProvider = new (require('../../dataproviders/user'))();
 var passport = require('passport');
 var debug = require('debug')('app:user-serializer');
 

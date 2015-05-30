@@ -2,17 +2,23 @@
 
 var utils = require('./utils');
 
-module.exports = {
+function UserProvider(req) {
+    this.req = req || {};
+}
+
+UserProvider.prototype = {
+    constructor: UserProvider,
+
     get: function (uid) {
-        return utils.askApi('/api/v1/user/' + uid);
+        return utils.askApi(this.req, '/user/' + uid);
     },
 
     find: function (str) {
-        return utils.askApi('/api/v1/suggest/user/' + encodeURIComponent(str));
+        return utils.askApi(this.req, '/suggest/user/' + encodeURIComponent(str));
     },
 
     put: function (provider, userData) {
-        return utils.askApi('/api/v1/user', {
+        return utils.askApi(this.req, '/user', {
             method: 'PUT',
             body: {
                 provider: provider,
@@ -21,3 +27,5 @@ module.exports = {
         });
     }
 };
+
+module.exports = UserProvider;

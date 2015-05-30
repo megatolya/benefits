@@ -14,6 +14,7 @@
     padding: 10px;
     width: 340px;
     margin: 10px;
+    position: relative;
 
     &_block {
         display: block;
@@ -25,6 +26,13 @@
     &:active {
         text-decoration: none;
         color: black;
+    }
+
+    &__tick {
+        position: absolute;
+        top: 5px;
+        user-select: none;
+        -webkit-user-select: none;
     }
 
     &__main-info {
@@ -79,52 +87,66 @@
     padding: 0 40px;
     margin: 10px 0;
 
-    & .achievement__image {
-        width: 200px;
-        height: 200px;
-    }
+    .achievement {
+        &__tick {
+            right: 130px;
+            font-size: 60px;
+        }
 
-    & .achievement__desc {
-        color: black;
-    }
+        &__image {
+            width: 200px;
+            height: 200px;
+        }
 
-    & .achievement__name {
-        font-weight: bold;
-    }
+        &__desc {
+            color: black;
+        }
 
-    & .achievement__main-info {
-        margin: 0 30px;
-    }
+        &__name {
+            font-weight: bold;
+        }
 
-    & input.achievement__name,
-    & input.achievement__description {
-        margin-bottom: 10px;
-    }
+        &__main-info {
+            margin: 0 30px;
+        }
 
-    & .achievement__table {
-        width: 100%;
+        & input.achievement__name,
+        & input.achievement__description {
+            margin-bottom: 10px;
+        }
 
-        & td {
-            padding: 10px 0;
+        &__table {
+            width: 100%;
+
+            & td {
+                padding: 10px 0;
+            }
         }
     }
 }
 
 .achievement_size_small {
-    & .achievement__image {
-        height: 50px;
-        width: 50px;
-    }
+    .achievement {
+        &__image {
+            height: 50px;
+            width: 50px;
+        }
 
-    & .achievement__name {
-        font-weight: normal;
-    }
+        &__tick {
+            right: 10px;
+            font-size: 15px;
+        }
 
-    & .achievement__table td {
-        padding: 5px 0;
-    }
+        &__name {
+            font-weight: normal;
+        }
 
-    & .achievement__main-info {
-        margin: 0 10px;
+        &__table td {
+            padding: 5px 0;
+        }
+
+        &__main-info {
+            margin: 0 10px;
+        }
     }
 }

@@ -61,6 +61,8 @@ app.use(passport.session());
 
 app.use(require('./middleware/auth'));
 
+require('./dataproviders');
+
 require('./request')(app);
 require('./response')(app);
 

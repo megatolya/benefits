@@ -4,6 +4,7 @@ module.exports = {
     ru: {
         achievements: {
             achievements: 'Достижения',
+            received: 'Получено',
             noAchievements: 'Нет достижений',
             allAchievements: 'Все достижения',
             catalogue: 'Достижения',

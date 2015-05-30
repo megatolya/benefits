@@ -23,7 +23,6 @@ module.exports = [
                     if (achievement) {
                         achievement.dataValues.parents = results[1];
                     }
-                    console.log('achievements found: ');
                     return achievement;
                 });
             },
@@ -35,7 +34,6 @@ module.exports = [
                     var ids = parentChildRows.map(function (row) {
                         return row.achievementId;
                     });
-                    console.log('finding parents: ');
                     return models.Achievement.scope('allRelations').findAll({where: {id: ids}});
                 }.bind(this));
             }
