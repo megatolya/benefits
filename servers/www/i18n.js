@@ -3,6 +3,7 @@
 module.exports = {
     ru: {
         achievements: {
+            tags: 'Теги',
             achievements: 'Достижения',
             received: 'Получено',
             noAchievements: 'Нет достижений',

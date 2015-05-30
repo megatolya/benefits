@@ -9,9 +9,9 @@ module.exports = function (req, res, next) {
     req.fromExtension = Boolean(header);
 
     if (req.user) {
-        debug(req.path + '(authorized)');
+        debug(req.path + ' (authorized)');
     } else {
-        debug(req.path + '(not authorized)');
+        debug(req.path + ' (not authorized)');
     }
 
     next();

@@ -4,6 +4,7 @@ var Q = require('q');
 var ask = require('vow-asker');
 var config = require('../../config');
 var _ = require('lodash');
+var debug = require('debug')('app:asker');
 
 module.exports = {
     askApi: function (req, path, options) {
@@ -32,6 +33,7 @@ module.exports = {
             {bodyEncoding: 'json', path: path, method: 'GET'},
             options
         );
+        debug('asking ' + requestOptions.path);
 
         return ask(requestOptions).then(this._onApiResponse.bind(this));
     },

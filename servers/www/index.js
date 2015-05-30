@@ -12,6 +12,7 @@ var passport = require('passport');
 var multer  = require('multer');
 var easyimage = require('easyimage');
 var fs = require('q-io/fs');
+var debug = require('debug')('app:main');
 
 app.disable('x-powered-by');
 app.disable('etag');
@@ -76,4 +77,4 @@ require('./controllers/suggest')(app);
 app.use(require('./error-handler'));
 
 app.listen(config.webServer.port);
-console.log('WEB server http://localhost:' + config.webServer.port);
+debug('WEB server http://localhost:' + config.webServer.port);

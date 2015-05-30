@@ -7,6 +7,7 @@ var app = express();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var db = require('./db');
+var debug = require('debug')('app:main');
 
 debug('db connected: %s', db.getDialect());
 
@@ -29,7 +30,7 @@ require('./controllers/api')(app);
 app.use(require('./error-handler'));
 
 app.listen(config.apiServer.port);
-console.log('API server http://localhost:' + config.apiServer.port);
+debug('API server http://localhost:' + config.apiServer.port);
 
 if (config.isTestsRunning) {
     require('./tests/')(app);
