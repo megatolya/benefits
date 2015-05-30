@@ -5,6 +5,8 @@ var config = require('../config');
 var _ = require('lodash');
 var i18n = require('./i18n');
 
+var i18nDebug = require('debug')('app:i18n');
+
 module.exports = function () {};
 
 express.response.magicRender = function (templateName, req, params) {
@@ -23,16 +25,18 @@ express.response.magicRender = function (templateName, req, params) {
                     key = keys.shift();
                     val = val[key];
                     if (!val) {
-                        console.warn('no such key', lang + '.' + str);
+                        i18nDebug('no such key ' + lang + '.' + str);
                         return str;
                     }
                 } while (keys.length);
+
+                i18nDebug(str + ' is ' + val);
                 return val;
             },
 
             lang: req.getLang()
         },
-        user: req.user,
+        me: req.user,
         mapVals: function (val) {
             return {
                 id: val.id, name: val.name || val.title || '???'

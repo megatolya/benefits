@@ -1,9 +1,9 @@
 mixin holder(holder)
-    a(href='/u/' + holder.id).holder=holder.name
+    a(href='/user/' + holder.id).holder=holder.name
 
 mixin headerProfile()
-    - if (user) {
-       a(href="/settings/")= user.name
+    - if (me) {
+       a(href="/user/" + user.id)= me.name
     - } else {
         a(href="/auth/")=i18n.get('auth.login.login')
     - }

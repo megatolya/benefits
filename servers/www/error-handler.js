@@ -10,5 +10,9 @@ module.exports = function (err, req, res, next) {
     console.error('Failed', err.message);
     console.error('Failed', err.stack);
     res.status(500);
-    res.json({status: 'error', errorCode: 500, errorMessage: err.message});
+    if (req.xhr) {
+        res.json({status: 'error', errorCode: 500, errorMessage: err.message});
+    } else {
+        res.end(err.message);
+    }
 };

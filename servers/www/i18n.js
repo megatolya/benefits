@@ -3,6 +3,9 @@
 module.exports = {
     ru: {
         achievements: {
+            achievements: 'Достижения',
+            noAchievements: 'Нет достижений',
+            allAchievements: 'Все достижения',
             catalogue: 'Каталог достижений',
             newAchievement: 'Новое достижение',
             name: 'Название',
@@ -40,7 +43,6 @@ module.exports = {
         },
 
         common: {
-            achievements: 'Достижения',
             helloHeader: 'Benefits!',
             save: 'Сохранить'
         },

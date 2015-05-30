@@ -1,10 +1,16 @@
+include achievements/mixins
+
 extends ./layout.jade
 
 block content
-    h1=i18n.achievements
+    h1=user.name
 
-    - achievements.forEach(function (achievement) {
-        .achievement
-            span.achievement__name=achievement.title
-            img.achievement__image(src=achievement.image)
-    - });
+    if achievements
+        h3=i18n.get('achievements.achievements')
+        - achievements = user.achievements
+        - achievements.forEach(function (achievement) {
+            +achievement(achievement)
+        - });
+    else
+        p=i18n.get('achievements.noAchievements')
+

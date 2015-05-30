@@ -1,5 +1,4 @@
 'use strict';
-
 var config = require('../../../config');
 var userProvider = require('../../dataproviders/user');
 var _ = require('lodash');
@@ -12,7 +11,7 @@ module.exports = {
      */
     extractSpecificData: function (profile) {
         return {
-           specific: profile._json
+            specific: profile._json
         };
     },
 
