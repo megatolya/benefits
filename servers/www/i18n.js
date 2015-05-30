@@ -4,6 +4,7 @@ module.exports = {
     ru: {
         achievements: {
             tags: 'Теги',
+            createdAchievements: 'Созданные достижения',
             achievements: 'Достижения',
             received: 'Получено',
             noAchievements: 'Нет достижений',

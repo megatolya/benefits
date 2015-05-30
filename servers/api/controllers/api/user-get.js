@@ -13,8 +13,7 @@ module.exports = function (req, res, next) {
     }
 
     // TODO delete salt
-    models.User.scope('withAchievements')
-        .find(uid)
+    models.User.getFullData(uid)
         .then(res.json.bind(res))
         .catch(next);
 };

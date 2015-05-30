@@ -2,6 +2,7 @@
 
 var sq = require('sequelize');
 var models = require('../models');
+var Q = require('q');
 
 module.exports = [
     'user',
@@ -30,6 +31,32 @@ module.exports = [
                     }).then(function (user) {
                         return user.get('achievements');
                     });
+            },
+
+            getFullData: function (uid) {
+                return Q.all([
+                    models.User.find(uid),
+                    this.findCreatedAchievements(uid)
+                ]).spread(function (user, achievements) {
+                    if (!user) {
+                        return Q.reject(new Error('User not found'));
+                    }
+
+                    user.dataValues.createdAchievements = achievements;
+                    return user;
+                });
+            },
+
+            findCreatedAchievements: function (uid) {
+                return models.Achievement.findAll({
+                    where: {
+                        creatorId: uid
+                    }
+                }).then(function (achievements) {
+                    return achievements.map(function (achievement) {
+                        return achievement.dataValues;
+                    });
+                });
             }
         },
 

@@ -1,6 +1,8 @@
 'use strict';
 
 var utils = require('./utils');
+var achievementProvider = new (require('./achievement'))();
+var debug = require('debug')('app:providers');
 
 function UserProvider(req) {
     this.req = req || {};
@@ -10,7 +12,7 @@ UserProvider.prototype = {
     constructor: UserProvider,
 
     get: function (uid) {
-        return utils.askApi(this.req, '/user/' + uid);
+        return utils.askApi(this.req, '/user/' + uid).then(this.normalize.bind(this));
     },
 
     find: function (str) {
@@ -25,6 +27,17 @@ UserProvider.prototype = {
                 userData: userData
             }
         });
+    },
+
+    normalize: function (user) {
+        user.achievemets = (user.achivements || []).map(function (achievement) {
+            return achievementProvider.normalize(achievement);
+        });
+        user.createdAchievements = (user.createdAchievements || []).map(function (achievement) {
+            return achievementProvider.normalize(achievement);
+        });
+        debug('User: ' + JSON.stringify(user));
+        return user;
     }
 };
 

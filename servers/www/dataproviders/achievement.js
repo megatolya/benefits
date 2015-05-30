@@ -1,6 +1,7 @@
 'use strict';
 
 var utils = require('./utils');
+var debug = require('debug')('app:providers');
 
 var i = 0;
 var labelThemes = ['default', 'primary', 'success', 'info', 'warning', 'danger'];
@@ -72,6 +73,7 @@ AchievementProvider.prototype = {
             return tag;
         });
 
+        debug('Achievement: ' + JSON.stringify(achievement));
         return achievement;
     }
 };

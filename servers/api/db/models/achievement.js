@@ -21,6 +21,8 @@ module.exports = [
                 ]).spread(function (achievement, parents) {
                     if (achievement) {
                         achievement.dataValues.parents = parents;
+                    } else {
+                        return Q.reject(new Error('Achievement not found'));
                     }
 
                     // FIXME так быть не должно

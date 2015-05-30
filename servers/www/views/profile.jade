@@ -5,7 +5,7 @@ extends ./layout.jade
 block content
     h1=user.name
 
-    if achievements
+    if user.achievements
         h3=i18n.get('achievements.achievements')
         - achievements = user.achievements
         - achievements.forEach(function (achievement) {
@@ -13,4 +13,10 @@ block content
         - });
     else
         p=i18n.get('achievements.noAchievements')
+
+    if user.createdAchievements
+        h3=i18n.get('achievements.createdAchivements')
+        - user.createdAchievements.forEach(function (achievement) {
+            +achievement(achievement)
+        - });
 
