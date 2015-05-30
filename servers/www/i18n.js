@@ -6,7 +6,7 @@ module.exports = {
             achievements: 'Достижения',
             noAchievements: 'Нет достижений',
             allAchievements: 'Все достижения',
-            catalogue: 'Каталог достижений',
+            catalogue: 'Достижения',
             newAchievement: 'Новое достижение',
             name: 'Название',
             description: 'Описание',

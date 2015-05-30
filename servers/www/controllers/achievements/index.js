@@ -22,6 +22,7 @@ module.exports = function (app) {
 
     app.get('/achievements/:id', function (req, res, next) {
         achievementProvider.get(req.params.id).then(function (achievement) {
+            console.log('achievement', achievement);
             res.magicRender('achievements/achievement', req, {
                 achievement: achievement
             });

@@ -15,25 +15,23 @@ mixin achievement-content(achievement, big)
                         .achievement__desc(data-name='description')=achievement.description
 
                 if big
-                    - if (achievement.children.length) {
+                    if achievement.children.length
                         tr
                             td(width='15%')=i18n.get('achievements.children')
                             td(width='85%')
                                 - achievement.children.forEach(function (achievement) {
                                     +achievement(achievement)
                                 - });
-                    - }
 
-                    - if (achievement.parents.length) {
+                    if achievement.parents.length
                         tr
                             td(width='15%')=i18n.get('achievements.parents')
                             td(width='85%')
                                 - achievement.parents.forEach(function (achievement) {
                                     +achievement(achievement)
                                 - });
-                    - }
 
-                    - if (achievement.holders.length) {
+                    if achievement.holders.length
                         tr
                             td=i18n.get('achievements.holders')
                             td
@@ -43,7 +41,14 @@ mixin achievement-content(achievement, big)
                                         |, 
                                     - }
                                 - });
-                    - }
+
+                    if achievement.tags.length
+                        tr
+                            td=i18n.get('achievements.tags')
+                            td
+                                - achievement.tags.forEach(function (tag, i) {
+                                    +tag(tag)
+                                - });
 
             if big
                 form.hide.form-wrapper
