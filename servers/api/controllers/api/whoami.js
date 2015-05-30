@@ -4,14 +4,14 @@ var auth = require('../../auth');
 var md5 = require('MD5');
 var config = require('../../../config');
 var validToken = md5(config.tokens.whoami);
-var console = require('../../console');
+var debug = require('debug')('app:whoami');
 
-console.log('validToken for whoami', validToken);
+debug('validToken for whoami', validToken);
 
 module.exports = function (req, res, next) {
 
     if (req.query.token !== validToken && config.useToken) {
-        console.error('wrong token', req.query.token);
+        debug('wrong token ' + req.query.token);
         return next(403);
     }
 

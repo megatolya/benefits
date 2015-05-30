@@ -1,6 +1,7 @@
 'use strict';
 
 var config = require('../../config');
+var debug = require('debug')('app:http');
 
 module.exports = function (req, res, next) {
     var header = req.headers[config.uidHeader];
@@ -8,9 +9,9 @@ module.exports = function (req, res, next) {
     req.fromExtension = Boolean(header);
 
     if (req.user) {
-        console.log(req.path, '(authorized)');
+        debug(req.path + '(authorized)');
     } else {
-        console.log(req.path, '(not authorized)');
+        debug(req.path + '(not authorized)');
     }
 
     next();

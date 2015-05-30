@@ -2,13 +2,8 @@
 
 var db = require('../db');
 var config = require('../../config');
-var console = require('../console');
 var auth = require('./');
 var Q = require('q');
-
-function log(req, status, params) {
-    console.log(req.method + ' ' + req.path + ' (' + status + ')', params || '');
-}
 
 function checkToken(req, token, uid) {
     if (config.useToken === false) {
@@ -27,7 +22,6 @@ function checkToken(req, token, uid) {
             }
 
             var validToken = auth.generateToken(uid, user.salt, method);
-            console.log('validToken', validToken, 'vs token', token);
 
             if (token === validToken) {
                 deferred.resolve();
@@ -48,16 +42,13 @@ module.exports = function (req, res, next) {
     req.authorized = false;
 
     if (!params.token && config.useToken) {
-        log(req, 'unauthorized');
         next();
         return;
     } else {
         checkToken(req, params.token, params.uid).then(function () {
             req.authorized = true;
-            log(req, 'authorized');
             next();
         }).fail(function (reason) {
-            log(req, 'mamkin haker or new user', reason);
             next();
         });
     }

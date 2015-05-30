@@ -72,7 +72,6 @@ AchievementProvider.prototype = {
             return tag;
         });
 
-        console.log('achievement', achievement);
         return achievement;
     }
 };

@@ -2,7 +2,6 @@
 
 var Q = require('q');
 var db = require('../db');
-var console = require('../console');
 
 var achievementManager = {
     getRulesForUser: function (uid) {
@@ -36,13 +35,7 @@ var achievementManager = {
             ]);
         }).then(function (res) {
             return this.brezhnevGlance.apply(this, res.concat(uid));
-        }.bind(this)).fail(function (reason) {
-            console.error('Failed to track dump', reason);
-
-            if ((reason || {}).stack) {
-                console.error('stack', reason.stack);
-            }
-        });
+        }.bind(this));
     },
 
     // Поиск новых ачивок, учитывая полученные
@@ -50,20 +43,11 @@ var achievementManager = {
         userAchievements = userAchievements.map(function (achievement) {
             return achievement.id;
         });
-        console.log('brezhnevGlance started for user', uid);
 
         userHits = userHits.reduce(function (hits, row) {
             hits[row.rule_id] = row.hits;
             return hits;
         }, Object(null));
-
-        console.log('---------');
-        console.log('userAchievements', userAchievements);
-        console.log('');
-        console.log('userHits', userHits);
-        console.log('');
-        console.log('allAchievements', allAchievements);
-        console.log('---------');
 
         var newAchievements = allAchievements.reduce(function (newAchievements, achievement) {
             if (userAchievements.indexOf(achievement.id) !== -1) {
@@ -86,11 +70,9 @@ var achievementManager = {
         }, []);
 
         if (newAchievements.length === 0) {
-            console.log('Brezhnev dissapointed :(');
             return;
         }
 
-        console.log('New achievements', newAchievements);
         db.userAchievements.add(uid, newAchievements);
     },
 
