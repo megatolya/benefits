@@ -8,7 +8,8 @@ module.exports = {
             image: 'vk.png',
             children: [3],
             tags: [1],
-            rules: [1]
+            rules: [1],
+            certificates: [1]
         },
         {
             // id: 2,
@@ -17,7 +18,8 @@ module.exports = {
             image: 'vk.png',
             children: [1, 3],
             tags: [1],
-            rules: [2]
+            rules: [2],
+            certificates: [2]
         },
         {
             // id: 3,
@@ -26,7 +28,8 @@ module.exports = {
             image: 'durov.jpg',
             children: [4],
             tags: [1],
-            rules: [3, 4]
+            rules: [3, 4],
+            certificates: []
         },
         {
             // id: 4,
@@ -35,7 +38,8 @@ module.exports = {
             image: 'ok.png',
             children: [2],
             tags: [2],
-            rules: [5]
+            rules: [5],
+            certificates: []
         },
         {
             // id: 5,
@@ -44,7 +48,8 @@ module.exports = {
             image: 'twitter.png',
             children: [],
             tags: [3],
-            rules: [6]
+            rules: [6],
+            certificates: []
         },
         {
             // id: 6,
@@ -53,7 +58,8 @@ module.exports = {
             image: 'twitter.png',
             children: [],
             tags: [3],
-            rules: [7]
+            rules: [7],
+            certificates: []
         },
         {
             // id: 7,
@@ -62,7 +68,8 @@ module.exports = {
             image: 'twitter.png',
             children: [],
             tags: [3],
-            rules: [8]
+            rules: [8],
+            certificates: []
         }
     ],
 
@@ -148,6 +155,21 @@ module.exports = {
             userId: 1,
             ruleId: 1,
             count: 12
+        }
+    ],
+
+    certificates: [
+        // id: 1
+        {
+            reusable: 1,
+            referer: 'asd'
+            //userId: 1
+        },
+        // id: 2
+        {
+            reusable: 0,
+            referer: 'dsa'
+            //userId: 2
         }
     ]
 };

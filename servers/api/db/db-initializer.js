@@ -11,6 +11,7 @@ var Achievement = models.Achievement;
 var Rule = models.Rule;
 var Hits = models.Hits;
 var Tag = models.Tag;
+var Certificate = models.Certificate;
 
 module.exports = {
     initSchema: function (force) {
@@ -25,6 +26,7 @@ module.exports = {
             this._createUsers.bind(this, data.users),
             this._createRules.bind(this, data.rules),
             this._createHits.bind(this, data.hits),
+            this._createCertificates.bind(this, data.certificates),
             this._createAchievements.bind(this, data.achievements)
         ]).then(this._applyRelationsQueue.bind(this));
     },
@@ -46,7 +48,8 @@ module.exports = {
         return Promise.all([
             this._linkAchievementsWithRules(achievementData, achievementModel),
             this._addAchievementTags(achievementData, achievementModel),
-            this._addAchievementChildren(achievementData, achievementModel)
+            this._addAchievementChildren(achievementData, achievementModel),
+            this._addAchievementCertificates(achievementData, achievementModel)
         ]);
     },
 
@@ -63,6 +66,11 @@ module.exports = {
     _addAchievementChildren: function (achievementData, achievementModel) {
         debug('_addAchievementChildren');
         return achievementModel.setChildren(achievementData.children);
+    },
+
+    _addAchievementCertificates: function (achievementData, achievementModel) {
+        debug('_addAchievementCertificates');
+        return achievementModel.setCertificates(achievementData.certificates);
     },
 
     _createRules: function (rules) {
@@ -97,6 +105,15 @@ module.exports = {
             return function () {
                 debug('_createHits');
                 return Hits.create(hit);
+            };
+        }));
+    },
+
+    _createCertificates: function (certificates) {
+        return this._createSeries(certificates.map(function (certificate) {
+            return function () {
+                debug('_createCertificates');
+                return Certificate.create(certificate);
             };
         }));
     },

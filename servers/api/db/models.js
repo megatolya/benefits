@@ -17,6 +17,10 @@ models.Rule.hasMany(models.Hits);
 models.Achievement = db.define.apply(db, require('./models/achievement'));
 models.Achievement.belongsTo(models.User, {as: 'creator'});
 
+models.Certificate = db.define.apply(db, require('./models/certificate'));
+models.Certificate.belongsTo(models.Achievement);
+models.Achievement.hasMany(models.Certificate, {as: 'certificates'});
+
 models.AchievementRule = db.define('achievementRule', {});
 models.Achievement.belongsToMany(models.Rule, {through: models.AchievementRule});
 models.Rule.belongsToMany(models.Achievement, {through: models.AchievementRule});
