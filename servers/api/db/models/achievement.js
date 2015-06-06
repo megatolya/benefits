@@ -57,7 +57,17 @@ module.exports = [
             }
         },
 
-        instanceMethods: {},
+        instanceMethods: {
+            addChild: function (childId) {
+                var children = this.children;
+                if (children.indexOf(childId) !== -1) {
+                    return Q.resolve();
+                }
+
+                children.push(childId);
+                return this.setChildren(children);
+            }
+        },
 
         defaultScope: {},
         scopes: {

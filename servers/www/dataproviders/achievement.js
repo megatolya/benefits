@@ -67,13 +67,9 @@ AchievementProvider.prototype = {
             achievement.currentUser.created = createdAchievements.indexOf(achievement.id) !== -1;
         }
 
-        if (achievement.parents) {
-            achievement.parents = achievement.parents.map(this.normalize.bind(this));
-        }
+        achievement.parents = (achievement.parents || []).map(this.normalize.bind(this));
 
-        if (achievement.children) {
-            achievement.children = achievement.children.map(this.normalize.bind(this));
-        }
+        achievement.children = (achievement.children || []).map(this.normalize.bind(this));
 
         achievement.tags = (achievement.tags || []).map(function (tag) {
             tag.theme = getLabelTheme();

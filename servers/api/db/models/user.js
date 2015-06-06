@@ -60,7 +60,18 @@ module.exports = [
             }
         },
 
-        instanceMethods: {},
+        instanceMethods: {
+            addAchievement: function (achievementId) {
+                var achievements = this.achievements;
+
+                if (achievements.indexOf(achievementId) !== -1) {
+                    return Q.resolve();
+                }
+
+                achievements.push(achievementId);
+                return this.setAchievements(achievements);
+            }
+        },
 
         defaultScope: {},
         scopes: {

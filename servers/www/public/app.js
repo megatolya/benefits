@@ -40,7 +40,13 @@ function main() {
             $.ajax(window.location.pathname, {
                 data: JSON.stringify(data),
                 contentType: 'application/json',
-                type: 'POST'
+                type: 'POST',
+                success: function () {
+                    window.location.reload();
+                },
+                fail: function () {
+                    window.location.reload();
+                }
             });
         });
     });
