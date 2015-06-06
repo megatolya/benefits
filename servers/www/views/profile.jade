@@ -15,7 +15,7 @@ block content
         p=i18n.get('achievements.noAchievements')
 
     if user.createdAchievements
-        h3=i18n.get('achievements.createdAchivements')
+        h3=i18n.get('achievements.createdAchievements')
         - user.createdAchievements.forEach(function (achievement) {
             +achievement(achievement)
         - });

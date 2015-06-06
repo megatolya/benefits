@@ -9,7 +9,8 @@ module.exports = {
             children: [3],
             tags: [1],
             rules: [1],
-            certificates: [1]
+            certificates: [1],
+            creatorId: 1
         },
         {
             // id: 2,
@@ -19,7 +20,8 @@ module.exports = {
             children: [1, 3],
             tags: [1],
             rules: [2],
-            certificates: [2]
+            certificates: [2],
+            creatorId: 2
         },
         {
             // id: 3,
@@ -29,7 +31,8 @@ module.exports = {
             children: [4],
             tags: [1],
             rules: [3, 4],
-            certificates: []
+            certificates: [],
+            creatorId: 1
         },
         {
             // id: 4,
@@ -39,7 +42,8 @@ module.exports = {
             children: [2],
             tags: [2],
             rules: [5],
-            certificates: []
+            certificates: [],
+            creatorId: 2
         },
         {
             // id: 5,
@@ -49,7 +53,8 @@ module.exports = {
             children: [],
             tags: [3],
             rules: [6],
-            certificates: []
+            certificates: [],
+            creatorId: 1
         },
         {
             // id: 6,
@@ -59,7 +64,8 @@ module.exports = {
             children: [],
             tags: [3],
             rules: [7],
-            certificates: []
+            certificates: [],
+            creatorId: 2
         },
         {
             // id: 7,
@@ -69,7 +75,8 @@ module.exports = {
             children: [],
             tags: [3],
             rules: [8],
-            certificates: []
+            certificates: [],
+            creatorId: 1
         }
     ],
 

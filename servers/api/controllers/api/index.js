@@ -16,11 +16,6 @@ module.exports = function (app) {
         app.put.apply(app, arguments);
     }
 
-    get('/whoami', require('./whoami'));
-    get('/token', require('./token'));
-    get('/rules', require('./rules'));
-    get('/achievements', require('./achievements'));
-
     get('/all-achievements', require('./allAchievements'));
     get('/achievement/:id', require('./achievement'));
 
@@ -30,8 +25,6 @@ module.exports = function (app) {
 
     get('/user/:uid', require('./user-get'));
     put('/user', require('./user-put'));
-
-    post('/dump', require('./dump'));
 
     get('/suggest/user/:query', require('./userSuggest'));
     get('/suggest/achievement/:query', require('./achievementSuggest'));
