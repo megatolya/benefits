@@ -51,13 +51,20 @@ AchievementProvider.prototype = {
     },
 
     normalize: function (achievement) {
-        achievement.received = false;
+        achievement.currentUser = {
+            received: false,
+            created: false
+        };
 
         if (this.req.user) {
-            var achievementsIds = this.req.user.achievements.map(function (achievement) {
+            var receivedAchievements = this.req.user.achievements.map(function (achievement) {
                 return achievement.id;
             });
-            achievement.received = achievementsIds.indexOf(achievement.id) !== -1;
+            var createdAchievements = this.req.user.createdAchievements.map(function (achievement) {
+                return achievement.id;
+            });
+            achievement.currentUser.received = receivedAchievements.indexOf(achievement.id) !== -1;
+            achievement.currentUser.created = createdAchievements.indexOf(achievement.id) !== -1;
         }
 
         if (achievement.parents) {

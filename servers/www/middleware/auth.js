@@ -8,11 +8,23 @@ module.exports = function (req, res, next) {
 
     req.fromExtension = Boolean(header);
 
-    if (req.user) {
-        debug(req.path + ' (authorized)');
-    } else {
-        debug(req.path + ' (not authorized)');
+    function goNext() {
+        if (req.user) {
+            debug(req.path + ' (authorized)');
+        } else {
+            debug(req.path + ' (not authorized)');
+        }
+
+        next();
     }
 
-    next();
+    if (req.query.aka) {
+        var id = parseInt(req.query.aka, 10);
+        req.getProvider('user').get(id).then(function (user) {
+            req.user = user;
+            goNext();
+        }, next);
+    } else {
+        goNext();
+    }
 };

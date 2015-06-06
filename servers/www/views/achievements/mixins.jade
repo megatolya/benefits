@@ -1,7 +1,7 @@
 mixin achievement-content(achievement, big)
     - if (achievement) {
-        if achievement.received
-            i.achievement__tick(title=i18n.get('achievements.received'))='✓'
+        if achievement.currentUser.received
+            i.achievement__tick(title=i18n.get('achievements.currentUser.received'))='✓'
         img.achievement__image(src=achievement.image)
         .achievement__main-info
             table.achievement__table
@@ -68,7 +68,8 @@ mixin achievement-content(achievement, big)
                     +suggest(achievement.parents.map(mapVals), 'parents', 'achievement')
                     +suggest(achievement.children.map(mapVals), 'children', 'achievement')
                     +suggest(achievement.holders.map(mapVals), 'holders', 'user')
-                .btn.btn-default.achievement__edit=i18n.get('achievements.edit')
+                if achievement.currentUser.created
+                    .btn.btn-default.achievement__edit=i18n.get('achievements.edit')
     - } else {
         form(action='/achievements/new-image').dropzone.achievement__image
             input(name='token', value=token, type='hidden')
