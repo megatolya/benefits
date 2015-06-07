@@ -3,6 +3,21 @@ block title
     !{i18n.get('modal.createCert')}
 block content
     p=i18n.get('modal.certText')
+    form.cert-settings
+        p=i18n.get('cert.standsFor')
+        select
+            option(value=0, selected)=i18n.get('cert.award')
+            option(value=1)=i18n.get('cert.awardAndMakeHolder')
+            option(value=2)=i18n.get('cert.makeHolder')
+        p=i18n.get('cert.certMaxUses')
+        select
+            option(value=1, selected)=i18n.get('cert.uses.1')
+            option(value=2)=i18n.get('cert.uses.2')
+            option(value=0)=i18n.get('cert.uses.many')
+
+    //-.alert.alert-success=i18n.get('modal.aboutCertSettings')
+    //-.alert.alert-warning=i18n.get('modal.warnAboutUsesCount')
+    //-.alert.alert-warning=i18n.get('modal.warnAboutHolders')
     .alert.alert-info=i18n.get('modal.whatIsCert')
 block footer
     button.btn.btn-default(type='button', data-dismiss='modal')=i18n.get('button.close')
