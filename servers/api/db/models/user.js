@@ -35,7 +35,7 @@ module.exports = [
 
             getFullData: function (uid) {
                 return Q.all([
-                    models.User.find(uid),
+                    models.User.scope('withAchievementsAndRules').find(uid),
                     this.findCreatedAchievements(uid)
                 ]).spread(function (user, achievements) {
                     if (!user) {

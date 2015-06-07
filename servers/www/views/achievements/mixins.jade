@@ -71,7 +71,7 @@ mixin achievement-content(achievement, big)
                 if achievement.currentUser.created
                     .btn.btn-default.achievement__edit=i18n.get('achievements.edit')
                     .btn.btn-success.achievement__award=i18n.get('achievements.award')
-                    a(href='/achievements/' + achievement.id + '/certs').btn.btn-info.achievement__award=i18n.get('achievements.certs')
+                    a(href='/achievements/' + achievement.id + '/certs').btn.btn-info.achievement__certs=i18n.get('achievements.certs')
     - } else {
         form(action='/achievements/new-image').dropzone.achievement__image
             input(name='token', value=token, type='hidden')

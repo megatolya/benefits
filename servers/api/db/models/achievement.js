@@ -89,7 +89,8 @@ module.exports = [
                         {model: models.Achievement, as: 'children'},
                         {model: models.User, as: 'holders'},
                         {model: models.Tag},
-                        {model: models.Rule}
+                        {model: models.Rule},
+                        {model: models.Certificate}
                     ]
                 };
             }

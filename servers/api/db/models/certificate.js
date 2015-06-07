@@ -7,7 +7,8 @@ module.exports = [
     'certificate',
     {
         id: {type: sq.INTEGER, primaryKey: true, autoIncrement: true},
-        reusable: {type: sq.INTEGER},
+        used: {type: sq.INTEGER},
+        uses: {type: sq.INTEGER},
         referer: {type: sq.STRING}
     },
     {

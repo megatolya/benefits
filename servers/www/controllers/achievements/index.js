@@ -5,6 +5,17 @@ var path = require('path');
 var uniq = require('../../../common/uniq');
 var authRequired = require('../../middleware/authRequired');
 
+function checkAchievementOwner(req, res, next) {
+    var achievementId = req.params.id;
+    req.getProvider('achievement').get(req.params.id).then(function (achievement) {
+        if (achievement.creatorId === req.user.id) {
+            next();
+        } else {
+            next(401);
+        }
+    });
+}
+
 module.exports = function (app) {
     app.get('/achievements', function (req, res, next) {
         req.getProvider('achievement').getAll().then(function (achievements) {
@@ -23,6 +34,14 @@ module.exports = function (app) {
     app.get('/achievements/:id', function (req, res, next) {
         req.getProvider('achievement').get(req.params.id).then(function (achievement) {
             res.magicRender('achievements/achievement', req, {
+                achievement: achievement
+            });
+        }, next);
+    });
+
+    app.get('/achievements/:id/certs', authRequired, checkAchievementOwner, function (req, res, next) {
+        req.getProvider('achievement').get(req.params.id).then(function (achievement) {
+            res.magicRender('certs', req, {
                 achievement: achievement
             });
         }, next);

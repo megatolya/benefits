@@ -1,7 +1,12 @@
 'use strict';
 
-var utils = require('./utils');
 var debug = require('debug')('app:providers');
+var moment = require('moment');
+
+// TODO req.moment
+moment.locale('ru');
+
+var utils = require('./utils');
 
 var i = 0;
 var labelThemes = ['default', 'primary', 'success', 'info', 'warning', 'danger'];
@@ -50,6 +55,11 @@ AchievementProvider.prototype = {
         }).then(this.normalize.bind(this));
     },
 
+    normalizeCert: function (cert) {
+        cert.created = moment(cert.createdAt, 'YYYYMMDD').fromNow();
+        return cert;
+    },
+
     normalize: function (achievement) {
         achievement.currentUser = {
             received: false,
@@ -68,8 +78,8 @@ AchievementProvider.prototype = {
         }
 
         achievement.parents = (achievement.parents || []).map(this.normalize.bind(this));
-
         achievement.children = (achievement.children || []).map(this.normalize.bind(this));
+        achievement.certificates = (achievement.certificates || []).map(this.normalizeCert.bind(this));
 
         achievement.tags = (achievement.tags || []).map(function (tag) {
             tag.theme = getLabelTheme();

@@ -3,6 +3,12 @@
 module.exports = function (err, req, res, next) {
     if (typeof err === 'number') {
         res.status(err);
+
+        if (err === 401 && req.user) {
+            res.magicRender('errors/401');
+            return;
+        }
+
         res.json({status: 'error', errorCode: err});
         return;
     }

@@ -1,0 +1,29 @@
+include achievements/mixins
+extends layout
+
+block content
+    +achievement(achievement)
+    button.btn.btn-lg.btn-default.achievement__award=i18n.get('cert.createNewCert')
+    h2.achievement-header=i18n.get('cert.certs')
+
+block no-container
+    if achievement.certificates.length
+        table.table
+            thead
+                tr
+                    td=i18n.get('cert.cert')
+                    td=i18n.get('common.created')
+                    td=i18n.get('cert.used')
+            tbody
+                - achievement.certificates.forEach(function (cert) {
+                    tr.cert
+                        td
+                            a(href='/cert/' + cert.referer).cert__referer=cert.referer
+                        td.cert__date=cert.created
+                        td.cert__used=(cert.uses - cert.used) + ' / ' + cert.uses
+                - });
+    else
+        p.center=i18n.get('cert.noCertsYet')
+    include partials/cert-modal
+
+

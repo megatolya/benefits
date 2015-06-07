@@ -11,8 +11,8 @@ module.exports = function () {};
 
 express.response.magicRender = function (templateName, req, params) {
     return this.render(templateName, _.assign(config, {
-        uid: req.uid,
-        path: req.path,
+        uid: this.req.uid,
+        path: this.req.path,
         description: 'FIXME',
         i18n: {
             get: function (str) {
@@ -34,9 +34,9 @@ express.response.magicRender = function (templateName, req, params) {
                 return val;
             },
 
-            lang: req.getLang()
+            lang: this.req.getLang()
         },
-        me: req.user,
+        me: this.req.user,
         mapVals: function (val) {
             return {
                 id: val.id, name: val.name || val.title || '???'
