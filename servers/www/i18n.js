@@ -4,7 +4,8 @@ module.exports = {
     ru: {
         achievements: {
             tags: 'Теги',
-            createdAchievements: 'Созданные достижения',
+            createdAchievements: 'Созданные',
+            receivedAchievements: 'Полученные',
             achievements: 'Достижения',
             received: 'Получено',
             noAchievements: 'Нет достижений',
@@ -20,6 +21,7 @@ module.exports = {
             holders: 'Получили',
             edit: 'Редактировать',
             save: 'Сохранить',
+            award: 'Выдать достижение',
             suggestSubmit: {
                 parents: 'Сохранить',
                 creators: 'Сохранить',
@@ -52,6 +54,16 @@ module.exports = {
 
         app: {
             name: 'Benefits!'
+        },
+        modal: {
+            certText: 'Выберите нужные настройки сертификата и нажмите "Создать"',
+            whatIsCert: 'Сертификат -- универсальный способ выдачи достижения.',
+            createCert: 'Новый сертификат'
+        },
+        button: {
+            save: 'Сохранить',
+            close: 'Закрыть',
+            create: 'Создать'
         }
     }
 };

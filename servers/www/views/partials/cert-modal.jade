@@ -1,0 +1,9 @@
+extends modal
+block title
+    !{i18n.get('modal.createCert')}
+block content
+    p=i18n.get('modal.certText')
+    .alert.alert-info=i18n.get('modal.whatIsCert')
+block footer
+    button.btn.btn-default(type='button', data-dismiss='modal')=i18n.get('button.close')
+    button.btn.btn-primary(type='button')=i18n.get('button.create')

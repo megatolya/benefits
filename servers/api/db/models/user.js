@@ -70,6 +70,18 @@ module.exports = [
 
                 achievements.push(achievementId);
                 return this.setAchievements(achievements);
+            },
+
+            removeAchievement: function (achievementId) {
+                var achievements = this.achievements;
+                var index = achievements.indexOf(achievementId);
+
+                if (index !== -1) {
+                    return Q.resolve();
+                }
+
+                achievements.splice(index, 1);
+                return this.setAchievements(achievements);
             }
         },
 

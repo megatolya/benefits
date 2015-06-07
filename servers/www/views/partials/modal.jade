@@ -1,0 +1,12 @@
+.modal.fade#modal(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+    .modal-dialog
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true')!='&times'
+                h4.modal-title#myModalLabel
+                    block title
+            .modal-body
+                block content
+            .modal-footer
+                block footer

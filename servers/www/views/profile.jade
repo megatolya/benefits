@@ -6,7 +6,7 @@ block content
     h1=user.name
 
     if user.achievements
-        h3=i18n.get('achievements.achievements')
+        h3=i18n.get('achievements.receivedAchievements')
         - achievements = user.achievements
         - achievements.forEach(function (achievement) {
             +achievement(achievement)

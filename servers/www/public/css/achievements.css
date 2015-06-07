@@ -16,6 +16,12 @@
     margin: 10px;
     position: relative;
 
+    .btn,
+    .select2 {
+        margin: 10px 10px 10px 0;
+    }
+
+
     &_block {
         display: block;
         width: auto;

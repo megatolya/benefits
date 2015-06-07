@@ -21,11 +21,6 @@
     color: red !important;
 }
 
-.btn,
-.select2 {
-    margin: 10px 10px 10px 0;
-}
-
 .select2-container .select2-selection--single {
     height: 34px;
 }

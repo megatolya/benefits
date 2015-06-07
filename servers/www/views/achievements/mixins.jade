@@ -70,6 +70,7 @@ mixin achievement-content(achievement, big)
                     +suggest(achievement.holders.map(mapVals), 'holders', 'user')
                 if achievement.currentUser.created
                     .btn.btn-default.achievement__edit=i18n.get('achievements.edit')
+                    .btn.btn-success.achievement__award=i18n.get('achievements.award')
     - } else {
         form(action='/achievements/new-image').dropzone.achievement__image
             input(name='token', value=token, type='hidden')

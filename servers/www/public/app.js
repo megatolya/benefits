@@ -19,6 +19,10 @@ function main() {
         }
     });
 
+    $('.achievement__award').on('click', function () {
+        $('#modal').modal();
+    });
+
     $('.achievement__edit').one('click', function () {
         var form = $('.form-wrapper');
         form.removeClass('hide');

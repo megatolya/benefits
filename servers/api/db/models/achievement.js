@@ -66,6 +66,18 @@ module.exports = [
 
                 children.push(childId);
                 return this.setChildren(children);
+            },
+
+            removeChild: function (achievementId) {
+                var children = this.children;
+                var index = children.indexOf(achievementId);
+
+                if (index !== -1) {
+                    return Q.resolve();
+                }
+
+                children.splice(index, 1);
+                return this.setChildren(children);
             }
         },
 
