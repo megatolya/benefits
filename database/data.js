@@ -1,3 +1,5 @@
+var uniq = require('../servers/common/uniq');
+
 module.exports = {
     achievements: [
         {
@@ -168,14 +170,22 @@ module.exports = {
     certificates: [
         // id: 1
         {
-            reusable: 1,
-            referer: 'asd'
+            uses: 1,
+            referer: uniq(),
+            used: 0
             //userId: 1
         },
         // id: 2
         {
-            reusable: 0,
-            referer: 'dsa'
+            uses: 2,
+            referer: uniq(),
+            used: 1,
+            //userId: 2
+        },
+        {
+            uses: 0,
+            referer: uniq(),
+            used: 0,
             //userId: 2
         }
     ]
