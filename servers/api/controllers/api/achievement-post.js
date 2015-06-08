@@ -38,20 +38,20 @@ module.exports = function (req, res, next) {
             var holdersDiff = getDiff(achievement.dataValues.holders.map(getId), req.body.holders);
 
             var parents = parentsDiff.added.map(function (parentId) {
-                return models.Achievement.find(parentId).then(function (parent) {
+                return models.Achievement.findById(parentId).then(function (parent) {
                     return parent.addChild(id);
                 });
             }).concat(parentsDiff.removed.map(function (parentId) {
-                return models.Achievement.find(parentId).then(function (parent) {
+                return models.Achievement.findById(parentId).then(function (parent) {
                     return parent.removeChild(id);
                 });
             }));
             var holders = holdersDiff.added.map(function (holderId) {
-                return models.User.find(holderId).then(function (holder) {
+                return models.User.findById(holderId).then(function (holder) {
                     return holder.addAchievement(id);
                 });
             }).concat(holdersDiff.removed.map(function (holderId) {
-                return models.User.find(holderId).then(function (holder) {
+                return models.User.findById(holderId).then(function (holder) {
                     return holder.removeAchievement(id);
                 });
             }));

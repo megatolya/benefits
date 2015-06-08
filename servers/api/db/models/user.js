@@ -24,18 +24,18 @@ module.exports = [
         classMethods: {
             findReceivedAchievements: function (uidToFind) {
                 return models.User
-                    .scope('withAchievementsAndRules')
+                    .scope('withAchievements')
                     .find({
                         where: {id: uidToFind},
                         attributes: ['id']
                     }).then(function (user) {
-                        return user.get('achievements');
+                        return user.get('receivedAchievements');
                     });
             },
 
             getFullData: function (uid) {
                 return Q.all([
-                    models.User.scope('withAchievementsAndRules').find(uid),
+                    models.User.scope('withAchievements').findById(uid),
                     this.findCreatedAchievements(uid)
                 ]).spread(function (user, achievements) {
                     if (!user) {
@@ -62,18 +62,18 @@ module.exports = [
 
         instanceMethods: {
             addAchievement: function (achievementId) {
-                var achievements = this.achievements;
+                var achievements = this.receivedAchievements;
 
                 if (achievements.indexOf(achievementId) !== -1) {
                     return Q.resolve();
                 }
 
                 achievements.push(achievementId);
-                return this.setAchievements(achievements);
+                return this.setReceivedAchievements(achievements);
             },
 
             removeAchievement: function (achievementId) {
-                var achievements = this.achievements;
+                var achievements = this.receivedAchievements;
                 var index = achievements.indexOf(achievementId);
 
                 if (index !== -1) {
@@ -81,7 +81,7 @@ module.exports = [
                 }
 
                 achievements.splice(index, 1);
-                return this.setAchievements(achievements);
+                return this.setReceivedAchievements(achievements);
             }
         },
 
@@ -90,14 +90,7 @@ module.exports = [
             withAchievements: function () {
                 return {
                     include: [{
-                        model: models.Achievement
-                    }]
-                };
-            },
-            withAchievementsAndRules: function () {
-                return {
-                    include: [{
-                        model: models.Achievement,
+                        model: models.Achievement, as: 'receivedAchievements',
                         include: [{model: models.Rule}]
                     }]
                 };

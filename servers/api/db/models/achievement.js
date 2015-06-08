@@ -16,7 +16,7 @@ module.exports = [
         classMethods: {
             getFullData: function (achievementId) {
                 return Q.all([
-                    models.Achievement.scope('allRelations').find(achievementId),
+                    models.Achievement.scope('allRelations').findById(achievementId),
                     this.findParents(achievementId)
                 ]).spread(function (achievement, parents) {
                     if (achievement) {
@@ -51,7 +51,7 @@ module.exports = [
             },
 
             getCreator: function (creatorId) {
-                return models.User.find(creatorId).then(function (creator) {
+                return models.User.findById(creatorId).then(function (creator) {
                     return creator.dataValues;
                 });
             }

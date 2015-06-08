@@ -97,7 +97,7 @@ module.exports = {
 
     _linkUserWithAchievements: function (userData, userModel) {
         debug('_linkUserWithAchievements');
-        return userModel.setAchievements(userData.achievements);
+        return userModel.setReceivedAchievements(userData.achievements);
     },
 
     _createHits: function (hits) {

@@ -28,7 +28,7 @@ models.Rule.belongsToMany(models.Achievement, {through: models.AchievementRule})
 
 models.AchievementHolder = db.define('achievementHolder', {});
 models.Achievement.belongsToMany(models.User, {as: 'holders', through: models.AchievementHolder});
-models.User.belongsToMany(models.Achievement, {through: models.AchievementHolder});
+models.User.belongsToMany(models.Achievement, {as: 'receivedAchievements', through: models.AchievementHolder});
 
 models.AchievementChild = db.define('achievementChild', {});
 models.Achievement.belongsToMany(models.Achievement, {as: 'children', through: models.AchievementChild});

@@ -7,7 +7,6 @@ var app = express();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var db = require('./db');
-var debug = require('debug')('app:main');
 
 debug('db connected: %s', db.getDialect());
 

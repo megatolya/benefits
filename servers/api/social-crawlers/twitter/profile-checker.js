@@ -24,13 +24,13 @@ module.exports = {
 
     _addAchievement: function (user, achievement) {
         this._ifAchievementNewForUser(user, achievement, function () {
-            user.addAchievements([achievement.id]);
+            user.addReceivedAchievements([achievement.id]);
             debug('achievement has been added: %s, %s', user.name, achievement.name);
         }.bind(this));
     },
 
     _ifAchievementNewForUser: function (user, achievement, callback) {
-        var userAchievements = user.get('achievements') || [];
+        var userAchievements = user.get('receivedAchievements') || [];
         for (var i = 0; i < userAchievements.length; i++) {
             if (userAchievements[i].id === achievement.id) {
                 return;

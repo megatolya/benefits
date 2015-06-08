@@ -67,7 +67,7 @@ AchievementProvider.prototype = {
         };
 
         if (this.req.user) {
-            var receivedAchievements = this.req.user.achievements.map(function (achievement) {
+            var receivedAchievements = this.req.user.receivedAchievements.map(function (achievement) {
                 return achievement.id;
             });
             var createdAchievements = this.req.user.createdAchievements.map(function (achievement) {
