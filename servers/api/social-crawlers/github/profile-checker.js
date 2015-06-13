@@ -1,6 +1,6 @@
 'use strict';
 
-var twitterRuleChecker = require('../../rule-checkers/twitter');
+var githubRuleChecker = require('../../rule-checkers/github');
 var giver = require('../giver');
 
 module.exports = {
@@ -9,6 +9,6 @@ module.exports = {
     },
 
     _ruleSatisfied: function (user, rule) {
-        return twitterRuleChecker.check(user.twitterData.specific, rule);
+        return githubRuleChecker.check(user.githubData.specific, rule);
     }
 };

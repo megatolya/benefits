@@ -79,6 +79,28 @@ module.exports = {
             rules: [8],
             certificates: [],
             creatorId: 1
+        },
+        {
+            // id: 8,
+            name: 'Мало фолловеров в гитхабе',
+            description: 'Действительно мало фолловеров в гитхабе',
+            image: 'github.png',
+            children: [],
+            tags: [4],
+            rules: [9],
+            certificates: [],
+            creatorId: 1
+        },
+        {
+            // id: 9,
+            name: 'Есть фолловеры в гитхабе',
+            description: 'Они есть',
+            image: 'github.png',
+            children: [],
+            tags: [4],
+            rules: [10],
+            certificates: [],
+            creatorId: 1
         }
     ],
 
@@ -94,6 +116,10 @@ module.exports = {
         {
             // id: 3,
             name: 'twitter'
+        },
+        {
+            // id: 4,
+            name: 'github'
         }
     ],
 
@@ -138,6 +164,16 @@ module.exports = {
             type: 'compareMore',
             field: 'followers_count',
             aim: 500
+        }, {
+            // id: 8,
+            type: 'compareLess',
+            field: 'followers',
+            aim: 20
+        }, {
+            // id: 8,
+            type: 'compareMore',
+            field: 'followers',
+            aim: 100
         }
     ],
 

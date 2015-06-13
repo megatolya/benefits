@@ -2,21 +2,19 @@
 
 var debug = require('debug')('app:crawler-manager');
 var config = require('../../config');
-var twitterCrawler = require('./twitter');
+
+var crawlers = {};
+crawlers[config.providers.twitter.name] = require('./twitter');
+crawlers[config.providers.facebook.name] = require('./facebook');
+crawlers[config.providers.github.name] = require('./github');
 
 module.exports = {
     crawl: function (user, provider) {
-        switch (provider) {
-            case config.providers.twitter.name:
-                this._twitterCrawl(user);
-                break;
-            default:
-                debug('Unsupported provider: ', provider);
+        var crawler = crawlers[provider];
+        if (crawler && typeof crawler.crawl === 'function') {
+            crawler.crawl(user);
+        } else {
+            debug('Unsupported provider: ', provider);
         }
-    },
-
-    _twitterCrawl: function (user) {
-        // TODO add this call to twitter-crawl-queue
-        twitterCrawler.crawl(user);
     }
 };
