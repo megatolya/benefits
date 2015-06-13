@@ -6,9 +6,11 @@ var debug = require('debug')('app:common-auth-strategy');
 
 function createStrategyOptions(options) {
     if (options.strategyOptions) {
+        options.strategyOptions.passReqToCallback = true;
         return options.strategyOptions;
     }
     return {
+        passReqToCallback: true,
         clientID: options.config.key,
         clientSecret: options.config.secret,
         callbackURL: authUtils.getCallbackUrl(options.config.name)
@@ -20,13 +22,13 @@ function createCallback(options) {
         return options.callback;
     }
     var config = options.config;
-    return function (accessToken, refreshToken, profile, done) {
+    return function (req, accessToken, refreshToken, profile, done) {
         authUtils.finishAuth({
             provider: config.name,
             userData: authUtils.createUserData(
-                config.name,
-                profile,
-                {accessToken: accessToken, refreshToken: refreshToken}
+                config.name, profile,
+                {accessToken: accessToken, refreshToken: refreshToken},
+                req.user
             )
         }, done);
     };

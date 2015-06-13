@@ -47,12 +47,16 @@ module.exports = {
      * @param {object} profile
      * @param {object} customData
      * @returns {object}
+     * @param {object|null} [user]
      */
-    createUserData: function (provider, profile, customData) {
+    createUserData: function (provider, profile, customData, user) {
         var userData = {};
         userData.name = profile.displayName || profile.username ;
         userData[provider + 'Id'] = profile.id;
         userData[provider + 'Data'] = _.extend(this.extractSpecificData(profile), customData);
+        if (user) {
+            userData.id = user.id;
+        }
         return userData;
     },
 
