@@ -10,7 +10,7 @@ module.exports = function (app) {
             });
         }
 
-        req.getProvider('user').findById(req.query.q).then(send, send.bind(null, []));
+        req.getProvider('user').find(req.query.q).then(send, send.bind(null, []));
     });
 
     app.get('/suggest/achievement/', function (req, res) {
@@ -21,6 +21,6 @@ module.exports = function (app) {
             });
         }
 
-        req.getProvider('achievement').findById(req.query.q).then(send, send.bind(null, []));
+        req.getProvider('achievement').find(req.query.q).then(send, send.bind(null, []));
     });
 };
