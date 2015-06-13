@@ -27,6 +27,10 @@ CertProvider.prototype = {
         cert.link = req.origin + '/cert/' + cert.referer;
         debug('cert', cert);
         return cert;
+    },
+
+    getByReferer: function (referer) {
+        return utils.askApi(this.req, '/certificate-by-referer/' + referer).then(this.normalize.bind(this));
     }
 };
 

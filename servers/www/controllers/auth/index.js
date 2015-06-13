@@ -11,4 +11,5 @@ module.exports = function (app) {
     require('./facebook-strategy')(app);
     require('./github-strategy')(app);
     require('./instagram-strategy')(app);
+    require('./local-strategy')(app);
 };

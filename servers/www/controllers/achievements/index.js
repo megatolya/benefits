@@ -4,17 +4,7 @@ var images = require('../../images');
 var path = require('path');
 var uniq = require('../../../common/uniq');
 var authRequired = require('../../middleware/authRequired');
-
-function checkAchievementOwner(req, res, next) {
-    var achievementId = req.params.id;
-    req.getProvider('achievement').get(req.params.id).then(function (achievement) {
-        if (achievement.creatorId === req.user.id) {
-            next();
-        } else {
-            next(401);
-        }
-    });
-}
+var checkAchievementOwner = require('../../middleware/checkAchievementOwner');
 
 module.exports = function (app) {
     app.get('/achievements', function (req, res, next) {
@@ -31,33 +21,16 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/achievements/receive', function (req, res, next) {
+        console.log('session', req.session);
+    });
+
     app.get('/achievements/:id', function (req, res, next) {
         req.getProvider('achievement').get(req.params.id).then(function (achievement) {
             res.magicRender('achievements/achievement', req, {
                 achievement: achievement
             });
         }, next);
-    });
-
-    app.get('/achievements/:id/certs', authRequired, checkAchievementOwner, function (req, res, next) {
-        req.getProvider('achievement').get(req.params.id).then(function (achievement) {
-            res.magicRender('certs', req, {
-                achievement: achievement
-            });
-        }, next);
-    });
-    app.get('/achievements/:id/certs/:certId', authRequired, checkAchievementOwner, function (req, res, next) {
-        req.getProvider('cert').get(req.params.certId).then(function (cert) {
-            res.magicRender('partials/cert-modal', req, {
-                cert: cert
-            });
-        });
-    });
-
-    app.post('/achievements/:id/certs', authRequired, checkAchievementOwner, function (req, res, next) {
-        req.getProvider('achievement').createCert(req.params.id, req.body).then(function (cert) {
-            res.redirect(req.originalUrl + '?from=creation');
-        });
     });
 
     app.post('/achievements/new-image', authRequired, function (req, res, next) {

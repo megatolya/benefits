@@ -32,4 +32,5 @@ module.exports = function (app) {
     post('/achievement/:id/certs', require('./achievement-certs'));
 
     get('/certificate/:id', require('./certificate'));
+    get('/certificate-by-referer/:referer', require('./certificate-by-referer'));
 };

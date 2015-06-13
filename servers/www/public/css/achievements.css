@@ -21,6 +21,12 @@
         margin: 10px 10px 10px 0;
     }
 
+    &_award {
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        border: 1px solid rgba(128, 128, 128, 0.2);
+    }
 
     &_block {
         display: block;

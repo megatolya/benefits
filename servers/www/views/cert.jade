@@ -1,0 +1,13 @@
+extends ./layout.jade
+
+block content
+    h1.award__head=i18n.get('award.congrats')
+    h2.award__head=i18n.get('award.youReceivedNewachievement')
+    form.achievement.achievement_award(action='/achievements/receive', method='POST')
+        input(type='hidden', name='cert', value=cert.referer)
+        img.achievement__image(src=achievement.image)
+        .achievement__main-info
+            h1.achievement__name=achievement.name
+            p.achievement__desc=achievement.description
+            .cert-award
+                button.btn.btn-success.btn-lg(type='submit')=i18n.get('cert.receive')

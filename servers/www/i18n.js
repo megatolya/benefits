@@ -98,7 +98,12 @@ module.exports = {
                 ALL: 'Получение и выдача достижения'
             },
             removeCert: 'Заблокировать сертификат',
-            toGiveCertUseThisLink: 'Чтобы выдать сертификат используйте эту сссылку:'
+            toGiveCertUseThisLink: 'Чтобы выдать сертификат используйте эту сссылку:',
+            receive: 'Получить'
+        },
+        award: {
+            congrats: 'Поздравляем!',
+            youReceivedNewachievement: 'Вам выдан сертификат на получение достижения'
         }
     }
 };
