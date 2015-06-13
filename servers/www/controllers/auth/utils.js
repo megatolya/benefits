@@ -50,7 +50,7 @@ module.exports = {
      */
     createUserData: function (provider, profile, customData) {
         var userData = {};
-        userData.name = profile.displayName;
+        userData.name = profile.displayName || profile.username ;
         userData[provider + 'Id'] = profile.id;
         userData[provider + 'Data'] = _.extend(this.extractSpecificData(profile), customData);
         return userData;

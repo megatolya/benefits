@@ -36,7 +36,8 @@ module.exports = {
                 login: 'Войти',
                 facebook: 'Войти через фейсбук',
                 twitter: 'Войти через твитер',
-                github: 'Войти через гитхаб'
+                github: 'Войти через гитхаб',
+                instagram: 'Войти через инстаграм'
             },
 
             state: {

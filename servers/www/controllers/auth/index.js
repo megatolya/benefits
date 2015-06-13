@@ -10,4 +10,5 @@ module.exports = function (app) {
     require('./twitter-strategy')(app);
     require('./facebook-strategy')(app);
     require('./github-strategy')(app);
+    require('./instagram-strategy')(app);
 };

@@ -42,6 +42,11 @@ module.exports = {
             name: 'github',
             key: 'f9f6f5c98d894d92bad6',
             secret: 'd8625cdcbca84ac0ef2e506c61f060968e84d7ff'
+        },
+        instagram: {
+            name: 'instagram',
+            key: '36d11b5bbb8f4f85bdce52e346e8680f',
+            secret: '4da93857c495439db9ffe0a679708423'
         }
     },
 

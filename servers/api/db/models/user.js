@@ -18,7 +18,10 @@ module.exports = [
         facebookData: {type: sq.JSONB},
 
         githubId: {type: sq.STRING},
-        githubData: {type: sq.JSONB}
+        githubData: {type: sq.JSONB},
+
+        instagramId: {type: sq.STRING},
+        instagramData: {type: sq.JSONB}
     },
     {
         classMethods: {
