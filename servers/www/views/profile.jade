@@ -28,7 +28,7 @@ block content
         - });
 
 
-    if me
+    if me && me.id === user.id
         .social-box
             h4=i18n.get('auth.add.addAccount')
                 +social-add-button('facebook', i18n.get('auth.add.facebook'))
