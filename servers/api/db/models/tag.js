@@ -16,7 +16,7 @@ module.exports = [
                 return models.Tag.scope('withAchievements').find({
                     where: {name: tagName}
                 }).then(function (tag) {
-                    return tag.get('achievements');
+                    return tag ? tag.get('achievements') : [];
                 });
             }
         },
