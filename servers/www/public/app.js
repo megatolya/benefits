@@ -1,6 +1,14 @@
 'use strict';
 
-/* global $, alert, Dropzone, i18n */
+/* global $, alert, Dropzone, i18n, location */
+
+function openCert(certId) {
+    $.get(location.pathname + '/' + certId, function (data) {
+        var modal = $(data);
+        $('body').append(modal);
+        modal.modal();
+    });
+}
 
 function main() {
     var fileAdded = false;
@@ -20,7 +28,7 @@ function main() {
     });
 
     $('.achievement__award').on('click', function () {
-        $('#modal').modal();
+        $('#award-modal').modal();
     });
 
     $('.achievement__edit').one('click', function () {
@@ -105,6 +113,16 @@ function main() {
             return val.id;
         }));
         suggest.trigger('change');
+    });
+
+    if (/certs/.test(location.href) && /from=creation/.test(location.href)) {
+        var certs = $('.cert');
+        openCert(certs.eq(certs.length - 1).attr('data-cert'));
+    }
+
+    $('.cert').click(function () {
+        openCert($(this).attr('data-cert'));
+        return false;
     });
 }
 

@@ -9,7 +9,8 @@ module.exports = [
         id: {type: sq.INTEGER, primaryKey: true, autoIncrement: true},
         used: {type: sq.INTEGER},
         uses: {type: sq.INTEGER},
-        referer: {type: sq.STRING}
+        referer: {type: sq.STRING},
+        type: {type: sq.STRING}
     },
     {
         classMethods: {},

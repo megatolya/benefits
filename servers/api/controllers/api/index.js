@@ -28,4 +28,8 @@ module.exports = function (app) {
 
     get('/suggest/user/:query', require('./userSuggest'));
     get('/suggest/achievement/:query', require('./achievementSuggest'));
+
+    post('/achievement/:id/certs', require('./achievement-certs'));
+
+    get('/certificate/:id', require('./certificate'));
 };

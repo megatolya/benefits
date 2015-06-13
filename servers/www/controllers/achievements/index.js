@@ -46,6 +46,19 @@ module.exports = function (app) {
             });
         }, next);
     });
+    app.get('/achievements/:id/certs/:certId', authRequired, checkAchievementOwner, function (req, res, next) {
+        req.getProvider('cert').get(req.params.certId).then(function (cert) {
+            res.magicRender('partials/cert-modal', req, {
+                cert: cert
+            });
+        });
+    });
+
+    app.post('/achievements/:id/certs', authRequired, checkAchievementOwner, function (req, res, next) {
+        req.getProvider('achievement').createCert(req.params.id, req.body).then(function (cert) {
+            res.redirect(req.originalUrl + '?from=creation');
+        });
+    });
 
     app.post('/achievements/new-image', authRequired, function (req, res, next) {
         res.status(201);

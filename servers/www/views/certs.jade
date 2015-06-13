@@ -12,18 +12,18 @@ block no-container
             thead
                 tr
                     td=i18n.get('cert.cert')
-                    td=i18n.get('common.created')
                     td=i18n.get('cert.used')
+                    td=i18n.get('cert.type')
             tbody
                 - achievement.certificates.forEach(function (cert) {
-                    tr.cert
+                    tr.cert(data-cert=cert.id)
                         td
                             a(href='/cert/' + cert.referer).cert__referer=cert.referer
-                        td.cert__date=cert.created
-                        td.cert__used=(cert.uses - cert.used) + ' / ' + cert.uses
+                        td.cert__used=cert.used + ' / ' + (cert.uses === 0 ? '∞' : cert.uses)
+                        td.cert__type=i18n.get('cert.types.' + cert.type)
                 - });
     else
         p.center=i18n.get('cert.noCertsYet')
-    include partials/cert-modal
+    include partials/cert-form-modal
 
 

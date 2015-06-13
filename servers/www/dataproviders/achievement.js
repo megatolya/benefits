@@ -2,6 +2,8 @@
 
 var debug = require('debug')('app:providers');
 var moment = require('moment');
+var Q = require('q');
+var constants = require('../../common/constants');
 
 // TODO req.moment
 moment.locale('ru');
@@ -55,11 +57,6 @@ AchievementProvider.prototype = {
         }).then(this.normalize.bind(this));
     },
 
-    normalizeCert: function (cert) {
-        cert.created = moment(cert.createdAt, 'YYYYMMDD').fromNow();
-        return cert;
-    },
-
     normalize: function (achievement) {
         achievement.currentUser = {
             received: false,
@@ -77,9 +74,10 @@ AchievementProvider.prototype = {
             achievement.currentUser.created = createdAchievements.indexOf(achievement.id) !== -1;
         }
 
+        var certProvider = new (require('./cert'))(this.req);
         achievement.parents = (achievement.parents || []).map(this.normalize.bind(this));
         achievement.children = (achievement.children || []).map(this.normalize.bind(this));
-        achievement.certificates = (achievement.certificates || []).map(this.normalizeCert.bind(this));
+        achievement.certificates = (achievement.certificates || []).map(certProvider.normalize.bind(certProvider));
 
         achievement.tags = (achievement.tags || []).map(function (tag) {
             tag.theme = getLabelTheme();
@@ -88,6 +86,17 @@ AchievementProvider.prototype = {
 
         debug('Achievement: ' + JSON.stringify(achievement));
         return achievement;
+    },
+
+    createCert: function (achievementId, cert) {
+        return utils.askApi(this.req, '/achievement/' + achievementId + '/certs', {
+            method: 'POST',
+            body: {
+                type: constants.CERT_TYPE[cert.type],
+                uses: Number(cert.uses),
+                achievementId: Number(achievementId)
+            }
+        });
     }
 };
 

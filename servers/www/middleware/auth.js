@@ -18,6 +18,8 @@ module.exports = function (req, res, next) {
         next();
     }
 
+    req.origin = 'http://localhost:3001';
+
     if (req.query.aka) {
         var id = parseInt(req.query.aka, 10);
         req.getProvider('user').get(id).then(function (user) {

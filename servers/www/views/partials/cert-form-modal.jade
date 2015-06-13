@@ -1,0 +1,29 @@
+.modal.fade#award-modal(tabindex='-1')
+    .modal-dialog
+        .modal-content
+            form.cert-settings(action='/achievements/' + achievement.id + '/certs', method='POST')
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true')!='&times'
+                    h4.modal-title
+                        | !{i18n.get('modal.createCert')}
+                .modal-body
+                    p=i18n.get('modal.certText')
+                        p=i18n.get('cert.standsFor')
+                        select(name='type')
+                            option(value=0, selected)=i18n.get('cert.award')
+                            option(value=1)=i18n.get('cert.awardAndMakeHolder')
+                            option(value=2)=i18n.get('cert.makeHolder')
+                        p=i18n.get('cert.certMaxUses')
+                        select(name='uses')
+                            option(value=1, selected)=i18n.get('cert.uses.1')
+                            option(value=2)=i18n.get('cert.uses.2')
+                            option(value=0)=i18n.get('cert.uses.many')
+
+                    //-.alert.alert-success=i18n.get('modal.aboutCertSettings')
+                    //-.alert.alert-warning=i18n.get('modal.warnAboutUsesCount')
+                    //-.alert.alert-warning=i18n.get('modal.warnAboutHolders')
+                    .alert.alert-info=i18n.get('modal.whatIsCert')
+                    .modal-footer
+                        button.btn.btn-default(type='button', data-dismiss='modal')=i18n.get('button.close')
+                        button.btn.btn-primary(type='submit')=i18n.get('button.create')

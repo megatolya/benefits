@@ -10,3 +10,9 @@
     font-family: monospace;
     color: rgb(47, 129, 255);
 }
+
+.share-cert {
+    width: 100%;
+    margin: 23px 0;
+    text-align: center;
+}
