@@ -1,22 +1,17 @@
+include ./mixins/index
+
 extends ./layout.jade
 
-mixin social-button(name, text)
-    a(href='/auth/' + name, title=name, class='btn-' + name).btn.btn-block.btn-social.btn-lg
-        i(class='fa-' + name).fa
-        | !{text}
+
+mixin social-button-row(name, text)
+    .row
+        .col-md-12
+            +social-button('/auth/' + name, name, text)
 
 block content
     .social-box
         h3 Войдите, чтобы получать крутые ачивки!
-        .row
-            .col-md-12
-                +social-button('facebook', i18n.get('auth.login.facebook'))
-        .row
-            .col-md-12
-                +social-button('twitter', i18n.get('auth.login.twitter'))
-        .row
-            .col-md-12
-                +social-button('github', i18n.get('auth.login.github'))
-        .row
-            .col-md-12
-                +social-button('instagram', i18n.get('auth.login.instagram'))
+            +social-button-row('facebook', i18n.get('auth.login.facebook'))
+            +social-button-row('twitter', i18n.get('auth.login.twitter'))
+            +social-button-row('github', i18n.get('auth.login.github'))
+            +social-button-row('instagram', i18n.get('auth.login.instagram'))

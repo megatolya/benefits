@@ -10,3 +10,9 @@ mixin headerProfile()
     - } else {
         a(href="/auth/")=i18n.get('auth.login.login')
     - }
+
+
+mixin social-button(link, name, text)
+    a(href=link, title=name, class='btn-' + name).btn.btn-block.btn-social.btn-lg
+        i(class='fa-' + name).fa
+        | !{text}

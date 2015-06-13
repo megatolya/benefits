@@ -1,6 +1,13 @@
-include achievements/mixins
+include ./achievements/mixins
+include ./mixins/index
 
 extends ./layout.jade
+
+mixin social-add-button(name, text)
+    if !me[name + 'Id']
+        .row
+            .col-md-12
+                +social-button('/auth/add/' + name, name, text)
 
 block content
     h1=user.name
@@ -20,3 +27,11 @@ block content
             +achievement(achievement)
         - });
 
+
+    if me
+        .social-box
+            h4=i18n.get('auth.add.addAccount')
+                +social-add-button('facebook', i18n.get('auth.add.facebook'))
+                +social-add-button('twitter', i18n.get('auth.add.twitter'))
+                +social-add-button('github', i18n.get('auth.add.github'))
+                +social-add-button('instagram', i18n.get('auth.add.instagram'))
