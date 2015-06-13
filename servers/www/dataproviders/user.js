@@ -30,7 +30,7 @@ UserProvider.prototype = {
     },
 
     normalize: function (user) {
-        user.achievements = (user.achivements || []).map(function (achievement) {
+        user.receivedAchievements = (user.receivedAchievements || []).map(function (achievement) {
             return achievementProvider.normalize(achievement);
         });
         user.createdAchievements = (user.createdAchievements || []).map(function (achievement) {
